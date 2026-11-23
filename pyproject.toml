@@ -1,0 +1,21 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=61.0"]
+
+[project]
+authors = [
+  {name = "sora", email = "sahikast6@gmail.com"},
+]
+dependencies = [
+  "aiohttp>=3.8.0",
+  "pydantic>=2.0.0",
+  "asyncio",
+]
+description = "A Python library for fetching player data from the SK-port , Performing daily sign-in rewards collection and fetching current game statistics for a player. For Arknights Endfield."
+license = {file = "LICENSE.txt"}
+name = "skport-py"
+readme = "README.md"
+version = "0.0.1"
+
+[tool.setuptools.packages.find]
+where = ["src"]
