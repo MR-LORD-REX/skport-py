@@ -9,3 +9,6 @@ debug_*.json
 scripts/
 
 local/
+
+!README.md
+*.md
