@@ -11,7 +11,7 @@ license = "GPL-3.0-only"
 license-files = ["LICENSE.txt"]
 dynamic = ["version"]
 authors = [{name = "sora", email = "sahikast6@gmail.com"}]
-dependencies = ["aiohttp>=3.9,<4"]
+dependencies = ["aiohttp>=3.9,<4", "pydantic>=2.8,<3"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "pytest-asyncio>=0.25", "ruff>=0.9", "mypy>=1.14", "build>=1.2"]

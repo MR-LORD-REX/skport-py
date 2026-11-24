@@ -6,7 +6,8 @@ from dataclasses import replace
 from typing import cast
 
 from skport.api import SkportAPI
-from skport.config import ClientConfig, Language, Region, parse_language, parse_region
+from skport.assets import AssetManager, AssetUpdate
+from skport.config import ClientConfig, ImageSource, Language, Region, parse_language, parse_region
 from skport.errors import ConfigError
 from skport.games.base import Game, GameClient
 from skport.games.endfield.client import EndfieldClient
@@ -29,7 +30,13 @@ class SkportClient:
         config: ClientConfig | None = None,
         lang: str | Language | None = None,
         region: str | Region | None = None,
+        icon_source: str | ImageSource | None = None,
+        assets: AssetManager | None = None,
     ) -> None:
+        try:
+            preferred_icons = ImageSource(icon_source) if icon_source is not None else None
+        except ValueError as exc:
+            raise ConfigError("unsupported image source") from exc
         if api is not None:
             if tokens is not None or config is not None or lang is not None or region is not None:
                 raise ConfigError("Supply api= or tokens/config/lang/region, not both")
@@ -44,9 +51,17 @@ class SkportClient:
                 settings = replace(settings, region=parse_region(region))
             self.api = SkportAPI(tokens, config=settings)
         self._owns_api = api is None
+        self.config = self.api.config
+        if preferred_icons is not None:
+            self.config = replace(self.config, icon_source=preferred_icons)
+        self._assets = assets
+        self._owns_assets = assets is None
         self._closed = False
         self.registry = GameRegistry()
-        self.registry.register(Game.ENDFIELD, EndfieldClient)
+        self.registry.register(
+            Game.ENDFIELD,
+            lambda shared_api: EndfieldClient(shared_api, assets=self.assets, config=self.config),
+        )
 
     async def __aenter__(self) -> SkportClient:
         """Enter the facade without authenticating until needed."""
@@ -60,6 +75,18 @@ class SkportClient:
     def endfield(self) -> EndfieldClient:
         """Return the cached Endfield client sharing this API."""
         return cast(EndfieldClient, self.game(Game.ENDFIELD))
+
+    @property
+    def assets(self) -> AssetManager:
+        """Return the shared asset manager without implicit network activity."""
+        if self._assets is None:
+            self._assets = AssetManager(self.config, self.api.transport)
+        return self._assets
+
+    async def update_assets(self) -> AssetUpdate:
+        """Update official Enka tables and share the new revision across games."""
+        self._require_open()
+        return await self.assets.update()
 
     def game(self, game: Game | str) -> GameClient:
         """Return a registered game client, creating it on first access."""
@@ -79,6 +106,8 @@ class SkportClient:
         try:
             await self.registry.close()
         finally:
+            if self._owns_assets and self._assets is not None:
+                await self._assets.close()
             if self._owns_api:
                 await self.api.close()
 

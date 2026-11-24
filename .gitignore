@@ -12,3 +12,5 @@ __pycache__/
 debug_*.json
 ef_cards/
 local/
+
+test.py

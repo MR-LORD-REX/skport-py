@@ -2,7 +2,7 @@ from skport._version import __version__
 from skport.api import SkportAPI
 from skport.auth import Credential, TokenPool
 from skport.client import SkportClient
-from skport.config import ClientConfig, Language, Region
+from skport.config import ClientConfig, ImageSource, Language, MissingAssetPolicy, Region
 from skport.errors import (
     AlreadyCheckedIn,
     APIError,
@@ -37,8 +37,10 @@ __all__ = [
     "EndfieldClient",
     "ForbiddenError",
     "Game",
+    "ImageSource",
     "Language",
     "MappingError",
+    "MissingAssetPolicy",
     "NetworkError",
     "PoolExhausted",
     "PrivacyError",

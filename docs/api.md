@@ -1,8 +1,15 @@
-# Phase-one API guide
+# API guide
 
-Fetch methods return the service's decoded data field without model conversion.
-Lists and scalar values keep their original shape. No Enka player endpoint or
-calculated statistic is used in this phase.
+`SkportClient.endfield` returns normalized Pydantic player cards, character
+builds and supported activity reports. Character builds include static
+calculated stats when their canonical data is available. Player data comes
+from SKPORT; calculations use a local Enka asset snapshot. No live Enka player
+endpoint is called.
+
+`SkportAPI` and `client.endfield.raw` return the service's decoded `data` field
+without model conversion. Lists and scalar values keep their original shape.
+Card and character methods accept `raw=True` to return the fetched wire data
+and skip asset resolution/calculation.
 
 ## Construction and lifecycle
 
@@ -21,6 +28,10 @@ refresh_interval, cache_size, login_store, max_attempts and retry_backoff.
 refresh_interval is a caller policy, not an asserted service TTL. Credentials
 stay in memory by default; login_store enables opt-in persistence.
 Only the global deployment is implemented; CN settings raise ConfigError.
+
+Build settings include `icon_source`, `calculate_stats`, `missing_assets`,
+`assets_dir`, `assets_ref`, `assets_offline` and `assets_auto_update`. See
+[models and assets](models.md) for their defaults and behavior.
 
 ## Public and owner identities
 
@@ -79,6 +90,7 @@ Shared API helpers:
 api.endfield helpers:
 
 - detail(Target), character(Target, char_id=...): card and individual build.
+- owned_card(token=...), owned_character(token=..., char_id=...): explicit owner data.
 - crisis_contract(Target, contract_id=...), indie_hard(Target): public records.
 - enums, wiki_catalog(type_sub_id=...), wiki_item(item_id): localized wiki/labels.
 - char_banners, weapon_banners, news: banner and publisher bulletin metadata.
@@ -92,17 +104,77 @@ Successful writes invalidate that owner's cached reads.
 
 ## Characters and languages
 
-client.endfield.characters returns raw card records. showcase_only=True uses
-configured showcase IDs/order. full=True fetches individual build endpoints.
-client.endfield.character requires exactly one of char_id, name or index.
+`client.endfield.card(skport_id=...)` returns `PlayerCard` with ordered
+`CharacterBuild` objects. The public list contains exposed characters and
+does not imply the owner's complete roster. `source_scope` and
+`roster_complete` keep that distinction explicit.
+
+`client.endfield.characters(skport_id=...)` returns `list[CharacterBuild]`.
+`showcase_only=True` uses configured showcase IDs/order. `full=True` fetches
+individual build endpoints; the default uses the card's character records.
+`client.endfield.character` requires exactly one of `char_id`, `name` or `index`.
 Names must be unique after NFKC/casefold normalization in the requested locale.
 Indexes are nonnegative positions; numeric strings remain IDs or names. Direct
-full-ID lookup avoids downloading a roster. Canonical IDs arrive with resolution.
+ID lookup with `full=True` avoids downloading a roster. `char_id` selects an
+opaque SKPORT character ID; canonical template and string IDs are output
+metadata after resolution.
+
+Owner methods stay bound to the explicitly supplied account token:
+
+~~~py
+from skport import Role
+
+role = Role(game_uid, server_id)
+card = await client.endfield.owned_card(token=owner_token, role=role)
+roster = await client.endfield.owned_characters(
+    token=owner_token, role=role, full=True
+)
+build = await client.endfield.owned_character(
+    token=owner_token, role=role, name="Yvonne"
+)
+~~~
+
+`owned_characters` uses the owner's returned roster without a public showcase
+filter. `owned_character` accepts exactly one of `char_id`, `name` or `index`,
+with `full=True` by default. Its optional `operator_id` is the owner endpoint's
+additional query field; it does not replace the required character selector.
+All three methods accept `lang` and `raw=True`. Roles are checked against the
+owner token's bindings before game data is fetched.
+
+Additional typed reports are `activity(skport_id=...)`, `factory(skport_id=...)`,
+`monument(skport_id=...)` and `contract(skport_id=...)`. They accept public
+`role_id`, `server_id` and `lang` selection. Wiki and pull-history endpoints
+currently remain raw; their output model families are available for future
+adapters.
 
 Languages: en, ja, ko, zh-Hans, zh-Hant. Regional aliases normalize locally;
 unsupported languages raise ConfigError. News/pulls use regional query codes.
-Enka's fourteen asset languages are a separate future capability. Caller
-language does not change credentials or session default headers.
+Canonical Enka localization is stored separately from SKPORT's supported
+request languages. Caller language does not change credentials or session
+default headers.
+
+## Asset loading and manual updates
+
+`icon_source="skport"` is the default. Each `ImageLinks` retains available
+SKPORT and Enka alternatives, with `.url` selecting the preferred available
+candidate. This is URL selection; the SDK does not download or probe images.
+
+The default `assets_auto_update=False` loads a valid local snapshot without
+checking Enka. The first typed build request downloads canonical tables if no
+valid cache exists and `assets_offline=False`. Construction and `warm()` do
+not download assets.
+
+`await client.update_assets()` explicitly installs the newest verified snapshot
+from `assets_ref`. Its `AssetUpdate` result exposes `changed`,
+`previous_revision` and `snapshot`. A failed update raises `AssetError` while
+preserving the previous valid snapshot. Future builds use the newly installed
+revision; previously returned models retain their original data.
+
+Use `assets_offline=True` to prohibit Enka asset requests, including manual
+updates. This setting still permits SKPORT API requests. Existing cached
+character/loadout records can provide static calculations while Enka is down.
+New characters or equipment missing from the snapshot produce partial builds,
+or raise errors when `missing_assets="raise"`.
 
 ## Authentication, retries and diagnostics
 
@@ -118,7 +190,8 @@ context-dependent; positive expiry/privacy signals precede missing-target mappin
 
 All errors derive from SkportError. Specific classes include AuthError,
 TargetNotFound, ForbiddenError, PrivacyError, AlreadyCheckedIn, RateLimitError,
-ServerError, NetworkError and DecodeError. Errors retain safe status/code/path,
+ServerError, NetworkError, DecodeError, AssetError, MappingError and
+UnsupportedFormula. Errors retain safe status/code/path,
 retry delay and attempt context.
 
 skport.logging.configure(level="DEBUG") opts into safe request metadata.

@@ -9,13 +9,14 @@ async def main():
     async with SkportAPI(tokens=[token_a], lang="en") as api:
         await api.warm()
         async with SkportClient(api=api) as client:
-            card = await client.endfield.card(
-                skport_id=skport_id, lang="en"
-            )
-            for i in range(0,8):
-                character = await client.endfield.character(
-                    skport_id=skport_id, index=i, lang="en"
-                )
-                print(character["charData"]["name"])
+            # await client.update_assets()
+            # characters = await client.endfield.characters(skport_id=1705883884575)
+            # for c in characters:
+            #     print(c.name)
+
+            char=await client.endfield.character(skport_id=1705883884575,index=1)
+            for s in char.stats:
+                print(s)
+                print("\n")
 
 asyncio.run(main())

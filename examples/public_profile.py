@@ -16,7 +16,7 @@ async def main() -> None:
         await api.warm()
         async with SkportClient(api=api) as client:
             characters = await client.endfield.characters(skport_id=skport_id, role_id=game_uid)
-            print(json.dumps([{"id": char["id"], "name": char["charData"]["name"]} for char in characters]))
+            print(json.dumps([{"id": char.identity.skport_id, "name": char.name} for char in characters]))
 
 
 if __name__ == "__main__":

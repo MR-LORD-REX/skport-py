@@ -60,6 +60,55 @@ class EndfieldRawAPI:
             params["contractId"] = contract_id
         return await self.api.request("GET", ep.CONTRACT, params=params, lang=lang, ttl=ttl)
 
+    async def owned_card(
+        self,
+        *,
+        token: str,
+        role: Role | str | None = None,
+        lang: str | Language | None = None,
+        ttl: float | None = None,
+    ) -> Any:
+        """Fetch the card for a role verified against the token owner's bindings."""
+        owner = await self.role_for(token, role=role, lang=lang)
+        return await self.api.request(
+            "GET",
+            ep.DETAIL,
+            params={"roleId": owner.role_id, "serverId": owner.server_id},
+            token=token,
+            role=owner.game_role,
+            lang=lang,
+            ttl=ttl,
+        )
+
+    async def owned_character(
+        self,
+        *,
+        token: str,
+        char_id: str,
+        operator_id: str | None = None,
+        role: Role | str | None = None,
+        lang: str | Language | None = None,
+        ttl: float | None = None,
+    ) -> Any:
+        """Fetch one character using the explicit owner's authenticated role."""
+        if not char_id:
+            raise ConfigError("char_id must not be empty")
+        owner = await self.role_for(token, role=role, lang=lang)
+        return await self.api.request(
+            "GET",
+            ep.CHARACTER,
+            params={
+                "roleId": owner.role_id,
+                "serverId": owner.server_id,
+                "operatorId": operator_id or char_id,
+                "charId": char_id,
+            },
+            token=token,
+            role=owner.game_role,
+            lang=lang,
+            ttl=ttl,
+        )
+
     async def indie_hard(
         self,
         target: Target,

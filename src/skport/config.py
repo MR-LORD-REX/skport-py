@@ -27,6 +27,20 @@ class Language(StrEnum):
     ZH_HANT = "zh-Hant"
 
 
+class ImageSource(StrEnum):
+    """Preferred artwork provider, with fallback to an available alternative."""
+
+    SKPORT = "skport"
+    ENKA = "enka"
+
+
+class MissingAssetPolicy(StrEnum):
+    """Behavior when canonical data cannot resolve or calculate a build."""
+
+    PARTIAL = "partial"
+    RAISE = "raise"
+
+
 LANGUAGE_ALIASES = {
     "en": Language.EN,
     "en-us": Language.EN,
@@ -131,6 +145,13 @@ class ClientConfig:
     max_attempts: int = 3
     retry_backoff: float = 0.25
     user_agent: str = field(default_factory=lambda: Protocol().user_agent)
+    icon_source: ImageSource = ImageSource.SKPORT
+    calculate_stats: bool = True
+    missing_assets: MissingAssetPolicy = MissingAssetPolicy.PARTIAL
+    assets_dir: Path | None = None
+    assets_ref: str = "master"
+    assets_offline: bool = False
+    assets_auto_update: bool = False
 
     @property
     def hosts(self) -> Hosts:
@@ -145,6 +166,15 @@ class ClientConfig:
     def __post_init__(self) -> None:
         self.lang = parse_language(self.lang)
         self.region = parse_region(self.region)
+        try:
+            self.icon_source = ImageSource(self.icon_source)
+            self.missing_assets = MissingAssetPolicy(self.missing_assets)
+        except ValueError as exc:
+            raise ConfigError("unsupported image source or missing-asset policy") from exc
+        if not isinstance(self.assets_ref, str) or not self.assets_ref.strip():
+            raise ConfigError("assets_ref must name an upstream branch or commit")
+        if self.assets_dir is not None:
+            self.assets_dir = Path(self.assets_dir).expanduser()
         positive = {"timeout": self.timeout}
         if self.refresh_interval is not None:
             positive["refresh_interval"] = self.refresh_interval
