@@ -10,7 +10,8 @@ from skport.assets import AssetManager
 from skport.config import ClientConfig, Language, parse_language
 from skport.errors import ConfigError, DecodeError
 from skport.games.base import Game
-from skport.games.endfield.identity import Role, Target
+from skport.games.endfield.clean.user import build_verified_user
+from skport.games.endfield.identity import Role, Target, parse_roles, select_role
 from skport.games.endfield.models import (
     CharacterBuild,
     ContractState,
@@ -19,6 +20,7 @@ from skport.games.endfield.models import (
     MonumentState,
     PlayerCard,
     PlayerIdentity,
+    VerifiedUser,
 )
 from skport.games.endfield.selection import character_records, select_character
 
@@ -90,6 +92,43 @@ class EndfieldClient:
     async def profile(self, *, skport_id: str | int, lang: str | Language | None = None) -> dict[str, Any]:
         """Fetch raw public SKPORT social metadata independent of game builds."""
         return await self.api.user(skport_id=skport_id, lang=lang)
+
+    async def verify_skid(
+        self,
+        skport_id: str | int,
+        *,
+        role_id: str | int | None = None,
+        server_id: str | int | None = None,
+        lang: str | Language | None = None,
+    ) -> VerifiedUser:
+        """Verify a public SKPORT profile and return its selected Endfield identity."""
+        if not isinstance(skport_id, (str, int)) or isinstance(skport_id, bool) or not str(skport_id).strip():
+            raise ConfigError("skport_id must be a nonempty identifier")
+        normalized_id = str(skport_id).strip()
+        language = self._language(lang)
+        bindings, social = await asyncio.gather(
+            self.api.binding(skport_id=normalized_id, lang=language, ttl=0),
+            self.api.user(skport_id=normalized_id, lang=language, ttl=0),
+        )
+        selected = select_role(parse_roles(bindings), role_id=role_id, server_id=server_id)
+        return build_verified_user(social, selected, "public", expected_id=normalized_id)
+
+    async def verify_token(
+        self,
+        token: str,
+        *,
+        role: Role | str | None = None,
+        lang: str | Language | None = None,
+    ) -> VerifiedUser:
+        """Verify the explicit token owner and return their social/game information."""
+        if not isinstance(token, str) or not token.strip():
+            raise ConfigError("account tokens must be nonempty strings")
+        language = self._language(lang)
+        selected, social = await asyncio.gather(
+            self.raw.role_for(token, role=role, lang=language, ttl=0),
+            self.api.user(token=token, lang=language, ttl=0),
+        )
+        return build_verified_user(social, selected, "owner")
 
     async def card(
         self,

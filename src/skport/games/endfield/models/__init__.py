@@ -36,6 +36,7 @@ from skport.games.endfield.models.stats import (
     format_percent,
 )
 from skport.games.endfield.models.talents import Potential, TalentNode, TalentTree
+from skport.games.endfield.models.user import VerifiedUser
 from skport.games.endfield.models.weapon import Gem, GemTerm, Weapon
 from skport.games.endfield.models.wiki import WikiPage, WikiSection, WikiSummary
 from skport.games.endfield.models.world import (
@@ -102,6 +103,7 @@ __all__ = [
     "StatValue",
     "TalentNode",
     "TalentTree",
+    "VerifiedUser",
     "TeamMember",
     "Weapon",
     "WikiPage",

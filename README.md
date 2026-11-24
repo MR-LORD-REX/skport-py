@@ -48,6 +48,14 @@ roster = await client.endfield.owned_characters(token=owner_token, full=True)
 build = await client.endfield.owned_character(token=owner_token, index=0)
 ~~~
 
+Verify a public SKPORT ID or the explicit token owner without loading assets:
+
+~~~py
+public_user = await client.endfield.verify_skid(skport_id)
+owner = await client.endfield.verify_token(owner_token)
+print(owner.skport_username, owner.game_uid, owner.in_game_name)
+~~~
+
 Languages: en, ja, ko, zh-Hans and zh-Hant. Regional aliases such as ja-JP and zh-TW are normalized. API.with_language(...) shares credentials, transport and cache without changing its parent.
 
 ## Assets and update gaps

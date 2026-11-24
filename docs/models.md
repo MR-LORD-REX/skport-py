@@ -7,6 +7,9 @@ SKPORT responses and card templates. Import models from
 
 ## Schema families
 
+- `user.py`: `VerifiedUser` keeps the verified SKPORT ID/username, selected
+  game UID/in-game name, server information and public/owner scope. It contains
+  no token or intermediate credentials.
 - `identity.py`: `PlayerIdentity` keeps the SKPORT social ID, game UID and
   server separate. `CharacterIdentity` retains the opaque SKPORT character ID,
   resolved Enka template/string IDs and optional display-variant IDs.

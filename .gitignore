@@ -13,4 +13,6 @@ debug_*.json
 ef_cards/
 local/
 
+.sk_assets/
+
 test.py

@@ -1,0 +1,2664 @@
+{
+  "identity": {
+    "skport_id": "c2fa8a588cab489795166bed5161fefc",
+    "template_id": 46,
+    "str_id": "chr_0030_zhuangfy",
+    "display_template_id": null,
+    "display_str_id": "chr_0030_zhuangfy"
+  },
+  "name": "Zhuang Fangyi",
+  "level": 90,
+  "max_level": 90,
+  "evolution": 4,
+  "potential": 0,
+  "rarity": 6,
+  "element": {
+    "key": "char_property_pulse",
+    "name": "Electric",
+    "icons": {
+      "skport": null,
+      "enka": "https://enka.network/ui/ef/attributeicon/PulseDamageIncrease.png",
+      "preferred": "enka",
+      "effective_source": "enka",
+      "url": "https://enka.network/ui/ef/attributeicon/PulseDamageIncrease.png"
+    }
+  },
+  "profession": {
+    "key": "profession_assault",
+    "name": "Striker",
+    "icons": {
+      "skport": null,
+      "enka": null,
+      "preferred": "enka",
+      "effective_source": null,
+      "url": null
+    }
+  },
+  "weapon_type": {
+    "key": "weapon_type_wand",
+    "name": "Arts Unit",
+    "icons": {
+      "skport": null,
+      "enka": null,
+      "preferred": "enka",
+      "effective_source": null,
+      "url": null
+    }
+  },
+  "images": {
+    "avatar": {
+      "skport": "https://static.skport.com/image/common/20260416/e6c38b8d6240eaa77a5763f4e855b888.png",
+      "enka": "https://enka.network/ui/ef/charremoteicon/icon_chr_0030_zhuangfy.png",
+      "preferred": "enka",
+      "effective_source": "enka",
+      "url": "https://enka.network/ui/ef/charremoteicon/icon_chr_0030_zhuangfy.png"
+    },
+    "portrait": {
+      "skport": "https://static.skport.com/image/common/20260416/85ab92dda70186799065d5a8b541f281.png",
+      "enka": null,
+      "preferred": "enka",
+      "effective_source": "skport",
+      "url": "https://static.skport.com/image/common/20260416/85ab92dda70186799065d5a8b541f281.png"
+    },
+    "splash": {
+      "skport": "https://static.skport.com/image/common/20260416/60030f4c50f89328686d731a2d066145.png",
+      "enka": "https://enka.network/ui/ef/splash/chr_0030_zhuangfy.webp",
+      "preferred": "enka",
+      "effective_source": "enka",
+      "url": "https://enka.network/ui/ef/splash/chr_0030_zhuangfy.webp"
+    },
+    "half_body": {
+      "skport": "https://static.skport.com/image/common/20260416/85ab92dda70186799065d5a8b541f281.png",
+      "enka": null,
+      "preferred": "enka",
+      "effective_source": "skport",
+      "url": "https://static.skport.com/image/common/20260416/85ab92dda70186799065d5a8b541f281.png"
+    },
+    "focal_point": null
+  },
+  "showcase_index": null,
+  "owner": {
+    "skport_id": "1705883884575",
+    "game_uid": "4572346170",
+    "server_id": "2",
+    "name": "sora"
+  },
+  "stats": {
+    "values": {
+      "1": {
+        "id": 1,
+        "value": 5990.0,
+        "unit": "flat",
+        "name": "HP",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "5990"
+      },
+      "2": {
+        "id": 2,
+        "value": 7379.0,
+        "unit": "flat",
+        "name": "ATK",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "7379"
+      },
+      "3": {
+        "id": 3,
+        "value": 140.0,
+        "unit": "flat",
+        "name": "DEF",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "140"
+      },
+      "4": {
+        "id": 4,
+        "value": 1.0,
+        "unit": "factor",
+        "name": "Physical Damage Taken",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "1×"
+      },
+      "5": {
+        "id": 5,
+        "value": 1.0,
+        "unit": "factor",
+        "name": "Heat Damage Taken",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "1×"
+      },
+      "6": {
+        "id": 6,
+        "value": 1.0,
+        "unit": "factor",
+        "name": "Electric Damage Taken",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "1×"
+      },
+      "7": {
+        "id": 7,
+        "value": 1.0,
+        "unit": "factor",
+        "name": "Cryo Damage Taken",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "1×"
+      },
+      "8": {
+        "id": 8,
+        "value": 1.0,
+        "unit": "number",
+        "name": "Stat 8",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "1"
+      },
+      "9": {
+        "id": 9,
+        "value": 0.05,
+        "unit": "fraction",
+        "name": "Critical Rate",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "5.0%"
+      },
+      "10": {
+        "id": 10,
+        "value": 0.5,
+        "unit": "fraction",
+        "name": "Critical Damage",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "50.0%"
+      },
+      "11": {
+        "id": 11,
+        "value": 1.0,
+        "unit": "number",
+        "name": "Stat 11",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "1"
+      },
+      "12": {
+        "id": 12,
+        "value": 10.0,
+        "unit": "number",
+        "name": "Stat 12",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "10"
+      },
+      "15": {
+        "id": 15,
+        "value": 1.0,
+        "unit": "factor",
+        "name": "Attack Speed",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "1×"
+      },
+      "25": {
+        "id": 25,
+        "value": 1.2270408163265305,
+        "unit": "factor",
+        "name": "Stat 25",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "1.22704×"
+      },
+      "30": {
+        "id": 30,
+        "value": 0.862,
+        "unit": "fraction",
+        "name": "Treatment Received",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "86.2%"
+      },
+      "32": {
+        "id": 32,
+        "value": 0.5382,
+        "unit": "fraction",
+        "name": "Battle Skill Damage",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "53.8%"
+      },
+      "39": {
+        "id": 39,
+        "value": 99.0,
+        "unit": "flat",
+        "name": "Strength",
+        "icon": {
+          "skport": null,
+          "enka": "https://enka.network/ui/ef/attributeicon/Str.png",
+          "preferred": "enka",
+          "effective_source": "enka",
+          "url": "https://enka.network/ui/ef/attributeicon/Str.png"
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "99"
+      },
+      "40": {
+        "id": 40,
+        "value": 99.0,
+        "unit": "flat",
+        "name": "Agility",
+        "icon": {
+          "skport": null,
+          "enka": "https://enka.network/ui/ef/attributeicon/Agi.png",
+          "preferred": "enka",
+          "effective_source": "enka",
+          "url": "https://enka.network/ui/ef/attributeicon/Agi.png"
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "99"
+      },
+      "41": {
+        "id": 41,
+        "value": 307.0,
+        "unit": "flat",
+        "name": "Intellect",
+        "icon": {
+          "skport": null,
+          "enka": "https://enka.network/ui/ef/attributeicon/Wisd.png",
+          "preferred": "enka",
+          "effective_source": "enka",
+          "url": "https://enka.network/ui/ef/attributeicon/Wisd.png"
+        },
+        "is_main": false,
+        "is_sub": true,
+        "display": "307"
+      },
+      "42": {
+        "id": 42,
+        "value": 862.0,
+        "unit": "flat",
+        "name": "Will",
+        "icon": {
+          "skport": null,
+          "enka": "https://enka.network/ui/ef/attributeicon/Will.png",
+          "preferred": "enka",
+          "effective_source": "enka",
+          "url": "https://enka.network/ui/ef/attributeicon/Will.png"
+        },
+        "is_main": true,
+        "is_sub": false,
+        "display": "862"
+      },
+      "44": {
+        "id": 44,
+        "value": 1.0,
+        "unit": "fraction",
+        "name": "Ultimate Gain",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "100.0%"
+      },
+      "48": {
+        "id": 48,
+        "value": 1.0,
+        "unit": "factor",
+        "name": "Nature Damage Taken",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "1×"
+      },
+      "49": {
+        "id": 49,
+        "value": 1.4540816326530612,
+        "unit": "factor",
+        "name": "Stat 49",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "1.45408×"
+      },
+      "52": {
+        "id": 52,
+        "value": 0.6546666666666667,
+        "unit": "fraction",
+        "name": "Electric Damage",
+        "icon": {
+          "skport": null,
+          "enka": "https://enka.network/ui/ef/attributeicon/PulseDamageIncrease.png",
+          "preferred": "enka",
+          "effective_source": "enka",
+          "url": "https://enka.network/ui/ef/attributeicon/PulseDamageIncrease.png"
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "65.5%"
+      },
+      "53": {
+        "id": 53,
+        "value": 0.3986666666666667,
+        "unit": "fraction",
+        "name": "Cryo Damage",
+        "icon": {
+          "skport": null,
+          "enka": "https://enka.network/ui/ef/attributeicon/CrystDamageIncrease.png",
+          "preferred": "enka",
+          "effective_source": "enka",
+          "url": "https://enka.network/ui/ef/attributeicon/CrystDamageIncrease.png"
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "39.9%"
+      },
+      "60": {
+        "id": 60,
+        "value": 1.0,
+        "unit": "factor",
+        "name": "Ether Damage Taken",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "1×"
+      },
+      "90": {
+        "id": 90,
+        "value": 10.0,
+        "unit": "number",
+        "name": "Stat 90",
+        "icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "is_main": false,
+        "is_sub": false,
+        "display": "10"
+      }
+    },
+    "main_attribute": 42,
+    "sub_attribute": 41,
+    "contributions": [
+      {
+        "stat_id": 39,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 99.0,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 40,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 99.0,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 41,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 123.91142436356016,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 42,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 184.27940248264306,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 49,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 1.4540816326530612,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 25,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 1.2270408163265305,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 4,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 1.0,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 5,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 1.0,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 6,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 1.0,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 7,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 1.0,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 48,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 1.0,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 60,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 1.0,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 8,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 1.0,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 9,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 0.05,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 90,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 10.0,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 12,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 10.0,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 15,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 1.0,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 11,
+        "source": "character:base",
+        "formula": "BaseAddition",
+        "value": 1.0,
+        "source_id": "base"
+      },
+      {
+        "stat_id": 1,
+        "source": "character:hp",
+        "formula": "BaseAddition",
+        "value": 5495.0,
+        "source_id": "hp"
+      },
+      {
+        "stat_id": 2,
+        "source": "character:attack",
+        "formula": "BaseAddition",
+        "value": 326.0,
+        "source_id": "attack"
+      },
+      {
+        "stat_id": 44,
+        "source": "character:ultimate-gain",
+        "formula": "BaseAddition",
+        "value": 1.0,
+        "source_id": "ultimate-gain"
+      },
+      {
+        "stat_id": 10,
+        "source": "character:critical-damage",
+        "formula": "BaseAddition",
+        "value": 0.5,
+        "source_id": "critical-damage"
+      },
+      {
+        "stat_id": 2,
+        "source": "weapon:attack",
+        "formula": "BaseAddition",
+        "value": 510.0,
+        "source_id": "attack"
+      },
+      {
+        "stat_id": 42,
+        "source": "weapon:1245",
+        "formula": "BaseAddition",
+        "value": 156.0,
+        "source_id": "1245"
+      },
+      {
+        "stat_id": 2,
+        "source": "weapon:1249",
+        "formula": "BaseMultiplier",
+        "value": 0.39,
+        "source_id": "1249"
+      },
+      {
+        "stat_id": 52,
+        "source": "weapon:2912",
+        "formula": "BaseAddition",
+        "value": 0.256,
+        "source_id": "2912"
+      },
+      {
+        "stat_id": 3,
+        "source": "equipment:bodyEquip:4178:0",
+        "formula": "BaseAddition",
+        "value": 56.0,
+        "source_id": "4178"
+      },
+      {
+        "stat_id": 42,
+        "source": "equipment:bodyEquip:4178:1",
+        "formula": "BaseAddition",
+        "value": 113.0,
+        "source_id": "4178"
+      },
+      {
+        "stat_id": 41,
+        "source": "equipment:bodyEquip:4178:2",
+        "formula": "BaseAddition",
+        "value": 75.0,
+        "source_id": "4178"
+      },
+      {
+        "stat_id": 53,
+        "source": "equipment:bodyEquip:4178:3",
+        "formula": "BaseAddition",
+        "value": 0.1495,
+        "source_id": "4178"
+      },
+      {
+        "stat_id": 52,
+        "source": "equipment:bodyEquip:4178:3",
+        "formula": "BaseAddition",
+        "value": 0.1495,
+        "source_id": "4178"
+      },
+      {
+        "stat_id": 3,
+        "source": "equipment:armEquip:4172:0",
+        "formula": "BaseAddition",
+        "value": 42.0,
+        "source_id": "4172"
+      },
+      {
+        "stat_id": 42,
+        "source": "equipment:armEquip:4172:1",
+        "formula": "BaseAddition",
+        "value": 84.0,
+        "source_id": "4172"
+      },
+      {
+        "stat_id": 41,
+        "source": "equipment:armEquip:4172:2",
+        "formula": "BaseAddition",
+        "value": 55.0,
+        "source_id": "4172"
+      },
+      {
+        "stat_id": 53,
+        "source": "equipment:armEquip:4172:3",
+        "formula": "BaseAddition",
+        "value": 0.2491666666666667,
+        "source_id": "4172"
+      },
+      {
+        "stat_id": 52,
+        "source": "equipment:armEquip:4172:3",
+        "formula": "BaseAddition",
+        "value": 0.2491666666666667,
+        "source_id": "4172"
+      },
+      {
+        "stat_id": 3,
+        "source": "equipment:firstAccessory:4161:0",
+        "formula": "BaseAddition",
+        "value": 21.0,
+        "source_id": "4161"
+      },
+      {
+        "stat_id": 42,
+        "source": "equipment:firstAccessory:4161:1",
+        "formula": "BaseAddition",
+        "value": 41.0,
+        "source_id": "4161"
+      },
+      {
+        "stat_id": 41,
+        "source": "equipment:firstAccessory:4161:2",
+        "formula": "BaseAddition",
+        "value": 27.0,
+        "source_id": "4161"
+      },
+      {
+        "stat_id": 32,
+        "source": "equipment:firstAccessory:4161:3",
+        "formula": "BaseAddition",
+        "value": 0.5382,
+        "source_id": "4161"
+      },
+      {
+        "stat_id": 3,
+        "source": "equipment:secondAccessory:3009:0",
+        "formula": "BaseAddition",
+        "value": 21.0,
+        "source_id": "3009"
+      },
+      {
+        "stat_id": 42,
+        "source": "equipment:secondAccessory:3009:1",
+        "formula": "BaseAddition",
+        "value": 41.0,
+        "source_id": "3009"
+      },
+      {
+        "stat_id": 41,
+        "source": "equipment:secondAccessory:3009:2",
+        "formula": "BaseAddition",
+        "value": 27.0,
+        "source_id": "3009"
+      },
+      {
+        "stat_id": 42,
+        "source": "equipment:secondAccessory:3009:3",
+        "formula": "BaseMultiplier",
+        "value": 0.2691231855142706,
+        "source_id": "3009"
+      },
+      {
+        "stat_id": 2,
+        "source": "suit:suit_expend_spell01",
+        "formula": "BaseMultiplier",
+        "value": 0.1,
+        "source_id": "suit_expend_spell01"
+      },
+      {
+        "stat_id": 42,
+        "source": "talent:chr_0030_zhuangfy_1",
+        "formula": "BaseAddition",
+        "value": 10.0,
+        "source_id": "chr_0030_zhuangfy_1"
+      },
+      {
+        "stat_id": 42,
+        "source": "talent:chr_0030_zhuangfy_3",
+        "formula": "BaseAddition",
+        "value": 15.0,
+        "source_id": "chr_0030_zhuangfy_3"
+      },
+      {
+        "stat_id": 42,
+        "source": "talent:chr_0030_zhuangfy_5",
+        "formula": "BaseAddition",
+        "value": 15.0,
+        "source_id": "chr_0030_zhuangfy_5"
+      },
+      {
+        "stat_id": 42,
+        "source": "talent:chr_0030_zhuangfy_7",
+        "formula": "BaseAddition",
+        "value": 20.0,
+        "source_id": "chr_0030_zhuangfy_7"
+      },
+      {
+        "stat_id": 1,
+        "source": "derived:strength-health",
+        "formula": "BaseAddition",
+        "value": 495.0,
+        "source_id": "strength-health"
+      },
+      {
+        "stat_id": 30,
+        "source": "derived:will-treatment",
+        "formula": "Addition",
+        "value": 0.862,
+        "source_id": "will-treatment"
+      },
+      {
+        "stat_id": 2,
+        "source": "derived:attribute-attack",
+        "formula": "Addition",
+        "value": 6133.531360000001,
+        "source_id": "attribute-attack"
+      }
+    ]
+  },
+  "skills": [
+    {
+      "id": "6d3c127dbd81a7fc7ad045037d91208d",
+      "key": "chr_0030_zhuangfy_NormalAttack",
+      "name": "Jolting Arts",
+      "type": {
+        "key": "skill_type_normal_attack",
+        "name": "Basic Attack",
+        "icons": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        }
+      },
+      "icon": {
+        "skport": "https://static.skport.com/image/common/20251112/f5f5d5a61369f1b80b2115749bf28161.png",
+        "enka": "https://enka.network/ui/ef/skillicon/icon_attack_funnel.png",
+        "preferred": "enka",
+        "effective_source": "enka",
+        "url": "https://enka.network/ui/ef/skillicon/icon_attack_funnel.png"
+      },
+      "level": 9,
+      "max_level": 12,
+      "description": "BASIC ATTACK: \nAn attack with up to 5 sequences that deals Electric DMG. As the controlled operator, Final Strike also deals 18 Stagger. \n\nDIVE ATTACK: \nBasic attack performed in mid-air becomes a dive attack that deals Electric DMG to nearby enemies. \n\nFINISHER: \nBasic attack performed near a Staggered enemy becomes a finisher that deals massive Electric DMG and recovers some SP.",
+      "params": {
+        "atb": "18",
+        "atk_scale": "0.86",
+        "poise": "18"
+      },
+      "effects": [],
+      "forms": [],
+      "raw_description": "BASIC ATTACK: \nAn attack with up to 5 sequences that deals <@ba.pulse>Electric DMG</>. As the controlled operator, <#ba.lastcombo>Final Strike</> also deals <@ba.poise>{poise:0}</> Stagger. \n\nDIVE ATTACK: \nBasic attack performed in mid-air becomes a dive attack that deals <@ba.pulse>Electric DMG</> to nearby enemies. \n\nFINISHER: \nBasic attack performed near a Staggered enemy becomes a finisher that deals massive <@ba.pulse>Electric DMG</> and recovers some SP.",
+      "level_params": {
+        "1": {
+          "level": "1",
+          "params": {
+            "atb": "18",
+            "atk_scale": "0.48",
+            "poise": "18"
+          }
+        },
+        "10": {
+          "level": "10",
+          "params": {
+            "atb": "18",
+            "atk_scale": "0.92",
+            "poise": "18"
+          }
+        },
+        "11": {
+          "level": "11",
+          "params": {
+            "atb": "18",
+            "atk_scale": "1",
+            "poise": "18"
+          }
+        },
+        "12": {
+          "level": "12",
+          "params": {
+            "atb": "18",
+            "atk_scale": "1.08",
+            "poise": "18"
+          }
+        },
+        "2": {
+          "level": "2",
+          "params": {
+            "atb": "18",
+            "atk_scale": "0.53",
+            "poise": "18"
+          }
+        },
+        "3": {
+          "level": "3",
+          "params": {
+            "atb": "18",
+            "atk_scale": "0.58",
+            "poise": "18"
+          }
+        },
+        "4": {
+          "level": "4",
+          "params": {
+            "atb": "18",
+            "atk_scale": "0.62",
+            "poise": "18"
+          }
+        },
+        "5": {
+          "level": "5",
+          "params": {
+            "atb": "18",
+            "atk_scale": "0.67",
+            "poise": "18"
+          }
+        },
+        "6": {
+          "level": "6",
+          "params": {
+            "atb": "18",
+            "atk_scale": "0.72",
+            "poise": "18"
+          }
+        },
+        "7": {
+          "level": "7",
+          "params": {
+            "atb": "18",
+            "atk_scale": "0.77",
+            "poise": "18"
+          }
+        },
+        "8": {
+          "level": "8",
+          "params": {
+            "atb": "18",
+            "atk_scale": "0.82",
+            "poise": "18"
+          }
+        },
+        "9": {
+          "level": "9",
+          "params": {
+            "atb": "18",
+            "atk_scale": "0.86",
+            "poise": "18"
+          }
+        }
+      }
+    },
+    {
+      "id": "394ad0becbaa6ef17061d7b76d5b29dc",
+      "key": "chr_0030_zhuangfy_NormalSkill",
+      "name": "Mantra of Sundering",
+      "type": {
+        "key": "skill_type_normal_skill",
+        "name": "Battle Skill",
+        "icons": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        }
+      },
+      "icon": {
+        "skport": "https://static.skport.com/image/common/20260416/f4c5aa3dca87c763cbd42edbc5a473b8.png",
+        "enka": "https://enka.network/ui/ef/skillicon/icon_skill_zhuangfy_01.png",
+        "preferred": "enka",
+        "effective_source": "enka",
+        "url": "https://enka.network/ui/ef/skillicon/icon_skill_zhuangfy_01.png"
+      },
+      "level": 11,
+      "max_level": 12,
+      "description": "Consumes the target's Electrification to increase the DMG multiplier of this battle skill and create [Status Level of Electrification consumed +1] Sunderblades. If the battlefield has fewer than 3 Sunderblades, Mantra of Sundering can still create 1 Sunderblade, even if it does not consume any target's Electrification.\nZhuang Fangyi then channels all Sunderblades nearby to successively unleash Thunder Strikes on the target, dealing Electric DMG and giving bonus Ultimate Energy, with the final Thunder Strike dealing 6 times the DMG.\nA single battle skill casting can only create a max of 3 Sunderblades.",
+      "params": {
+        "atk_scale": "0.42",
+        "atk_up_per_conduct": "0.08",
+        "final_rate": "6",
+        "free_sword_limit": "3",
+        "max_conduct_sword": "3",
+        "poise": "15",
+        "remain_sword_limit": "9",
+        "sword_duration": "36",
+        "sword_range": "50",
+        "usp_extra": "6",
+        "usp_extra_limit": "54"
+      },
+      "effects": [],
+      "forms": [],
+      "raw_description": "<#ba.consume>Consumes</> the target's <#ba.conduct>Electrification</> to increase the DMG multiplier of this battle skill and create [<#ba.statuslevel>Status Level</> of <#ba.conduct>Electrification</> <#ba.consume>consumed</> <@ba.key>+1</>] <@ba.key>Sunderblades</>. If the battlefield has fewer than {free_sword_limit:0} <@ba.key>Sunderblades</>, Mantra of Sundering can still create 1 <@ba.key>Sunderblade</>, even if it does not <#ba.consume>consume</> any target's <#ba.conduct>Electrification</>.\nZhuang Fangyi then channels all <@ba.key>Sunderblades</> nearby to successively unleash Thunder Strikes on the target, dealing <@ba.pulse>Electric DMG</> and giving bonus Ultimate Energy, with the final Thunder Strike dealing {final_rate:0} times the DMG.\n<@ba.info>A single battle skill casting can only create a max of {max_conduct_sword:0} Sunderblades.</>",
+      "level_params": {
+        "1": {
+          "level": "1",
+          "params": {
+            "atk_scale": "0.2",
+            "atk_up_per_conduct": "0.03",
+            "final_rate": "6",
+            "free_sword_limit": "3",
+            "max_conduct_sword": "3",
+            "poise": "15",
+            "remain_sword_limit": "9",
+            "sword_duration": "36",
+            "sword_range": "50",
+            "usp_extra": "6",
+            "usp_extra_limit": "54"
+          }
+        },
+        "10": {
+          "level": "10",
+          "params": {
+            "atk_scale": "0.39",
+            "atk_up_per_conduct": "0.07",
+            "final_rate": "6",
+            "free_sword_limit": "3",
+            "max_conduct_sword": "3",
+            "poise": "15",
+            "remain_sword_limit": "9",
+            "sword_duration": "36",
+            "sword_range": "50",
+            "usp_extra": "6",
+            "usp_extra_limit": "54"
+          }
+        },
+        "11": {
+          "level": "11",
+          "params": {
+            "atk_scale": "0.42",
+            "atk_up_per_conduct": "0.08",
+            "final_rate": "6",
+            "free_sword_limit": "3",
+            "max_conduct_sword": "3",
+            "poise": "15",
+            "remain_sword_limit": "9",
+            "sword_duration": "36",
+            "sword_range": "50",
+            "usp_extra": "6",
+            "usp_extra_limit": "54"
+          }
+        },
+        "12": {
+          "level": "12",
+          "params": {
+            "atk_scale": "0.45",
+            "atk_up_per_conduct": "0.09",
+            "final_rate": "6",
+            "free_sword_limit": "3",
+            "max_conduct_sword": "3",
+            "poise": "15",
+            "remain_sword_limit": "9",
+            "sword_duration": "36",
+            "sword_range": "50",
+            "usp_extra": "6",
+            "usp_extra_limit": "54"
+          }
+        },
+        "2": {
+          "level": "2",
+          "params": {
+            "atk_scale": "0.22",
+            "atk_up_per_conduct": "0.04",
+            "final_rate": "6",
+            "free_sword_limit": "3",
+            "max_conduct_sword": "3",
+            "poise": "15",
+            "remain_sword_limit": "9",
+            "sword_duration": "36",
+            "sword_range": "50",
+            "usp_extra": "6",
+            "usp_extra_limit": "54"
+          }
+        },
+        "3": {
+          "level": "3",
+          "params": {
+            "atk_scale": "0.24",
+            "atk_up_per_conduct": "0.04",
+            "final_rate": "6",
+            "free_sword_limit": "3",
+            "max_conduct_sword": "3",
+            "poise": "15",
+            "remain_sword_limit": "9",
+            "sword_duration": "36",
+            "sword_range": "50",
+            "usp_extra": "6",
+            "usp_extra_limit": "54"
+          }
+        },
+        "4": {
+          "level": "4",
+          "params": {
+            "atk_scale": "0.26",
+            "atk_up_per_conduct": "0.04",
+            "final_rate": "6",
+            "free_sword_limit": "3",
+            "max_conduct_sword": "3",
+            "poise": "15",
+            "remain_sword_limit": "9",
+            "sword_duration": "36",
+            "sword_range": "50",
+            "usp_extra": "6",
+            "usp_extra_limit": "54"
+          }
+        },
+        "5": {
+          "level": "5",
+          "params": {
+            "atk_scale": "0.28",
+            "atk_up_per_conduct": "0.05",
+            "final_rate": "6",
+            "free_sword_limit": "3",
+            "max_conduct_sword": "3",
+            "poise": "15",
+            "remain_sword_limit": "9",
+            "sword_duration": "36",
+            "sword_range": "50",
+            "usp_extra": "6",
+            "usp_extra_limit": "54"
+          }
+        },
+        "6": {
+          "level": "6",
+          "params": {
+            "atk_scale": "0.3",
+            "atk_up_per_conduct": "0.05",
+            "final_rate": "6",
+            "free_sword_limit": "3",
+            "max_conduct_sword": "3",
+            "poise": "15",
+            "remain_sword_limit": "9",
+            "sword_duration": "36",
+            "sword_range": "50",
+            "usp_extra": "6",
+            "usp_extra_limit": "54"
+          }
+        },
+        "7": {
+          "level": "7",
+          "params": {
+            "atk_scale": "0.32",
+            "atk_up_per_conduct": "0.05",
+            "final_rate": "6",
+            "free_sword_limit": "3",
+            "max_conduct_sword": "3",
+            "poise": "15",
+            "remain_sword_limit": "9",
+            "sword_duration": "36",
+            "sword_range": "50",
+            "usp_extra": "6",
+            "usp_extra_limit": "54"
+          }
+        },
+        "8": {
+          "level": "8",
+          "params": {
+            "atk_scale": "0.34",
+            "atk_up_per_conduct": "0.06",
+            "final_rate": "6",
+            "free_sword_limit": "3",
+            "max_conduct_sword": "3",
+            "poise": "15",
+            "remain_sword_limit": "9",
+            "sword_duration": "36",
+            "sword_range": "50",
+            "usp_extra": "6",
+            "usp_extra_limit": "54"
+          }
+        },
+        "9": {
+          "level": "9",
+          "params": {
+            "atk_scale": "0.36",
+            "atk_up_per_conduct": "0.06",
+            "final_rate": "6",
+            "free_sword_limit": "3",
+            "max_conduct_sword": "3",
+            "poise": "15",
+            "remain_sword_limit": "9",
+            "sword_duration": "36",
+            "sword_range": "50",
+            "usp_extra": "6",
+            "usp_extra_limit": "54"
+          }
+        }
+      }
+    },
+    {
+      "id": "98075f04fc950139f3bb95a53821e38d",
+      "key": "chr_0030_zhuangfy_ComboSkill",
+      "name": "Breath of Transformation",
+      "type": {
+        "key": "skill_type_combo_skill",
+        "name": "Combo Skill",
+        "icons": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        }
+      },
+      "icon": {
+        "skport": "https://static.skport.com/image/common/20260416/a4ccd5469197770af8881eab2257d7fe.png",
+        "enka": "https://enka.network/ui/ef/skillicon/icon_combo_skill_zhuangfy_01.png",
+        "preferred": "enka",
+        "effective_source": "enka",
+        "url": "https://enka.network/ui/ef/skillicon/icon_combo_skill_zhuangfy_01.png"
+      },
+      "level": 12,
+      "max_level": 12,
+      "description": "COMBO TRIGGER: When the controlled operator's Final Strike or Finisher hits an enemy with Electric Infliction.\nZhuang Fangyi creates a Xiranblitz Array that attacks the enemy and deals Electric DMG. If the Array hits an enemy that has Electric Infliction stack(s), then it will consume the said Electric Infliction stack(s), forcibly apply Electrification, and give Ultimate Energy based on the number of stacks consumed.\nIf Electrification is forcibly applied to an enemy that already has Electrification, then apply Status Level +1 to the enemy's Electrification.",
+      "params": {
+        "atk_scale": "3.6",
+        "poise": "10",
+        "usp": "10",
+        "usp_extra": "10"
+      },
+      "effects": [],
+      "forms": [],
+      "raw_description": "COMBO TRIGGER: When the controlled operator's <#ba.lastcombo>Final Strike</> or Finisher hits an enemy with <#ba.pulseinflict>Electric Infliction</>.\nZhuang Fangyi creates a Xiranblitz Array that attacks the enemy and deals <@ba.pulse>Electric DMG</>. If the Array hits an enemy that has <#ba.pulseinflict>Electric Infliction</> stack(s), then it will <#ba.consume>consume</> the said <#ba.pulseinflict>Electric Infliction</> stack(s), forcibly apply <#ba.conduct>Electrification</>, and give Ultimate Energy based on the number of stacks <#ba.consume>consumed</>.\nIf <#ba.conduct>Electrification</> is forcibly applied to an enemy that already has <#ba.conduct>Electrification</>, then apply <#ba.statuslevel>Status Level</> +1 to the enemy's <#ba.conduct>Electrification</>.",
+      "level_params": {
+        "1": {
+          "level": "1",
+          "params": {
+            "atk_scale": "1.6",
+            "poise": "10",
+            "usp": "10",
+            "usp_extra": "10"
+          }
+        },
+        "10": {
+          "level": "10",
+          "params": {
+            "atk_scale": "3.08",
+            "poise": "10",
+            "usp": "10",
+            "usp_extra": "10"
+          }
+        },
+        "11": {
+          "level": "11",
+          "params": {
+            "atk_scale": "3.32",
+            "poise": "10",
+            "usp": "10",
+            "usp_extra": "10"
+          }
+        },
+        "12": {
+          "level": "12",
+          "params": {
+            "atk_scale": "3.6",
+            "poise": "10",
+            "usp": "10",
+            "usp_extra": "10"
+          }
+        },
+        "2": {
+          "level": "2",
+          "params": {
+            "atk_scale": "1.76",
+            "poise": "10",
+            "usp": "10",
+            "usp_extra": "10"
+          }
+        },
+        "3": {
+          "level": "3",
+          "params": {
+            "atk_scale": "1.92",
+            "poise": "10",
+            "usp": "10",
+            "usp_extra": "10"
+          }
+        },
+        "4": {
+          "level": "4",
+          "params": {
+            "atk_scale": "2.08",
+            "poise": "10",
+            "usp": "10",
+            "usp_extra": "10"
+          }
+        },
+        "5": {
+          "level": "5",
+          "params": {
+            "atk_scale": "2.24",
+            "poise": "10",
+            "usp": "10",
+            "usp_extra": "10"
+          }
+        },
+        "6": {
+          "level": "6",
+          "params": {
+            "atk_scale": "2.4",
+            "poise": "10",
+            "usp": "10",
+            "usp_extra": "10"
+          }
+        },
+        "7": {
+          "level": "7",
+          "params": {
+            "atk_scale": "2.56",
+            "poise": "10",
+            "usp": "10",
+            "usp_extra": "10"
+          }
+        },
+        "8": {
+          "level": "8",
+          "params": {
+            "atk_scale": "2.72",
+            "poise": "10",
+            "usp": "10",
+            "usp_extra": "10"
+          }
+        },
+        "9": {
+          "level": "9",
+          "params": {
+            "atk_scale": "2.88",
+            "poise": "10",
+            "usp": "10",
+            "usp_extra": "10"
+          }
+        }
+      }
+    },
+    {
+      "id": "738d67102c99dcd5762a2be9e0cd460a",
+      "key": "chr_0030_zhuangfy_UltimateSkill",
+      "name": "Smiting Tempest",
+      "type": {
+        "key": "skill_type_ultimate_skill",
+        "name": "Ultimate",
+        "icons": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        }
+      },
+      "icon": {
+        "skport": "https://static.skport.com/image/common/20260416/e48523d032512ea53d46a153b001dd36.png",
+        "enka": "https://enka.network/ui/ef/skillicon/icon_ultimate_skill_zhuangfy_01.png",
+        "preferred": "enka",
+        "effective_source": "enka",
+        "url": "https://enka.network/ui/ef/skillicon/icon_ultimate_skill_zhuangfy_01.png"
+      },
+      "level": 12,
+      "max_level": 12,
+      "description": "Transforms into the Empyrean of Truth that grants these enhancements:\nZhuang Fangyi's basic attacks are enhanced and her actions are harder to interrupt;\nBattle skill Mantra of Sundering gains a higher DMG multiplier and an increased effect range, and the final Thunder Strike also applies Electric Infliction to the target hit.\nCombo skill Breath of Transformation gains a higher DMG multiplier, cooldown becomes 4 times faster, and effects are applied to enemies within a small area.\nThe first casting of the battle skill Mantra of Sundering does not consume SP nor Electrification, and if a target is available, the battle skill is guaranteed to create 3 Sunderblades even if the target has no Electrification.",
+      "params": {
+        "combo_cd_rate": "4",
+        "duration": "25",
+        "duration_extra": "1"
+      },
+      "effects": [],
+      "forms": [],
+      "raw_description": "Transforms into the <@ba.key>Empyrean of Truth</> that grants these enhancements:\nZhuang Fangyi's basic attacks are enhanced and her actions are harder to interrupt;\nBattle skill <@ba.key>Mantra of Sundering</> gains a higher DMG multiplier and an increased effect range, and the final Thunder Strike also applies <#ba.pulseinflict>Electric Infliction</> to the target hit.\nCombo skill <@ba.key>Breath of Transformation</> gains a higher DMG multiplier, cooldown becomes {combo_cd_rate:0} times faster, and effects are applied to enemies within a small area.\nThe first casting of the battle skill <@ba.key>Mantra of Sundering</> does not consume SP nor <#ba.conduct>Electrification</>, and if a target is available, the battle skill is guaranteed to create 3 <@ba.key>Sunderblades</> even if the target has no <#ba.conduct>Electrification</>.",
+      "level_params": {
+        "1": {
+          "level": "1",
+          "params": {
+            "combo_cd_rate": "4",
+            "duration": "25",
+            "duration_extra": "1"
+          }
+        },
+        "10": {
+          "level": "10",
+          "params": {
+            "combo_cd_rate": "4",
+            "duration": "25",
+            "duration_extra": "1"
+          }
+        },
+        "11": {
+          "level": "11",
+          "params": {
+            "combo_cd_rate": "4",
+            "duration": "25",
+            "duration_extra": "1"
+          }
+        },
+        "12": {
+          "level": "12",
+          "params": {
+            "combo_cd_rate": "4",
+            "duration": "25",
+            "duration_extra": "1"
+          }
+        },
+        "2": {
+          "level": "2",
+          "params": {
+            "combo_cd_rate": "4",
+            "duration": "25",
+            "duration_extra": "1"
+          }
+        },
+        "3": {
+          "level": "3",
+          "params": {
+            "combo_cd_rate": "4",
+            "duration": "25",
+            "duration_extra": "1"
+          }
+        },
+        "4": {
+          "level": "4",
+          "params": {
+            "combo_cd_rate": "4",
+            "duration": "25",
+            "duration_extra": "1"
+          }
+        },
+        "5": {
+          "level": "5",
+          "params": {
+            "combo_cd_rate": "4",
+            "duration": "25",
+            "duration_extra": "1"
+          }
+        },
+        "6": {
+          "level": "6",
+          "params": {
+            "combo_cd_rate": "4",
+            "duration": "25",
+            "duration_extra": "1"
+          }
+        },
+        "7": {
+          "level": "7",
+          "params": {
+            "combo_cd_rate": "4",
+            "duration": "25",
+            "duration_extra": "1"
+          }
+        },
+        "8": {
+          "level": "8",
+          "params": {
+            "combo_cd_rate": "4",
+            "duration": "25",
+            "duration_extra": "1"
+          }
+        },
+        "9": {
+          "level": "9",
+          "params": {
+            "combo_cd_rate": "4",
+            "duration": "25",
+            "duration_extra": "1"
+          }
+        }
+      }
+    }
+  ],
+  "talents": {
+    "nodes": [
+      {
+        "id": "chr_0030_zhuangfy_7",
+        "name": "Stalwart",
+        "kind": "attribute",
+        "icon": {
+          "skport": "https://static.skport.com/image/common/20260310/317c00117f4489611c360925c0d30e85.png",
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": "skport",
+          "url": "https://static.skport.com/image/common/20260310/317c00117f4489611c360925c0d30e85.png"
+        },
+        "locked_icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "level": 1,
+        "max_level": 1,
+        "unlocked": true,
+        "description": "Operator Will +20.",
+        "effects": [
+          {
+            "id": 42,
+            "formula": "BaseAddition",
+            "value": 20.0,
+            "unit": "flat"
+          }
+        ]
+      },
+      {
+        "id": "chr_0030_zhuangfy_1",
+        "name": "Stalwart",
+        "kind": "attribute",
+        "icon": {
+          "skport": "https://static.skport.com/image/common/20260310/317c00117f4489611c360925c0d30e85.png",
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": "skport",
+          "url": "https://static.skport.com/image/common/20260310/317c00117f4489611c360925c0d30e85.png"
+        },
+        "locked_icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "level": 1,
+        "max_level": 1,
+        "unlocked": true,
+        "description": "Operator Will +10.",
+        "effects": [
+          {
+            "id": 42,
+            "formula": "BaseAddition",
+            "value": 10.0,
+            "unit": "flat"
+          }
+        ]
+      },
+      {
+        "id": "chr_0030_zhuangfy_3",
+        "name": "Stalwart",
+        "kind": "attribute",
+        "icon": {
+          "skport": "https://static.skport.com/image/common/20260310/317c00117f4489611c360925c0d30e85.png",
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": "skport",
+          "url": "https://static.skport.com/image/common/20260310/317c00117f4489611c360925c0d30e85.png"
+        },
+        "locked_icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "level": 1,
+        "max_level": 1,
+        "unlocked": true,
+        "description": "Operator Will +15.",
+        "effects": [
+          {
+            "id": 42,
+            "formula": "BaseAddition",
+            "value": 15.0,
+            "unit": "flat"
+          }
+        ]
+      },
+      {
+        "id": "chr_0030_zhuangfy_5",
+        "name": "Stalwart",
+        "kind": "attribute",
+        "icon": {
+          "skport": "https://static.skport.com/image/common/20260310/317c00117f4489611c360925c0d30e85.png",
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": "skport",
+          "url": "https://static.skport.com/image/common/20260310/317c00117f4489611c360925c0d30e85.png"
+        },
+        "locked_icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "level": 1,
+        "max_level": 1,
+        "unlocked": true,
+        "description": "Operator Will +15.",
+        "effects": [
+          {
+            "id": 42,
+            "formula": "BaseAddition",
+            "value": 15.0,
+            "unit": "flat"
+          }
+        ]
+      },
+      {
+        "id": "chr_0030_zhuangfy_passive_skill_0_1",
+        "name": "Force of Nature",
+        "kind": "combat",
+        "icon": {
+          "skport": "https://static.skport.com/image/common/20260416/07914fee7a04b36b71c2cfe94ee7a88e.png",
+          "enka": "https://enka.network/ui/ef/skillicon/icon_talent_zhuangfy_01.png",
+          "preferred": "enka",
+          "effective_source": "enka",
+          "url": "https://enka.network/ui/ef/skillicon/icon_talent_zhuangfy_01.png"
+        },
+        "locked_icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "level": 1,
+        "max_level": 1,
+        "unlocked": true,
+        "description": "Battle skill Mantra of Sundering improved: Casting the battle skill grants Zhuang Fangyi 9% Electric Amp for 5s.\nScoring hits with the battle skill's Thunder Strike increases this effect by +1%.\nEvery casting of the battle skill Mantra of Sundering again resets this Electric Amp effect.",
+        "effects": []
+      },
+      {
+        "id": "chr_0030_zhuangfy_passive_skill_0_2",
+        "name": "Force of Nature",
+        "kind": "combat",
+        "icon": {
+          "skport": "https://static.skport.com/image/common/20260416/07914fee7a04b36b71c2cfe94ee7a88e.png",
+          "enka": "https://enka.network/ui/ef/skillicon/icon_talent_zhuangfy_01.png",
+          "preferred": "enka",
+          "effective_source": "enka",
+          "url": "https://enka.network/ui/ef/skillicon/icon_talent_zhuangfy_01.png"
+        },
+        "locked_icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "level": 2,
+        "max_level": 2,
+        "unlocked": true,
+        "description": "Battle skill Mantra of Sundering improved: Casting the battle skill grants Zhuang Fangyi 18% Electric Amp for 5s.\nScoring hits with the battle skill's Thunder Strike increases this effect by +2%.\nEvery casting of the battle skill Mantra of Sundering again resets this Electric Amp effect.",
+        "effects": []
+      },
+      {
+        "id": "chr_0030_zhuangfy_passive_skill_1_1",
+        "name": "Ordained by Heaven",
+        "kind": "combat",
+        "icon": {
+          "skport": "https://static.skport.com/image/common/20260416/71fb4f28a01f9fc6146003580c052c9e.png",
+          "enka": "https://enka.network/ui/ef/skillicon/icon_talent_zhuangfy_02.png",
+          "preferred": "enka",
+          "effective_source": "enka",
+          "url": "https://enka.network/ui/ef/skillicon/icon_talent_zhuangfy_02.png"
+        },
+        "locked_icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "level": 1,
+        "max_level": 1,
+        "unlocked": true,
+        "description": "Gains a 9% chance of immunity against DMG taken, with each Sunderblade nearby increasing this chance by +1%.\nAfter DMG Immunity is triggered, Zhuang Fangyi is also restored for 9% Max HP. The HP restoration effect can only trigger once every 99s.",
+        "effects": []
+      },
+      {
+        "id": "chr_0030_zhuangfy_passive_skill_1_2",
+        "name": "Ordained by Heaven",
+        "kind": "combat",
+        "icon": {
+          "skport": "https://static.skport.com/image/common/20260416/71fb4f28a01f9fc6146003580c052c9e.png",
+          "enka": "https://enka.network/ui/ef/skillicon/icon_talent_zhuangfy_02.png",
+          "preferred": "enka",
+          "effective_source": "enka",
+          "url": "https://enka.network/ui/ef/skillicon/icon_talent_zhuangfy_02.png"
+        },
+        "locked_icon": {
+          "skport": null,
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": null,
+          "url": null
+        },
+        "level": 2,
+        "max_level": 2,
+        "unlocked": true,
+        "description": "Gains a 9% chance of immunity against DMG taken, with each Sunderblade nearby increasing this chance by +1%.\nAfter DMG Immunity is triggered, Zhuang Fangyi is also restored for 18% Max HP. The HP restoration effect can only trigger once every 99s.",
+        "effects": []
+      },
+      {
+        "id": "spaceship_skill_chr_0030_zhuangfy_1_2",
+        "name": "Viceroy Experience γ",
+        "kind": "base",
+        "icon": {
+          "skport": "https://static.skport.com/image/common/20260310/7483e402fdd571eb9343bc04ac26c963.png",
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": "skport",
+          "url": "https://static.skport.com/image/common/20260310/7483e402fdd571eb9343bc04ac26c963.png"
+        },
+        "locked_icon": {
+          "skport": "https://static.skport.com/image/common/20260310/adc1398c12344a26244985fe9bc69491.png",
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": "skport",
+          "url": "https://static.skport.com/image/common/20260310/adc1398c12344a26244985fe9bc69491.png"
+        },
+        "level": 1,
+        "max_level": 1,
+        "unlocked": true,
+        "description": "Assign to Manufacturing Cabin to slow Mood Drop of all operators in it by 18%",
+        "effects": []
+      },
+      {
+        "id": "spaceship_skill_chr_0030_zhuangfy_1_1",
+        "name": "Viceroy Experience β",
+        "kind": "base",
+        "icon": {
+          "skport": "https://static.skport.com/image/common/20260310/7483e402fdd571eb9343bc04ac26c963.png",
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": "skport",
+          "url": "https://static.skport.com/image/common/20260310/7483e402fdd571eb9343bc04ac26c963.png"
+        },
+        "locked_icon": {
+          "skport": "https://static.skport.com/image/common/20260310/adc1398c12344a26244985fe9bc69491.png",
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": "skport",
+          "url": "https://static.skport.com/image/common/20260310/adc1398c12344a26244985fe9bc69491.png"
+        },
+        "level": 1,
+        "max_level": 1,
+        "unlocked": true,
+        "description": "Assign to Manufacturing Cabin to slow Mood Drop of all operators in it by 14%",
+        "effects": []
+      },
+      {
+        "id": "spaceship_skill_chr_0030_zhuangfy_2_1",
+        "name": "Tianshi Chi Meditation β",
+        "kind": "base",
+        "icon": {
+          "skport": "https://static.skport.com/image/common/20260310/8b84f8ccea090c7176ef978c76634669.png",
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": "skport",
+          "url": "https://static.skport.com/image/common/20260310/8b84f8ccea090c7176ef978c76634669.png"
+        },
+        "locked_icon": {
+          "skport": "https://static.skport.com/image/common/20260310/bbd0f650942cf4940b2e1ecab741c866.png",
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": "skport",
+          "url": "https://static.skport.com/image/common/20260310/bbd0f650942cf4940b2e1ecab741c866.png"
+        },
+        "level": 1,
+        "max_level": 1,
+        "unlocked": true,
+        "description": "Assign to Manufacturing Cabin to grant operator EXP material production efficiency +20%",
+        "effects": []
+      },
+      {
+        "id": "spaceship_skill_chr_0030_zhuangfy_2_2",
+        "name": "Tianshi Chi Meditation γ",
+        "kind": "base",
+        "icon": {
+          "skport": "https://static.skport.com/image/common/20260310/8b84f8ccea090c7176ef978c76634669.png",
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": "skport",
+          "url": "https://static.skport.com/image/common/20260310/8b84f8ccea090c7176ef978c76634669.png"
+        },
+        "locked_icon": {
+          "skport": "https://static.skport.com/image/common/20260310/bbd0f650942cf4940b2e1ecab741c866.png",
+          "enka": null,
+          "preferred": "enka",
+          "effective_source": "skport",
+          "url": "https://static.skport.com/image/common/20260310/bbd0f650942cf4940b2e1ecab741c866.png"
+        },
+        "level": 1,
+        "max_level": 1,
+        "unlocked": true,
+        "description": "Assign to Manufacturing Cabin to grant operator EXP material production efficiency +30%",
+        "effects": []
+      }
+    ],
+    "potentials": [
+      {
+        "level": 1,
+        "name": "Potential 1",
+        "description": "",
+        "unlocked": false,
+        "effects": []
+      },
+      {
+        "level": 2,
+        "name": "Potential 2",
+        "description": "",
+        "unlocked": false,
+        "effects": [
+          {
+            "id": 42,
+            "formula": "BaseAddition",
+            "value": 20.0,
+            "unit": "flat"
+          },
+          {
+            "id": 32,
+            "formula": "BaseAddition",
+            "value": 0.15,
+            "unit": "fraction"
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "name": "Potential 3",
+        "description": "",
+        "unlocked": false,
+        "effects": []
+      },
+      {
+        "level": 4,
+        "name": "Potential 4",
+        "description": "",
+        "unlocked": false,
+        "effects": []
+      },
+      {
+        "level": 5,
+        "name": "Potential 5",
+        "description": "",
+        "unlocked": false,
+        "effects": []
+      }
+    ],
+    "unlocked_node_ids": [
+      "chr_0030_zhuangfy_1",
+      "chr_0030_zhuangfy_3",
+      "chr_0030_zhuangfy_5",
+      "chr_0030_zhuangfy_7",
+      "chr_0030_zhuangfy_passive_skill_0_2",
+      "chr_0030_zhuangfy_passive_skill_1_2",
+      "fac_chr_0030_zhuangfy_0_2",
+      "fac_chr_0030_zhuangfy_1_2",
+      "spaceship_skill_chr_0030_zhuangfy_1_2",
+      "spaceship_skill_chr_0030_zhuangfy_2_2"
+    ],
+    "unlocked_count": 12,
+    "total_count": 12,
+    "progress": 1.0
+  },
+  "equipment": [
+    {
+      "slot": "body",
+      "id": "63a33c27e81176b29cdd914645fe073d",
+      "template_id": 4178,
+      "name": "Xiranflow Light Armor",
+      "rarity": 5,
+      "suit_id": "suit_expend_spell01",
+      "suit_name": "Xiranflow",
+      "icon": {
+        "skport": "https://static.skport.com/image/common/20260416/aa2cd3344d64e3641c33a2c1dcd51977.png",
+        "enka": "https://enka.network/ui/ef/itemicon/item_equip_t4_suit_expend_spell01_body_02.png",
+        "preferred": "enka",
+        "effective_source": "enka",
+        "url": "https://enka.network/ui/ef/itemicon/item_equip_t4_suit_expend_spell01_body_02.png"
+      },
+      "defense": 56.0,
+      "stat_lines": [
+        {
+          "name": "Will",
+          "value": 113.0,
+          "unit": "flat",
+          "level": 3,
+          "max_level": 3,
+          "stat_ids": [
+            42
+          ],
+          "formula": "BaseAddition",
+          "icon": {
+            "skport": null,
+            "enka": null,
+            "preferred": "skport",
+            "effective_source": null,
+            "url": null
+          },
+          "effects": [
+            {
+              "id": 42,
+              "formula": "BaseAddition",
+              "value": 113.0,
+              "unit": "flat"
+            }
+          ],
+          "display": "113"
+        },
+        {
+          "name": "Intellect",
+          "value": 75.0,
+          "unit": "flat",
+          "level": 3,
+          "max_level": 3,
+          "stat_ids": [
+            41
+          ],
+          "formula": "BaseAddition",
+          "icon": {
+            "skport": null,
+            "enka": null,
+            "preferred": "skport",
+            "effective_source": null,
+            "url": null
+          },
+          "effects": [
+            {
+              "id": 41,
+              "formula": "BaseAddition",
+              "value": 75.0,
+              "unit": "flat"
+            }
+          ],
+          "display": "75"
+        },
+        {
+          "name": "Cryo & Electric DMG",
+          "value": 0.1495,
+          "unit": "fraction",
+          "level": 3,
+          "max_level": 3,
+          "stat_ids": [
+            53,
+            52
+          ],
+          "formula": "BaseAddition",
+          "icon": {
+            "skport": null,
+            "enka": null,
+            "preferred": "skport",
+            "effective_source": null,
+            "url": null
+          },
+          "effects": [
+            {
+              "id": 53,
+              "formula": "BaseAddition",
+              "value": 0.1495,
+              "unit": "fraction"
+            },
+            {
+              "id": 52,
+              "formula": "BaseAddition",
+              "value": 0.1495,
+              "unit": "fraction"
+            }
+          ],
+          "display": "15.0%"
+        }
+      ],
+      "enhance_count": 9,
+      "max_enhance": 9
+    },
+    {
+      "slot": "arms",
+      "id": "8640830ac695305d8f4cf6e396e817f6",
+      "template_id": 4172,
+      "name": "Xiranflow Gloves",
+      "rarity": 5,
+      "suit_id": "suit_expend_spell01",
+      "suit_name": "Xiranflow",
+      "icon": {
+        "skport": "https://static.skport.com/image/common/20260416/c985b8dee9e81e8baea1d92eeecf4c25.png",
+        "enka": "https://enka.network/ui/ef/itemicon/item_equip_t4_suit_expend_spell01_hand_02.png",
+        "preferred": "enka",
+        "effective_source": "enka",
+        "url": "https://enka.network/ui/ef/itemicon/item_equip_t4_suit_expend_spell01_hand_02.png"
+      },
+      "defense": 42.0,
+      "stat_lines": [
+        {
+          "name": "Will",
+          "value": 84.0,
+          "unit": "flat",
+          "level": 3,
+          "max_level": 3,
+          "stat_ids": [
+            42
+          ],
+          "formula": "BaseAddition",
+          "icon": {
+            "skport": null,
+            "enka": null,
+            "preferred": "skport",
+            "effective_source": null,
+            "url": null
+          },
+          "effects": [
+            {
+              "id": 42,
+              "formula": "BaseAddition",
+              "value": 84.0,
+              "unit": "flat"
+            }
+          ],
+          "display": "84"
+        },
+        {
+          "name": "Intellect",
+          "value": 55.0,
+          "unit": "flat",
+          "level": 3,
+          "max_level": 3,
+          "stat_ids": [
+            41
+          ],
+          "formula": "BaseAddition",
+          "icon": {
+            "skport": null,
+            "enka": null,
+            "preferred": "skport",
+            "effective_source": null,
+            "url": null
+          },
+          "effects": [
+            {
+              "id": 41,
+              "formula": "BaseAddition",
+              "value": 55.0,
+              "unit": "flat"
+            }
+          ],
+          "display": "55"
+        },
+        {
+          "name": "Cryo & Electric DMG",
+          "value": 0.2491666666666667,
+          "unit": "fraction",
+          "level": 3,
+          "max_level": 3,
+          "stat_ids": [
+            53,
+            52
+          ],
+          "formula": "BaseAddition",
+          "icon": {
+            "skport": null,
+            "enka": null,
+            "preferred": "skport",
+            "effective_source": null,
+            "url": null
+          },
+          "effects": [
+            {
+              "id": 53,
+              "formula": "BaseAddition",
+              "value": 0.2491666666666667,
+              "unit": "fraction"
+            },
+            {
+              "id": 52,
+              "formula": "BaseAddition",
+              "value": 0.2491666666666667,
+              "unit": "fraction"
+            }
+          ],
+          "display": "24.9%"
+        }
+      ],
+      "enhance_count": 9,
+      "max_enhance": 9
+    },
+    {
+      "slot": "accessory1",
+      "id": "377c6a4092c7d197a22e4d3c7a243578",
+      "template_id": 4161,
+      "name": "Xiranflow Baton",
+      "rarity": 5,
+      "suit_id": "suit_expend_spell01",
+      "suit_name": "Xiranflow",
+      "icon": {
+        "skport": "https://static.skport.com/image/common/20260416/5ee2149b1eb32f52f7990f59cee34869.png",
+        "enka": "https://enka.network/ui/ef/itemicon/item_equip_t4_suit_expend_spell01_edc_02.png",
+        "preferred": "enka",
+        "effective_source": "enka",
+        "url": "https://enka.network/ui/ef/itemicon/item_equip_t4_suit_expend_spell01_edc_02.png"
+      },
+      "defense": 21.0,
+      "stat_lines": [
+        {
+          "name": "Will",
+          "value": 41.0,
+          "unit": "flat",
+          "level": 3,
+          "max_level": 3,
+          "stat_ids": [
+            42
+          ],
+          "formula": "BaseAddition",
+          "icon": {
+            "skport": null,
+            "enka": null,
+            "preferred": "skport",
+            "effective_source": null,
+            "url": null
+          },
+          "effects": [
+            {
+              "id": 42,
+              "formula": "BaseAddition",
+              "value": 41.0,
+              "unit": "flat"
+            }
+          ],
+          "display": "41"
+        },
+        {
+          "name": "Intellect",
+          "value": 27.0,
+          "unit": "flat",
+          "level": 3,
+          "max_level": 3,
+          "stat_ids": [
+            41
+          ],
+          "formula": "BaseAddition",
+          "icon": {
+            "skport": null,
+            "enka": null,
+            "preferred": "skport",
+            "effective_source": null,
+            "url": null
+          },
+          "effects": [
+            {
+              "id": 41,
+              "formula": "BaseAddition",
+              "value": 27.0,
+              "unit": "flat"
+            }
+          ],
+          "display": "27"
+        },
+        {
+          "name": "Battle Skill DMG Bonus",
+          "value": 0.5382,
+          "unit": "fraction",
+          "level": 3,
+          "max_level": 3,
+          "stat_ids": [
+            32
+          ],
+          "formula": "BaseAddition",
+          "icon": {
+            "skport": null,
+            "enka": null,
+            "preferred": "skport",
+            "effective_source": null,
+            "url": null
+          },
+          "effects": [
+            {
+              "id": 32,
+              "formula": "BaseAddition",
+              "value": 0.5382,
+              "unit": "fraction"
+            }
+          ],
+          "display": "53.8%"
+        }
+      ],
+      "enhance_count": 9,
+      "max_enhance": 9
+    },
+    {
+      "slot": "accessory2",
+      "id": "77e9eae4b10d4093025b1ff4cbe86148",
+      "template_id": 3009,
+      "name": "LYNX Slab",
+      "rarity": 5,
+      "suit_id": "suit_heal01",
+      "suit_name": "LYNX",
+      "icon": {
+        "skport": "https://static.skport.com/image/common/20251121/1656dd37d66a1d8dff8b6f5e9265b140.png",
+        "enka": "https://enka.network/ui/ef/itemicon/item_equip_t4_suit_heal01_edc_03.png",
+        "preferred": "enka",
+        "effective_source": "enka",
+        "url": "https://enka.network/ui/ef/itemicon/item_equip_t4_suit_heal01_edc_03.png"
+      },
+      "defense": 21.0,
+      "stat_lines": [
+        {
+          "name": "Will",
+          "value": 41.0,
+          "unit": "flat",
+          "level": 3,
+          "max_level": 3,
+          "stat_ids": [
+            42
+          ],
+          "formula": "BaseAddition",
+          "icon": {
+            "skport": null,
+            "enka": null,
+            "preferred": "skport",
+            "effective_source": null,
+            "url": null
+          },
+          "effects": [
+            {
+              "id": 42,
+              "formula": "BaseAddition",
+              "value": 41.0,
+              "unit": "flat"
+            }
+          ],
+          "display": "41"
+        },
+        {
+          "name": "Intellect",
+          "value": 27.0,
+          "unit": "flat",
+          "level": 3,
+          "max_level": 3,
+          "stat_ids": [
+            41
+          ],
+          "formula": "BaseAddition",
+          "icon": {
+            "skport": null,
+            "enka": null,
+            "preferred": "skport",
+            "effective_source": null,
+            "url": null
+          },
+          "effects": [
+            {
+              "id": 41,
+              "formula": "BaseAddition",
+              "value": 27.0,
+              "unit": "flat"
+            }
+          ],
+          "display": "27"
+        },
+        {
+          "name": "Main Attribute",
+          "value": 0.2691231855142706,
+          "unit": "fraction",
+          "level": 3,
+          "max_level": 3,
+          "stat_ids": [
+            42
+          ],
+          "formula": "BaseMultiplier",
+          "icon": {
+            "skport": null,
+            "enka": null,
+            "preferred": "skport",
+            "effective_source": null,
+            "url": null
+          },
+          "effects": [
+            {
+              "id": 42,
+              "formula": "BaseMultiplier",
+              "value": 0.2691231855142706,
+              "unit": "fraction"
+            }
+          ],
+          "display": "26.9%"
+        }
+      ],
+      "enhance_count": 9,
+      "max_enhance": 9
+    }
+  ],
+  "equipment_sets": [
+    {
+      "id": "0b8830f8e80c7ca94230596a99d614a4",
+      "template_id": "suit_expend_spell01",
+      "name": "Xiranflow",
+      "pieces": 3,
+      "required_pieces": 3,
+      "icon": {
+        "skport": null,
+        "enka": "https://enka.network/ui/ef/equipmentlogobigwhite/icon_pack_wuling_suit_usp02.png",
+        "preferred": "enka",
+        "effective_source": "enka",
+        "url": "https://enka.network/ui/ef/equipmentlogobigwhite/icon_pack_wuling_suit_usp02.png"
+      },
+      "description": "3-piece set effect: Wearer's ATK +10%.\nWhenever the wearer consumes Electrification or Corrosion, the wearer gains a number of buff stacks equal to the Status Level of the Arts Reaction consumed, with each buff stack giving Electric DMG Dealt and Nature DMG Dealt +15% for 25s. Max number of buff stacks: 3. Duration of each stack is counted separately.",
+      "effects": [
+        {
+          "id": 2,
+          "formula": "BaseMultiplier",
+          "value": 0.1,
+          "unit": "fraction"
+        }
+      ],
+      "active": true
+    },
+    {
+      "id": "6f111f96a39d526ec108f4896079b7e5",
+      "template_id": "suit_heal01",
+      "name": "LYNX",
+      "pieces": 1,
+      "required_pieces": 3,
+      "icon": {
+        "skport": null,
+        "enka": "https://enka.network/ui/ef/equipmentlogobigwhite/icon_pack_wuling_suit_heal01.png",
+        "preferred": "enka",
+        "effective_source": "enka",
+        "url": "https://enka.network/ui/ef/equipmentlogobigwhite/icon_pack_wuling_suit_heal01.png"
+      },
+      "description": "3-piece set effect: Wearer's HP Treatment Efficiency +20%. \nAfter the wearer gives HP treatment to an allied target, that target also gains {1-dmg_taken_down:0%} DMG Reduction against all types of DMG for 10s. If the said treatment exceeds the target's Max HP, the target gains {1-dmg_taken_down2:0%} DMG Reduction against all types of DMG. The aforementioned effects cannot stack.",
+      "effects": [
+        {
+          "id": 29,
+          "formula": "BaseAddition",
+          "value": 0.2,
+          "unit": "fraction"
+        }
+      ],
+      "active": false
+    }
+  ],
+  "weapon": {
+    "id": "6c5d4ace32ad675ad62d3dbed2ce36fe",
+    "template_id": 3526,
+    "str_id": "wpn_funnel_0015",
+    "name": "Lone Barge",
+    "level": 90,
+    "refinement": 0,
+    "breakthrough": 4,
+    "rarity": 6,
+    "base_attack": 510.0,
+    "images": {
+      "skport": "https://static.skport.com/image/common/20260416/2d4d91d21ff658b02d38729c5a7c9944.png",
+      "enka": "https://enka.network/ui/ef/itemicon/wpn_funnel_0015.png",
+      "preferred": "enka",
+      "effective_source": "enka",
+      "url": "https://enka.network/ui/ef/itemicon/wpn_funnel_0015.png"
+    },
+    "skills": [
+      {
+        "id": "1245",
+        "key": "wpn_attr_will_high",
+        "name": "Will [L]",
+        "type": null,
+        "icon": {
+          "skport": null,
+          "enka": "https://enka.network/ui/ef/itemicon/icon_wpngem_00.png",
+          "preferred": "enka",
+          "effective_source": "enka",
+          "url": "https://enka.network/ui/ef/itemicon/icon_wpngem_00.png"
+        },
+        "level": 9,
+        "max_level": 9,
+        "description": "",
+        "params": {},
+        "effects": [
+          {
+            "id": 42,
+            "formula": "BaseAddition",
+            "value": 156.0,
+            "unit": "flat"
+          }
+        ],
+        "forms": [],
+        "raw_description": "",
+        "level_params": {}
+      },
+      {
+        "id": "1249",
+        "key": "wpn_sp_attr_atk_high",
+        "name": "ATK [L]",
+        "type": null,
+        "icon": {
+          "skport": null,
+          "enka": "https://enka.network/ui/ef/itemicon/icon_wpngem_00.png",
+          "preferred": "enka",
+          "effective_source": "enka",
+          "url": "https://enka.network/ui/ef/itemicon/icon_wpngem_00.png"
+        },
+        "level": 9,
+        "max_level": 9,
+        "description": "",
+        "params": {},
+        "effects": [
+          {
+            "id": 2,
+            "formula": "BaseMultiplier",
+            "value": 0.39,
+            "unit": "fraction"
+          }
+        ],
+        "forms": [],
+        "raw_description": "",
+        "level_params": {}
+      },
+      {
+        "id": "2912",
+        "key": "sk_wpn_funnel_0015",
+        "name": "Suppression: Streaming Blitz",
+        "type": null,
+        "icon": {
+          "skport": null,
+          "enka": "https://enka.network/ui/ef/itemicon/icon_tactic.png",
+          "preferred": "enka",
+          "effective_source": "enka",
+          "url": "https://enka.network/ui/ef/itemicon/icon_tactic.png"
+        },
+        "level": 4,
+        "max_level": 4,
+        "description": "",
+        "params": {},
+        "effects": [
+          {
+            "id": 52,
+            "formula": "BaseAddition",
+            "value": 0.256,
+            "unit": "fraction"
+          }
+        ],
+        "forms": [],
+        "raw_description": "",
+        "level_params": {}
+      }
+    ],
+    "effects": [
+      {
+        "id": 42,
+        "formula": "BaseAddition",
+        "value": 156.0,
+        "unit": "flat"
+      },
+      {
+        "id": 2,
+        "formula": "BaseMultiplier",
+        "value": 0.39,
+        "unit": "fraction"
+      },
+      {
+        "id": 52,
+        "formula": "BaseAddition",
+        "value": 0.256,
+        "unit": "fraction"
+      }
+    ],
+    "gem": {
+      "id": "item_gem_rarity_5-2e03b6f455b52b4c659f500c9566c77b",
+      "template_id": 1070,
+      "name": "Flawless Essence·Suppression",
+      "rarity": 5,
+      "icon": {
+        "skport": "https://static.skport.com/image/common/20260310/9266fa24bb1c461e66f1bd2ed24b8ec9.png",
+        "enka": "https://enka.network/ui/ef/itemicon/icon_tactic.png",
+        "preferred": "enka",
+        "effective_source": "enka",
+        "url": "https://enka.network/ui/ef/itemicon/icon_tactic.png"
+      },
+      "base_icon": {
+        "skport": null,
+        "enka": "https://enka.network/ui/ef/itemicon/item_gem_rarity_5.png",
+        "preferred": "enka",
+        "effective_source": "enka",
+        "url": "https://enka.network/ui/ef/itemicon/item_gem_rarity_5.png"
+      },
+      "terms": [
+        {
+          "id": "afdbd2737ef27a96cc5670a17b117767",
+          "name": "Will",
+          "tag_id": "attr_will",
+          "points": 6,
+          "icon": {
+            "skport": null,
+            "enka": "https://enka.network/ui/ef/itemicon/icon_wpngem_00.png",
+            "preferred": "enka",
+            "effective_source": "enka",
+            "url": "https://enka.network/ui/ef/itemicon/icon_wpngem_00.png"
+          }
+        },
+        {
+          "id": "9f17a15db250efaaac4e2f4a0a5ca331",
+          "name": "ATK",
+          "tag_id": "attr_atk",
+          "points": 6,
+          "icon": {
+            "skport": null,
+            "enka": "https://enka.network/ui/ef/itemicon/icon_wpngem_00.png",
+            "preferred": "enka",
+            "effective_source": "enka",
+            "url": "https://enka.network/ui/ef/itemicon/icon_wpngem_00.png"
+          }
+        },
+        {
+          "id": "2e03b6f455b52b4c659f500c9566c77b",
+          "name": "Suppression",
+          "tag_id": "tactic",
+          "points": 3,
+          "icon": {
+            "skport": null,
+            "enka": "https://enka.network/ui/ef/itemicon/icon_tactic.png",
+            "preferred": "enka",
+            "effective_source": "enka",
+            "url": "https://enka.network/ui/ef/itemicon/icon_tactic.png"
+          }
+        }
+      ]
+    }
+  },
+  "tactical_item": {
+    "id": "3ecb00a89c2ec66de39820bb74197ad7",
+    "template_id": null,
+    "name": "Buck Capsule [A]",
+    "description": "Use this to instantly restore 891 HP.",
+    "rarity": 4,
+    "icon": {
+      "skport": "https://static.skport.com/image/common/20251112/93eb6ccdbcb192bbf0428bc752696ec2.png",
+      "enka": null,
+      "preferred": "enka",
+      "effective_source": "skport",
+      "url": "https://static.skport.com/image/common/20251112/93eb6ccdbcb192bbf0428bc752696ec2.png"
+    }
+  },
+  "set_effects": [
+    {
+      "id": 2,
+      "formula": "BaseMultiplier",
+      "value": 0.1,
+      "unit": "fraction"
+    }
+  ],
+  "asset_revision": "2a63e0971795bd0d4f8753e61d266b1ab565a417",
+  "locale": "en",
+  "status": "complete",
+  "calculation_state": "calculated",
+  "issues": [],
+  "source_fields": {
+    "id": "c2fa8a588cab489795166bed5161fefc",
+    "level": 90,
+    "userSkills": {
+      "394ad0becbaa6ef17061d7b76d5b29dc": {
+        "skillId": "394ad0becbaa6ef17061d7b76d5b29dc",
+        "level": 11,
+        "maxLevel": 12,
+        "skillFormType": "CHAR_SKILL_FORM_TYPE_UNSPECIFIED"
+      },
+      "6d3c127dbd81a7fc7ad045037d91208d": {
+        "skillId": "6d3c127dbd81a7fc7ad045037d91208d",
+        "level": 9,
+        "maxLevel": 12,
+        "skillFormType": "CHAR_SKILL_FORM_TYPE_UNSPECIFIED"
+      },
+      "738d67102c99dcd5762a2be9e0cd460a": {
+        "skillId": "738d67102c99dcd5762a2be9e0cd460a",
+        "level": 12,
+        "maxLevel": 12,
+        "skillFormType": "CHAR_SKILL_FORM_TYPE_UNSPECIFIED"
+      },
+      "98075f04fc950139f3bb95a53821e38d": {
+        "skillId": "98075f04fc950139f3bb95a53821e38d",
+        "level": 12,
+        "maxLevel": 12,
+        "skillFormType": "CHAR_SKILL_FORM_TYPE_UNSPECIFIED"
+      }
+    },
+    "evolvePhase": 4,
+    "potentialLevel": 0,
+    "gender": "CHAR_GENDER_MALE",
+    "ownTs": "1778998654",
+    "wikiItemId": "838",
+    "talent": {
+      "latestBreakNode": "charBreak70",
+      "attrNodes": [
+        "chr_0030_zhuangfy_1",
+        "chr_0030_zhuangfy_3",
+        "chr_0030_zhuangfy_5",
+        "chr_0030_zhuangfy_7"
+      ],
+      "latestPassiveSkillNodes": [
+        "chr_0030_zhuangfy_passive_skill_0_2",
+        "chr_0030_zhuangfy_passive_skill_1_2"
+      ],
+      "latestFactorySkillNodes": [
+        "fac_chr_0030_zhuangfy_0_2",
+        "fac_chr_0030_zhuangfy_1_2"
+      ],
+      "latestSpaceshipSkillNodes": [
+        "spaceship_skill_chr_0030_zhuangfy_2_2",
+        "spaceship_skill_chr_0030_zhuangfy_1_2"
+      ]
+    }
+  }
+}

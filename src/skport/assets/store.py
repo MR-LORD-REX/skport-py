@@ -34,9 +34,10 @@ _DIRECTORY_PATTERN = re.compile(r"^[0-9a-f]{40}-[0-9a-f]{8}$")
 
 def default_asset_path() -> Path:
     """Choose a user-writable cache without touching the installed package."""
-    base = os.environ.get("LOCALAPPDATA") or os.environ.get("XDG_CACHE_HOME")
-    return (Path(base) if base else Path.home() / ".cache") / "skport" / "enka"
-
+    cwd=Path.cwd()
+    assets_path= cwd / ".sk_assets"
+    os.makedirs(assets_path,exist_ok=True)
+    return assets_path
 
 class AssetManager:
     """Share one coherent asset snapshot across games and locale views."""

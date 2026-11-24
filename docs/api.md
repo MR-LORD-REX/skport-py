@@ -50,6 +50,32 @@ Owner calls validate the selected role against that token's bindings. A public
 role cannot substitute. Owner tokens outside the public pool stay separate and
 never enter public rotation.
 
+## User verification
+
+`client.endfield.verify_skid(skport_id)` verifies a public social profile and
+selects its Endfield binding. `client.endfield.verify_token(token)` verifies
+the supplied token owner's social profile and Endfield binding. Both return
+`VerifiedUser` with `skport_id`, `skport_username`, `game_uid`, `in_game_name`,
+`server_id`, `server_name` and `source_scope`.
+
+~~~py
+public_user = await client.endfield.verify_skid(skport_id)
+owner = await client.endfield.verify_token(owner_token)
+print(owner.skport_username, owner.game_uid, owner.in_game_name)
+~~~
+
+Public verification accepts optional `role_id` and `server_id` filters. Token
+verification accepts `role=Role(game_uid, server_id)` or an owner role header;
+the selected role must belong to that token. Both accept `lang` and use the
+normal default-account selection rules when no role is supplied.
+
+These methods bypass cached responses and use only binding and social-profile
+reads. They do not download cards or Enka assets. In-game names come from the
+binding and remain empty if the service omits them. Failures raise the existing
+SDK exceptions: for example, `AuthError` for rejected authentication,
+`TargetNotFound` for missing or ambiguous Endfield bindings, and `DecodeError`
+for malformed social profiles. Account tokens are never included in the result.
+
 ## Multiple bound accounts
 
 Public UID/server selection applies to other users too, provided the requested

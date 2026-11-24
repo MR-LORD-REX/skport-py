@@ -164,9 +164,10 @@ class EndfieldRawAPI:
         *,
         role: Role | str | None = None,
         lang: str | Language | None = None,
+        ttl: float | None = None,
     ) -> Role:
         """Resolve an owner's Endfield role and validate any supplied role header."""
-        data = await self.api.binding(token=token, lang=lang)
+        data = await self.api.binding(token=token, lang=lang, ttl=ttl)
         roles = parse_roles(data)
         if role is None:
             return select_role(roles)
