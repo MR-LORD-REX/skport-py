@@ -3,8 +3,11 @@
 This example verifies a public player, fetches their Endfield card, and prints
 the exposed characters and any calculated stats.
 
-Complete [installation](installation.md) first and set `SKPORT_TOKEN` and
-`SKPORT_ID`. Save the following script as `quickstart.py`:
+Complete [installation](installation.md), obtain a token through the
+[official account-token endpoint](account-tokens.md), and follow the
+[SKPORT ID and privacy guide](../guides/skport-id-and-privacy.md). Set
+`SKPORT_TOKEN` to your viewer token and `SKPORT_ID` to the target profile ID.
+Save the following script as `quickstart.py`:
 
 ```python
 import asyncio

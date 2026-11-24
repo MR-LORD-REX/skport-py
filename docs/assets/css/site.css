@@ -134,6 +134,12 @@
   .markdown-body blockquote p { font-size: 13px; margin: 0; }
   .markdown-body hr { margin: 32px 0; border: 0; border-top: 1px solid var(--border); }
   .markdown-body img { max-width: 100%; height: auto; border-radius: 8px; }
+  .app-screenshot { width: 100%; max-width: 360px; margin: 24px auto 30px; padding: 12px; background: var(--surface-soft); border: 1px solid var(--border); border-radius: var(--radius); }
+  .app-screenshot a { display: block; }
+  .app-screenshot img { display: block; width: 100%; height: auto; }
+  .app-screenshot figcaption { margin-top: 11px; font-size: 11px; line-height: 1.7; color: var(--muted); }
+  .screenshot-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin: 24px 0 30px; }
+  .screenshot-grid .app-screenshot { max-width: none; margin: 0; }
   .table-wrapper { overflow-x: auto; margin: 20px 0; }
   .markdown-body table { width: 100%; border-collapse: collapse; font-size: 12px; }
   .markdown-body th, .markdown-body td { border-bottom: 1px solid var(--border); padding: 11px 14px; text-align: left; }
@@ -200,6 +206,10 @@
     .article-footer { font-size: 10px; }
     .search-footer { font-size: 9px; padding-left: 16px; padding-right: 16px; }
     .search-dialog { margin-top: 20px; max-height: calc(100dvh - 40px); }
+  }
+  @media (max-width: 640px) {
+    .screenshot-grid { grid-template-columns: minmax(0, 1fr); }
+    .screenshot-grid .app-screenshot { max-width: 360px; margin-inline: auto; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }

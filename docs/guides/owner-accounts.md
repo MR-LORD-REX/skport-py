@@ -3,6 +3,11 @@
 Owner methods operate on the account identified by the token supplied to that
 method. They do not select an arbitrary viewer from the public token pool.
 
+Follow [Account tokens](../getting-started/account-tokens.md) to sign in with your
+game account and retrieve its token from the official SKPORT website. You can
+keep public card sharing disabled when using token-bound methods for your own
+account. Use a separate viewer token for public lookups if desired.
+
 An owner token can be outside `SkportClient(tokens=[...])`. The SDK retains it
 for owner requests without adding it to public rotation. The examples below
 run inside an open client context.

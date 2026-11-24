@@ -9,9 +9,10 @@ SKPORT deployment and Endfield.
 
 ## Get started
 
-1. [Install the package](getting-started/installation.md) and prepare your account token.
-2. [Run your first request](getting-started/quickstart.md) with `SkportClient`.
-3. [Read a public profile](guides/public-profiles.md) or [fetch a character build](guides/character-builds.md).
+1. [Install the package](getting-started/installation.md).
+2. [Get an account token](getting-started/account-tokens.md) for a public viewer or your game account.
+3. [Copy your SKPORT ID and configure privacy](guides/skport-id-and-privacy.md).
+4. [Run your first request](getting-started/quickstart.md) with `SkportClient`.
 
 ## What the client provides
 
@@ -31,6 +32,7 @@ Player requests do not depend on Enka's live player API.
 
 ## Guides
 
+- [SKPORT ID and privacy](guides/skport-id-and-privacy.md)
 - [Public profiles](guides/public-profiles.md)
 - [Character builds](guides/character-builds.md)
 - [Owner accounts](guides/owner-accounts.md)

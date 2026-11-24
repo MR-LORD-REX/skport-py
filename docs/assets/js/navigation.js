@@ -4,6 +4,8 @@ export const sections = [
     pages: [
       { id: "overview", title: "Overview", path: "overview.md", description: "Meet the async SKPORT client and choose your first request." },
       { id: "getting-started/installation", title: "Installation", path: "getting-started/installation.md", description: "Install skport-py and prepare your Python environment." },
+      { id: "getting-started/account-tokens", title: "Account tokens", path: "getting-started/account-tokens.md", description: "Get an account token from the official SKPORT endpoint and choose public or owner access." },
+      { id: "guides/skport-id-and-privacy", title: "SKPORT ID & privacy", path: "guides/skport-id-and-privacy.md", description: "Find your SKPORT ID in the app and configure global and section visibility." },
       { id: "getting-started/quickstart", title: "Quickstart", path: "getting-started/quickstart.md", description: "Fetch your first player profile and character build." },
     ],
   },

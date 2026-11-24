@@ -4,8 +4,16 @@ Use a target's SKPORT ID to inspect the Endfield data they expose. Your configur
 account tokens authenticate requests as viewers; they do not determine which
 public player is selected.
 
+Your viewer token can come from a separate SKPORT account; it does not need an
+Endfield binding. See [Account tokens](../getting-started/account-tokens.md) for
+the official token endpoint and separate public/owner account setup.
+
 The examples below run inside an open `SkportClient` context. See the
 [quickstart](../getting-started/quickstart.md) for a complete script.
+
+Before fetching a card, follow the illustrated [SKPORT ID and privacy guide](skport-id-and-privacy.md).
+It shows where to copy the profile ID, how to enable global card visibility, and
+how to make individual card sections public.
 
 ## Verify a SKPORT ID
 

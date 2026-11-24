@@ -31,9 +31,19 @@ python -m pip install -e ".[dev]"
 
 ## Prepare authentication
 
-Have a valid Gryphline account token accepted by SKPORT authentication. Public
-requests also require a target **SKPORT ID**. This social ID differs from an
-Endfield game UID and from a character ID.
+Follow [Account tokens](account-tokens.md) to sign in to the official SKPORT
+website and retrieve the logged-in account's token from its internal endpoint.
+Use a separate viewer account for public requests if you prefer to keep your
+main game account's token outside the public pool. Account-specific methods
+require the game account's token.
+
+Public requests also require a target **SKPORT ID**. This social ID differs from
+an Endfield game UID and from a character ID.
+
+Download the official SKPORT community app and sign in with the same account you
+use for Endfield. Follow the illustrated [SKPORT ID and privacy guide](../guides/skport-id-and-privacy.md)
+to copy your profile ID and configure public card access. The profile copy button
+copies your ID; the account token comes from the authenticated website endpoint.
 
 The client accepts account tokens directly. It does not provide an interactive
 sign-in screen. Pass at least one token through `SkportClient(tokens=[...])` or
