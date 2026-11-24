@@ -16,3 +16,4 @@ local/
 .sk_assets/
 
 test.py
+*.json
