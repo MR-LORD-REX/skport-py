@@ -1,0 +1,137 @@
+name: Publish release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions: {}
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Validate and build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      package_name: ${{ steps.tag.outputs.package_name }}
+      version: ${{ steps.tag.outputs.version }}
+      prerelease: ${{ steps.tag.outputs.prerelease }}
+      checksum_sha256: ${{ steps.distributions.outputs.checksum_sha256 }}
+    steps:
+      - name: Check out the tagged source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install version validation dependency
+        run: python -m pip install packaging
+      - name: Verify tag against library version
+        id: tag
+        run: python .github/scripts/release.py check-tag
+      - name: Test release validation
+        run: python -m unittest discover -s .github/scripts -p test_release.py
+      - name: Install packaging tools
+        run: python -m pip install build twine
+      - name: Build wheel and source archive
+        run: python -m build
+      - name: Validate package metadata
+        run: python -m twine check dist/*
+      - name: Verify distribution versions and checksums
+        id: distributions
+        run: python .github/scripts/release.py check-dist
+      - name: Stage release files
+        run: |
+          mkdir -p release-artifacts/dist
+          cp dist/* release-artifacts/dist/
+      - name: Store verified release files
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ github.ref_name }}
+          path: release-artifacts/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+
+  publish:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/${{ needs.build.outputs.package_name }}
+    permissions:
+      id-token: write
+    steps:
+      - name: Download verified release files
+        uses: actions/download-artifact@v4
+        with:
+          name: release-${{ github.ref_name }}
+          path: release-artifacts
+      - name: Verify downloaded files
+        working-directory: release-artifacts
+        env:
+          EXPECTED_CHECKSUM_SHA256: ${{ needs.build.outputs.checksum_sha256 }}
+        run: |
+          python - <<'PY'
+          import hashlib
+          import os
+          from pathlib import Path
+          actual = hashlib.sha256(Path("SHA256SUMS").read_bytes()).hexdigest()
+          if actual != os.environ["EXPECTED_CHECKSUM_SHA256"]:
+              raise SystemExit("Checksum manifest differs from the validated build")
+          PY
+          sha256sum --check --strict SHA256SUMS
+      - name: Publish verified distributions
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: release-artifacts/dist/
+          attestations: true
+
+  release:
+    name: Create GitHub release
+    needs: [build, publish]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download verified release files
+        uses: actions/download-artifact@v4
+        with:
+          name: release-${{ github.ref_name }}
+          path: release-artifacts
+      - name: Verify downloaded files
+        working-directory: release-artifacts
+        env:
+          EXPECTED_CHECKSUM_SHA256: ${{ needs.build.outputs.checksum_sha256 }}
+        run: |
+          python - <<'PY'
+          import hashlib
+          import os
+          from pathlib import Path
+          actual = hashlib.sha256(Path("SHA256SUMS").read_bytes()).hexdigest()
+          if actual != os.environ["EXPECTED_CHECKSUM_SHA256"]:
+              raise SystemExit("Checksum manifest differs from the validated build")
+          PY
+          sha256sum --check --strict SHA256SUMS
+      - name: Create release and upload distributions
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PRERELEASE: ${{ needs.build.outputs.prerelease }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" release-artifacts/dist/* release-artifacts/SHA256SUMS --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            args=("$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --verify-tag --title "$GITHUB_REF_NAME" --generate-notes)
+            if [[ "$PRERELEASE" == "true" ]]; then
+              args+=(--prerelease)
+            fi
+            gh release create "${args[@]}" release-artifacts/dist/* release-artifacts/SHA256SUMS
+          fi
