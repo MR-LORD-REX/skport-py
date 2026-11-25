@@ -207,6 +207,8 @@ class EndfieldClient:
             record = _character_detail(await self.raw.character(target, char_id=char_id, lang=lang))
         if raw:
             return record
+        if card_data is None:
+            card_data = await self.raw.detail(target, lang=lang)
         return (
             await self.builds.characters([record], self._player(target, card_data), self._language(lang))
         )[0]
@@ -293,6 +295,8 @@ class EndfieldClient:
             )
         if raw:
             return record
+        if card_data is None:
+            card_data = await self.raw.owned_card(token=token, role=selected, lang=lang)
         target = await self._owner_target(token, selected)
         return (
             await self.builds.characters([record], self._player(target, card_data), self._language(lang))
@@ -303,6 +307,21 @@ class EndfieldClient:
         from skport.games.endfield.clean.progress import build_live_status
 
         data, target = await self._snapshot_data(ids)
+        return build_live_status(data, self._player(target, data), self.config.icon_source)
+
+    async def owned_activity(
+        self,
+        *,
+        token: str,
+        role: Role | str | None = None,
+        lang: str | Language | None = None,
+    ) -> LiveStatus:
+        """Normalize resources from the explicitly authenticated owner's snapshot."""
+        from skport.games.endfield.clean.progress import build_live_status
+
+        selected = await self.raw.role_for(token, role=role, lang=lang)
+        data = await self.raw.owned_card(token=token, role=selected, lang=lang)
+        target = await self._owner_target(token, selected)
         return build_live_status(data, self._player(target, data), self.config.icon_source)
 
     async def factory(self, **ids: Any) -> FactoryState:

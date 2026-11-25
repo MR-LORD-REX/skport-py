@@ -35,9 +35,11 @@ by_index = await client.endfield.character(
 - `index` is a nonnegative position in the returned list. With
   `showcase_only=True`, it uses the configured showcase order.
 
-The default `full=True` requests the individual character endpoint. A direct ID
-with `full=True` avoids fetching the roster first. Use `full=False` to build from
-the character record already returned in the card.
+The default `full=True` requests the individual character endpoint. A normalized
+direct ID lookup also reads the player's card to include their in-game name in
+`build.owner`. With `raw=True`, a direct ID lookup skips that card read. Name,
+index, and `full=False` lookups reuse the card already fetched for selection.
+Use `full=False` to build from the character record returned in the card.
 
 ## Fetch a collection
 

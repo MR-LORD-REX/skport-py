@@ -91,8 +91,9 @@ await client.endfield.character(
 ```
 
 Return one `CharacterBuild`, or a raw record with `raw=True`. Supply exactly one
-of `char_id`, `name`, or `index`. Direct ID lookup with `full=True` skips the
-card roster request. Names use the requested response language and must match
+of `char_id`, `name`, or `index`. Normalized direct ID lookup with `full=True`
+also reads the player's card for the owner's in-game name; `raw=True` skips
+that card request. Names use the requested response language and must match
 uniquely. See [character builds](../guides/character-builds.md).
 
 ## Reports
@@ -121,6 +122,8 @@ await client.endfield.owned_character(
     *, token=..., char_id=None, name=None, index=None,
     operator_id=None, role=None, full=True, lang=None, raw=False,
 )
+
+await client.endfield.owned_activity(*, token=..., role=None, lang=None)
 ```
 
 Return `PlayerCard`, `list[CharacterBuild]`, and `CharacterBuild`, respectively.
@@ -128,8 +131,17 @@ Return `PlayerCard`, `list[CharacterBuild]`, and `CharacterBuild`, respectively.
 than the public showcase filter. Single owner reads require exactly one of
 `char_id`, `name`, or `index`.
 
+Normalized single owner reads include the in-game name in `build.owner`. Direct
+ID lookup also reads the owner's card for that identity; `raw=True` skips this
+additional card read. Other selectors reuse the snapshot fetched for selection.
+
 `role` accepts `Role(game_uid, server_id)` or the owner header string
 `"3_<game_uid>_<server_id>"`. A role outside the token's bindings is rejected.
+
+`owned_activity()` returns `LiveStatus` from the authenticated owner's card,
+including source resource values and recovery/refresh timestamps. It does not
+require public card sharing or load character assets. Like the public report
+methods, it has no `raw` switch; use `raw.owned_card()` for the source snapshot.
 
 ## Attendance and inventory
 

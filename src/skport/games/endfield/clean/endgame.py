@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from typing import Any
 
 from skport.config import ImageSource
@@ -165,6 +166,16 @@ def build_monument_report(
     )
 
 
+def _stage_level(value: Any) -> int | None:
+    if value is None or isinstance(value, bool):
+        return None
+    try:
+        level = float(value)
+    except (TypeError, ValueError):
+        return None
+    return int(level) if math.isfinite(level) and level >= 0 and level.is_integer() else None
+
+
 def _contract(
     status: dict[str, Any],
     source: dict[str, Any],
@@ -218,6 +229,9 @@ def _contract(
         enemies=[_enemy(entry, preferred) for entry in dungeon.get("enemies") or []],
         ends_at_collection=timestamp(status.get("endAtTs")),
         rules=description(str(dungeon.get("desc") or "")),
+        stage_id=str(dungeon["id"]) if dungeon.get("id") is not None and str(dungeon["id"]).strip() else None,
+        stage_name=str(dungeon.get("name") or ""),
+        stage_recommended_level=_stage_level(dungeon.get("recommendLevel")),
     )
 
 

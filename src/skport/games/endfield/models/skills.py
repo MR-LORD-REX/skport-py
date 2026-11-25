@@ -29,6 +29,11 @@ class Skill(OutputModel):
     icon: ImageLinks = Field(default_factory=ImageLinks)
     level: int = Field(default=0, ge=0)
     max_level: int = Field(default=12, ge=0)
+    # Weapon display provenance: unlock/refinement base plus applied essence bonus.
+    # Ordinary skills and incomplete assets leave the optional split unknown.
+    tag_id: int | str | None = None
+    base_level: int | None = Field(default=None, ge=0)
+    bonus_level: int | None = Field(default=None, ge=0)
     description: str = ""
     params: dict[str, Any] = Field(default_factory=dict)
     effects: list[StatModifier] = Field(default_factory=list)

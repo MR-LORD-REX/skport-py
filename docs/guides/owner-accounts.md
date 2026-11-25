@@ -66,8 +66,27 @@ Its default `full=True` reads the individual owner character endpoint.
 `full=False` uses the owner's card record. The optional `operator_id` supplies
 the endpoint's additional operator query field; it does not replace the selector.
 
+Normalized direct ID lookup also reads the owner's card so that `build.owner`
+includes the in-game name. `raw=True` keeps the direct character request without
+that additional card read. Name, index, and `full=False` lookups reuse their
+selection snapshot.
+
 Card and character owner methods accept `lang` and `raw=True`. Typed owner
 builds use the same local assets and stat pipeline as public builds.
+
+## Live resources
+
+```python
+activity = await client.endfield.owned_activity(token=owner_token, role=role)
+print(activity.sanity.current, activity.sanity.maximum)
+print(activity.sanity.recovery_at)
+```
+
+`owned_activity()` returns normalized `LiveStatus` using the same resource
+normalizer as public activity reads. It preserves the captured server clock,
+overflow values, and source recovery or refresh timestamps. Missing resource
+sections are `None`. The request uses the token owner's authenticated card and
+does not require public card sharing or character asset loading.
 
 ## Inventory and attendance
 

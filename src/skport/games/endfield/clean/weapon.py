@@ -6,6 +6,8 @@ from pathlib import PurePosixPath
 from typing import Any
 
 from skport.config import ImageSource
+from skport.errors import MappingError
+from skport.games.endfield.calc.levels import weapon_skill_levels
 from skport.games.endfield.calc.types import ResolvedCharacter
 from skport.games.endfield.clean.common import description, image_links, numeric, rarity
 from skport.games.endfield.clean.stats import stat_modifier
@@ -82,6 +84,26 @@ def build_weapon(
     entries = (
         ordered_weapon_skills(tables, raw, canonical) if tables and canonical else raw.get("skills") or []
     )
+    gem = _gem(raw, resolved, tables, preferred)
+    bonus_points: dict[str, int] = {}
+    if gem is not None:
+        for term in gem.terms:
+            if term.tag_id is not None and str(term.tag_id):
+                tag = str(term.tag_id)
+                bonus_points[tag] = bonus_points.get(tag, 0) + term.points
+    base_levels = None
+    if canonical is not None and tables is not None:
+        try:
+            # Refine/breakthrough unlocks are base levels; essence points are extra.
+            base_levels = weapon_skill_levels(
+                tables,
+                canonical,
+                int(numeric(raw.get("refineLevel"))),
+                int(numeric(raw.get("breakthroughLevel"))),
+            )
+        except (MappingError, KeyError):
+            # Partial assets must retain the observed total without inventing a split.
+            pass
     if not entries and canonical and tables is not None and resolved is not None:
         derived = []
         passive_key = "sk_" + PurePosixPath(canonical["Icon"]).stem
@@ -127,6 +149,15 @@ def build_weapon(
                 )
         effects.extend(modifiers)
         info = infos.get(entry.get("key"), {})
+        tag_id = skill.get("TagId")
+        if tag_id is None or tag_id == "":
+            tag_id = info.get("gemTagId")
+        base_level, bonus_level = None, None
+        if base_levels is not None and index < len(base_levels):
+            base = base_levels[index]
+            bonus = level - base
+            if 0 <= bonus <= bonus_points.get(str(tag_id), 0):
+                base_level, bonus_level = base, bonus
         term = (
             tables["gems"]["TermNums"].get(str(resolved.gem_terms[index][0]), {})
             if tables is not None and resolved is not None and index < len(resolved.gem_terms)
@@ -139,6 +170,9 @@ def build_weapon(
                 name=str(entry.get("name") or ""),
                 level=level,
                 max_level=int(numeric(entry.get("currentMaxLevel"), numeric(info.get("maxLevel"), 9))),
+                tag_id=tag_id,
+                base_level=base_level,
+                bonus_level=bonus_level,
                 description=description(str(entry.get("desc") or ""), entry.get("descParams")),
                 params=entry.get("descParams") or {},
                 effects=modifiers,
@@ -166,5 +200,5 @@ def build_weapon(
         ),
         skills=skills,
         effects=effects,
-        gem=_gem(raw, resolved, tables, preferred),
+        gem=gem,
     )

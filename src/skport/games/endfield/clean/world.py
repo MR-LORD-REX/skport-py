@@ -28,6 +28,17 @@ _EXPLORATION = {
 }
 
 
+def _numeric_fields(
+    source: dict[str, Any], fields: dict[str, str], *, integer: bool = False
+) -> dict[str, Any]:
+    """Keep missing wire numbers unset while preserving observed zero values."""
+    return {
+        target: int(numeric(source[key])) if integer else numeric(source[key])
+        for key, target in fields.items()
+        if source.get(key) is not None
+    }
+
+
 def build_regions(domains: list[dict[str, Any]], preferred: ImageSource) -> list[RegionProgress]:
     """Keep separate exploration categories, settlement meters and officer icons."""
     regions = []
@@ -39,19 +50,17 @@ def build_regions(domains: list[dict[str, Any]], preferred: ImageSource) -> list
                 Settlement(
                     id=str(entry.get("id") or ""),
                     name=str(entry.get("name") or ""),
-                    level=int(numeric(entry.get("level"))),
+                    **_numeric_fields(entry, {"level": "level"}, integer=True),
                     experience=ResourceMeter(
                         key="settlement_experience",
                         name="Experience",
-                        current=numeric(entry.get("exp")),
-                        maximum=numeric(entry.get("expToLevelUp")),
+                        **_numeric_fields(entry, {"exp": "current", "expToLevelUp": "maximum"}),
                         note="maximum level" if entry.get("isFinalMaxLevel") else "",
                     ),
                     stock=ResourceMeter(
                         key="settlement_stock",
                         name="Stock",
-                        current=numeric(entry.get("remainMoney")),
-                        maximum=numeric(entry.get("moneyMax")),
+                        **_numeric_fields(entry, {"remainMoney": "current", "moneyMax": "maximum"}),
                     ),
                     officer=ItemSummary(
                         id=str(entry.get("officerCharIds") or ""),
@@ -59,7 +68,11 @@ def build_regions(domains: list[dict[str, Any]], preferred: ImageSource) -> list
                     )
                     if entry.get("officerCharAvatar") or entry.get("officerCharIds")
                     else None,
-                    maximum_level=bool(entry.get("isFinalMaxLevel")),
+                    **(
+                        {"maximum_level": bool(entry["isFinalMaxLevel"])}
+                        if entry.get("isFinalMaxLevel") is not None
+                        else {}
+                    ),
                     last_tick_at=timestamp(entry.get("lastTickTime")),
                 )
             )
@@ -73,8 +86,7 @@ def build_regions(domains: list[dict[str, Any]], preferred: ImageSource) -> list
                         ResourceMeter(
                             key=key,
                             name=name,
-                            current=numeric(count.get("count")),
-                            maximum=numeric(count.get("total")),
+                            **_numeric_fields(count, {"count": "current", "total": "maximum"}),
                         )
                     )
             areas.append(
@@ -88,12 +100,11 @@ def build_regions(domains: list[dict[str, Any]], preferred: ImageSource) -> list
             RegionProgress(
                 id=str(domain.get("domainId") or ""),
                 name=str(domain.get("name") or ""),
-                level=int(numeric(domain.get("level"))),
+                **_numeric_fields(domain, {"level": "level"}, integer=True),
                 funds=ResourceMeter(
                     key="region_funds",
                     name="Funds",
-                    current=numeric(money.get("count")),
-                    maximum=numeric(money.get("total")),
+                    **_numeric_fields(money, {"count": "current", "total": "maximum"}),
                 ),
                 settlements=settlements,
                 areas=areas,
@@ -110,7 +121,7 @@ def build_factory_state(data: dict[str, Any], player: PlayerIdentity, preferred:
         Cabin(
             id=str(room.get("id") or ""),
             name=str(room.get("name") or ""),
-            level=int(numeric(room.get("level"))),
+            **_numeric_fields(room, {"level": "level"}, integer=True),
             crew=[
                 CrewMember(
                     id=str(member.get("charId") or ""),

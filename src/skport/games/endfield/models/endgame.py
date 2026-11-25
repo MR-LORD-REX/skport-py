@@ -117,6 +117,9 @@ class CrisisContract(OutputModel):
     enemies: list[EnemySummary] = Field(default_factory=list)
     ends_at_collection: datetime | None = None
     rules: str = ""
+    stage_id: str | None = None
+    stage_name: str = ""
+    stage_recommended_level: int | None = Field(default=None, ge=0)
 
 
 class ContractState(OutputModel):
