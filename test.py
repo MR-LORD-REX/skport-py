@@ -2,7 +2,7 @@ from skport import SkportAPI, SkportClient , ClientConfig , ImageSource
 import asyncio
 
 async def main():
-    token_a="wcIb3Km2m6ur7exHo8QOLXHg"
+    token_a=""
     skport_id="2348675939926"
     game_uid="4925086679"
 
