@@ -10,8 +10,7 @@ Requires Python 3.11 or newer.
 pip install skport-py
 ```
 
-Read the [documentation](docs/overview.md) for setup, examples, configuration and
-the API reference. The responsive documentation website is in `docs/`, ready
-for [GitHub Pages](docs/maintainers/hosting.md).
+Read the [documentation](https://mr-lord-rex.github.io/skport-py/) for setup, examples, configuration and
+the API reference.
 
 Released under [GPL-3.0-only](LICENSE.txt).
