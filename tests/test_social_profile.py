@@ -3,12 +3,15 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
+from unittest.mock import AsyncMock
 
 import pytest
 
+from skport import SkportClient
 from skport.config import ImageSource
 from skport.errors import DecodeError
 from skport.games.endfield.clean.user import build_social_profile
+from skport.games.endfield.models import PlayerCard, PlayerIdentity, SocialProfile
 
 
 def test_social_profile_uses_observed_public_api_keys() -> None:
@@ -73,3 +76,85 @@ def test_social_profile_checks_the_requested_identity_and_counter_types() -> Non
         build_social_profile(payload, expected_id="2222")
     with pytest.raises(DecodeError, match="counter fans"):
         build_social_profile(payload)
+
+
+async def test_skport_profile_returns_typed_social_data_with_client_image_preference(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    payload = {
+        "user": {
+            "basicUser": {
+                "id": 1234,
+                "nickname": "Community user",
+                "avatar": "https://example.test/avatar.png",
+            },
+            "pendant": {"id": 44, "iconUrl": "https://example.test/pendant.png"},
+        },
+        "userRts": {"fans": "11"},
+    }
+    async with SkportClient(tokens=["viewer"], icon_source=ImageSource.ENKA) as client:
+        read = AsyncMock(return_value=payload)
+        card_read = AsyncMock(side_effect=AssertionError("Social profiles do not fetch game cards"))
+        binding_read = AsyncMock(side_effect=AssertionError("Social profiles do not fetch game bindings"))
+        monkeypatch.setattr(client.api, "user", read)
+        monkeypatch.setattr(client.api, "binding", binding_read)
+        monkeypatch.setattr(client.endfield, "card", card_read)
+
+        result = await client.endfield.skport_profile("  1234  ", lang="ja")
+
+    assert isinstance(result, SocialProfile)
+    assert result.skport_id == "1234" and result.skport_username == "Community user"
+    assert result.avatar.preferred is ImageSource.ENKA
+    assert result.avatar.url == "https://example.test/avatar.png"
+    assert result.pendant is not None and result.pendant.icon.preferred is ImageSource.ENKA
+    assert result.counts.followers == 11
+    read.assert_awaited_once()
+    assert read.await_args is not None
+    assert str(read.await_args.kwargs["skport_id"]).strip() == "1234"
+    assert read.await_args.kwargs["lang"] == "ja"
+    assert read.await_args.kwargs.get("token") is None
+    card_read.assert_not_awaited()
+    binding_read.assert_not_awaited()
+
+
+async def test_skport_profile_raw_preserves_decoded_response_and_typed_validates_identity(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    payload = {"user": {"basicUser": {"id": "other", "nickname": "Another user"}}, "futureField": True}
+    async with SkportClient(tokens=["viewer"]) as client:
+        monkeypatch.setattr(client.api, "user", AsyncMock(return_value=payload))
+
+        assert await client.endfield.skport_profile(skport_id=1234, raw=True) is payload
+        with pytest.raises(DecodeError, match="does not match"):
+            await client.endfield.skport_profile(1234)
+
+
+@pytest.mark.parametrize("raw", [False, True])
+async def test_profile_delegates_to_game_card_with_all_selections(
+    monkeypatch: pytest.MonkeyPatch,
+    raw: bool,
+) -> None:
+    card = PlayerCard(player=PlayerIdentity(skport_id="1234", game_uid="game-role", server_id="2"))
+    payload = {"detail": {"base": {"roleId": "game-role"}}, "futureField": True}
+    expected = payload if raw else card
+    async with SkportClient(tokens=["viewer"]) as client:
+        read = AsyncMock(return_value=expected)
+        social_read = AsyncMock(side_effect=AssertionError("Game profiles delegate to card"))
+        monkeypatch.setattr(client.endfield, "card", read)
+        monkeypatch.setattr(client.api, "user", social_read)
+
+        if raw:
+            result = await client.endfield.profile(
+                skport_id=1234, role_id=42, server_id=2, lang="ko", raw=True
+            )
+        else:
+            result = await client.endfield.profile(1234, role_id=42, server_id=2, lang="ko")
+
+    assert result is expected
+    read.assert_awaited_once()
+    assert read.await_args is not None
+    forwarded = read.await_args.kwargs.copy()
+    forwarded_id = read.await_args.args[0] if read.await_args.args else forwarded.pop("skport_id")
+    assert forwarded_id == 1234
+    assert forwarded == {"role_id": 42, "server_id": 2, "lang": "ko", "raw": raw}
+    social_read.assert_not_awaited()
