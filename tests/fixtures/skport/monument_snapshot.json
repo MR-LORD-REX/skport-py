@@ -1,0 +1,271 @@
+{
+  "indieHard": {
+    "indieHardGroups": [
+      {
+        "id": "2d8251dca781f78a8e9c23a74968ff0f",
+        "name": "Murmurs of the Deep Forest",
+        "pic": "https://static.skport.com/image/common/20261019/b4a01c77de4a4189c2de28bf243ff4d2.png",
+        "dungeonGroups": [
+          {
+            "normalDungeon": {
+              "id": "242ad4193299c2d26f5b9b2259077b11",
+              "name": "Critters That Dig",
+              "isPass": false,
+              "bestRecord": null,
+              "desc": "The frigid and dark season has ended. The hibernating critters stir and call to each other... They are legion, and they are waking.",
+              "feature": " - Careful. The Mist continuously deals <@ba.key>gradually increasing DMG</> to all operators.\n - The Woodcraft Slug will burrow underground and restore all its <@ba.key>shield stacks</> on a regular basis. Defeating a Woodcraft Slug will temporarily reduce Mist DMG.\n - After the battle begins, 1 random Woodcraft Slug will lose all its <@ba.key>shield stacks</> and no longer restore them. Defeating it will cause 1 random Woodcraft Slug to lose all its <@ba.key>shield stacks</> and no longer restore them.\n\n<@ba.info> - Enemies have the same resistance against every element.</>",
+              "enemies": [
+                {
+                  "id": "a811a9c80a6503e99126095d4e5ecdf5",
+                  "name": "Woodcraft Slug",
+                  "desc": "A battle puppet created by a Snowpriestess. Its shape resembles that of the Originium Slug. This woodcraft can move quickly and is an excellent burrower.",
+                  "level": 60,
+                  "imageUrl": "https://static.skport.com/image/common/20260831/7f9e3831f46c1da35776936494681eae.png",
+                  "ability": "Woodcraft Slugs can burrow underground to sneak up on their opponents."
+                }
+              ],
+              "recommendLevel": 60
+            },
+            "hardDungeon": {
+              "id": "62985d0c15da221ce6d55bab707d7498",
+              "name": "Critters That Dig: Agony",
+              "isPass": false,
+              "bestRecord": null,
+              "desc": "The frigid and dark season has ended. The hibernating critters stir and call to each other... They are legion, and they are waking.",
+              "feature": " - Careful. The Mist continuously deals <@ba.key>gradually increasing DMG</> to all operators. <@ba.key>Mist DMG is also greatly increased</>.\n - The Woodcraft Slug will burrow underground and restore all its <@ba.key>shield stacks</> on a regular basis. Defeating a Woodcraft Slug will temporarily reduce Mist DMG.\n - After the battle begins, 1 random Woodcraft Slug will lose all its <@ba.key>shield stacks</> and no longer restore them. Defeating it will cause 1 random Woodcraft Slug to lose all its <@ba.key>shield stacks</> and no longer restore them.\n\n<@ba.info> - Tacticals and consumables cannot be used.</>\n<@ba.info> - Enemies have the same resistance against every element.</>",
+              "enemies": [
+                {
+                  "id": "a811a9c80a6503e99126095d4e5ecdf5",
+                  "name": "Woodcraft Slug",
+                  "desc": "A battle puppet created by a Snowpriestess. Its shape resembles that of the Originium Slug. This woodcraft can move quickly and is an excellent burrower.",
+                  "level": 90,
+                  "imageUrl": "https://static.skport.com/image/common/20260831/7f9e3831f46c1da35776936494681eae.png",
+                  "ability": "Woodcraft Slugs can burrow underground to sneak up on their opponents."
+                }
+              ],
+              "recommendLevel": 90
+            }
+          }
+        ],
+        "activityStartTs": "1792641600",
+        "activityEndTs": "0",
+        "activityName": "Murmurs of the Deep Forest",
+        "achieve": {
+          "achievementData": {
+            "id": "eb839b4a070b1c4ee6f70562fe83f198",
+            "name": "\"Murmurs of the Deep Forest\"",
+            "initIcon": "https://static.skport.com/image/common/20261012/d349bbce254047d25c3703f988f1f41a.png",
+            "reforge2Icon": "",
+            "reforge3Icon": "",
+            "platedIcon": "https://static.skport.com/image/common/20261012/b53112e40c363c82fd78c36ada9e6e66.png",
+            "cateName": "Technical",
+            "canCertify": false,
+            "cate": "achv_type_battle",
+            "initLevel": 2
+          },
+          "level": 0,
+          "isPlated": false,
+          "obtainTs": "0"
+        },
+        "isInActivity": false
+      },
+      {
+        "id": "1a5c11e8e51aa225199b282d3dc3941e",
+        "name": "Howlers of the Crag",
+        "pic": "https://static.skport.com/image/common/20260806/d0d6ce7b77bc4a730132816cfbf9478c.png",
+        "dungeonGroups": [
+          {
+            "normalDungeon": {
+              "id": "bf4064b5784e7429c35bf5d9e9d9d078",
+              "name": "Visitors of Qingbo",
+              "isPass": true,
+              "bestRecord": {
+                "chars": [
+                  {
+                    "charId": "c2fa8a588cab489795166bed5161fefc",
+                    "level": 90,
+                    "potentialLevel": 0,
+                    "avatarUrl": "https://static.skport.com/image/common/20260416/e6c38b8d6240eaa77a5763f4e855b888.png",
+                    "evolvePhase": 4,
+                    "property": {
+                      "key": "char_property_pulse",
+                      "value": "Electric"
+                    },
+                    "rarity": {
+                      "key": "rarity_6",
+                      "value": "6"
+                    }
+                  },
+                  {
+                    "charId": "00ff4c582aeeafc237695f81e36969b4",
+                    "level": 80,
+                    "potentialLevel": 5,
+                    "avatarUrl": "https://static.skport.com/image/common/20251112/068394e39831e767a19d447579a97b1d.png",
+                    "evolvePhase": 3,
+                    "property": {
+                      "key": "char_property_pulse",
+                      "value": "Electric"
+                    },
+                    "rarity": {
+                      "key": "rarity_5",
+                      "value": "5"
+                    }
+                  },
+                  {
+                    "charId": "c4cf7541c23c93f991e2e464ee18bb18",
+                    "level": 80,
+                    "potentialLevel": 5,
+                    "avatarUrl": "https://static.skport.com/image/common/20251112/c7d4eaff6c2336b0e9d217e32d208e28.png",
+                    "evolvePhase": 3,
+                    "property": {
+                      "key": "char_property_pulse",
+                      "value": "Electric"
+                    },
+                    "rarity": {
+                      "key": "rarity_5",
+                      "value": "5"
+                    }
+                  },
+                  {
+                    "charId": "bfb4ba13f819568c69c2ae46d8f5b869",
+                    "level": 80,
+                    "potentialLevel": 0,
+                    "avatarUrl": "https://static.skport.com/image/common/20251112/8acdcdaa6c69979a9b01f77281465a0a.png",
+                    "evolvePhase": 3,
+                    "property": {
+                      "key": "char_property_natural",
+                      "value": "Nature"
+                    },
+                    "rarity": {
+                      "key": "rarity_6",
+                      "value": "6"
+                    }
+                  }
+                ],
+                "ts": "1787135467",
+                "passTs": "135"
+              },
+              "desc": "The band of Qingbo Stockaders sing the chorus of blades. No longer yearning for a home unmade, heroic spirit and wild ambitions drove them on to ascend the peak.",
+              "feature": " - Defeating the enemy restores some HP to all other enemies and permanently raises their ATK and Max HP.\n\n <@ba.info>- Enemies have the same resistance against every element.</>",
+              "enemies": [
+                {
+                  "id": "51756afae15b812d3f535c84ad0767c5",
+                  "name": "Hill Smasher",
+                  "desc": "A criminal armed with a heavy weapon. The name may sound like an exaggerated joke, but the Hill Smasher's quadruple rocket launcher delivers serious firepower. Do not underestimate this foe.",
+                  "level": 60,
+                  "imageUrl": "https://static.skport.com/image/common/20260309/7f3c318267b37b75a3ac83d560d51b82.png",
+                  "ability": "Uses the heavy rocket launcher as a melee weapon. Also shoots fireworks for its ranged attacks. Getting rammed and lifted by its horns might set off some super fireworks!\nDon't try to backstab it. It has a powerful hind kick!"
+                },
+                {
+                  "id": "f9787bf76e6e7eb5fb53583f5f99f403",
+                  "name": "Cloud Stalker",
+                  "desc": "A criminal armed with a strange weapon that appears like a harmless lantern. Do not be fooled. The Cloud Stalker's \"lantern\" is actually a flying decapitator with terrifying reach.",
+                  "level": 60,
+                  "imageUrl": "https://static.skport.com/image/common/20260309/aa70ead830578b1582087c7b533fcf2c.png",
+                  "ability": "Spews disrupting smoke. Operators caught in the smoke suffer shorter line of sight, slower movement speed, and cannot dodge.\nThe enemy is a relatively poor combatant. Try to take it out first.\nSpews green smoke that heals other enemies."
+                },
+                {
+                  "id": "0d021153e22b9ec73320490f7ebb9de6",
+                  "name": "Nimbus Razor",
+                  "desc": "A criminal armed with a strange weapon. When the Cloud Stalker is tired of using the strange lantern, he would draw his short blade and engage in melee combat.",
+                  "level": 60,
+                  "imageUrl": "https://static.skport.com/image/common/20260831/f62f3e03fb30fd07e992b57264a07580.png",
+                  "ability": "Uses chain hooks to attack allied operators. Chained operators will be Stunned unless freed."
+                },
+                {
+                  "id": "d3ab6cbf674d66df08172e4818e9fefc",
+                  "name": "Road Plunderer",
+                  "desc": "An armed criminal active in the jurisdiction of Wuling City. Road Plunderers would usually set up illegal road barricades or engage in the smuggling of illegal goods. Eliminating these brigands is a top priority for the law enforcement forces of Hongshan.",
+                  "level": 60,
+                  "imageUrl": "https://static.skport.com/image/common/20260119/1e9e6c7c4885a5b853e3eb7b8afb3faf.png",
+                  "ability": "This enemy has no special abilities."
+                },
+                {
+                  "id": "bb05f385a2f820a7e88377d92fdf2422",
+                  "name": "Grove Archer",
+                  "desc": "An armed outlaw equipped with basic ranged weaponry. Trained in the bamboo groves, the outlaw can fire an arrow through the forest without hitting a single leaf blade.",
+                  "level": 60,
+                  "imageUrl": "https://static.skport.com/image/common/20260119/b9506144a36fa1b4e0a104189df422a8.png",
+                  "ability": "Fires all sorts of arrows and throws bombs to harass their opponents from range."
+                }
+              ],
+              "recommendLevel": 60
+            },
+            "hardDungeon": {
+              "id": "93273b4e23b8ec1f3a528a3581ce8e70",
+              "name": "Visitors of Qingbo: Agony",
+              "isPass": false,
+              "bestRecord": null,
+              "desc": "The band of Qingbo Stockaders sing the chorus of blades. No longer yearning for a home unmade, heroic spirit and wild ambitions drove them on to ascend the peak.",
+              "feature": " - Defeating the enemy restores some HP to all other enemies and permanently raises their ATK and Max HP.\n\n <@ba.info>- Tacticals and consumables cannot be used.</>\n <@ba.info>- Enemies have the same resistance against every element.</>",
+              "enemies": [
+                {
+                  "id": "51756afae15b812d3f535c84ad0767c5",
+                  "name": "Hill Smasher",
+                  "desc": "A criminal armed with a heavy weapon. The name may sound like an exaggerated joke, but the Hill Smasher's quadruple rocket launcher delivers serious firepower. Do not underestimate this foe.",
+                  "level": 90,
+                  "imageUrl": "https://static.skport.com/image/common/20260309/7f3c318267b37b75a3ac83d560d51b82.png",
+                  "ability": "Uses the heavy rocket launcher as a melee weapon. Also shoots fireworks for its ranged attacks. Getting rammed and lifted by its horns might set off some super fireworks!\nDon't try to backstab it. It has a powerful hind kick!"
+                },
+                {
+                  "id": "f9787bf76e6e7eb5fb53583f5f99f403",
+                  "name": "Cloud Stalker",
+                  "desc": "A criminal armed with a strange weapon that appears like a harmless lantern. Do not be fooled. The Cloud Stalker's \"lantern\" is actually a flying decapitator with terrifying reach.",
+                  "level": 90,
+                  "imageUrl": "https://static.skport.com/image/common/20260309/aa70ead830578b1582087c7b533fcf2c.png",
+                  "ability": "Spews disrupting smoke. Operators caught in the smoke suffer shorter line of sight, slower movement speed, and cannot dodge.\nThe enemy is a relatively poor combatant. Try to take it out first.\nSpews green smoke that heals other enemies."
+                },
+                {
+                  "id": "0d021153e22b9ec73320490f7ebb9de6",
+                  "name": "Nimbus Razor",
+                  "desc": "A criminal armed with a strange weapon. When the Cloud Stalker is tired of using the strange lantern, he would draw his short blade and engage in melee combat.",
+                  "level": 90,
+                  "imageUrl": "https://static.skport.com/image/common/20260831/f62f3e03fb30fd07e992b57264a07580.png",
+                  "ability": "Uses chain hooks to attack allied operators. Chained operators will be Stunned unless freed."
+                },
+                {
+                  "id": "d3ab6cbf674d66df08172e4818e9fefc",
+                  "name": "Road Plunderer",
+                  "desc": "An armed criminal active in the jurisdiction of Wuling City. Road Plunderers would usually set up illegal road barricades or engage in the smuggling of illegal goods. Eliminating these brigands is a top priority for the law enforcement forces of Hongshan.",
+                  "level": 90,
+                  "imageUrl": "https://static.skport.com/image/common/20260119/1e9e6c7c4885a5b853e3eb7b8afb3faf.png",
+                  "ability": "This enemy has no special abilities."
+                },
+                {
+                  "id": "bb05f385a2f820a7e88377d92fdf2422",
+                  "name": "Grove Archer",
+                  "desc": "An armed outlaw equipped with basic ranged weaponry. Trained in the bamboo groves, the outlaw can fire an arrow through the forest without hitting a single leaf blade.",
+                  "level": 90,
+                  "imageUrl": "https://static.skport.com/image/common/20260119/b9506144a36fa1b4e0a104189df422a8.png",
+                  "ability": "Fires all sorts of arrows and throws bombs to harass their opponents from range."
+                }
+              ],
+              "recommendLevel": 90
+            }
+          }
+        ],
+        "activityStartTs": "1785988800",
+        "activityEndTs": "0",
+        "activityName": "Howlers of the Crag",
+        "achieve": {
+          "achievementData": {
+            "id": "ad3f3342fe8d19514df86912906e7728",
+            "name": "\"Howlers of the Crag\"",
+            "initIcon": "https://static.skport.com/image/common/20260713/d0c22015def02c462d1006a400071be8.png",
+            "reforge2Icon": "",
+            "reforge3Icon": "",
+            "platedIcon": "https://static.skport.com/image/common/20260713/84960d3a40477dbc5f30158cb524af72.png",
+            "cateName": "Technical",
+            "canCertify": false,
+            "cate": "achv_type_battle",
+            "initLevel": 2
+          },
+          "level": 1,
+          "isPlated": false,
+          "obtainTs": "1787136049"
+        },
+        "isInActivity": false
+      }
+    ]
+  }
+}
