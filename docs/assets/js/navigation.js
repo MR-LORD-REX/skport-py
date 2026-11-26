@@ -14,6 +14,7 @@ export const sections = [
     pages: [
       { id: "guides/public-profiles", title: "Public profiles", path: "guides/public-profiles.md", description: "Verify SKPORT IDs, choose game accounts and read profiles." },
       { id: "guides/character-builds", title: "Character builds", path: "guides/character-builds.md", description: "Select operators and use their loadouts and calculated stats." },
+      { id: "guides/stat-calculation", title: "Stat calculation", path: "guides/stat-calculation.md", description: "Follow the formulas, rounding rules and validation for static stats." },
       { id: "guides/owner-accounts", title: "Owner accounts", path: "guides/owner-accounts.md", description: "Verify tokens and access an owner's roster and account data." },
       { id: "guides/assets-and-images", title: "Assets & images", path: "guides/assets-and-images.md", description: "Use cached Enka tables and choose SKPORT or Enka artwork." },
       { id: "guides/languages-and-configuration", title: "Configuration", path: "guides/languages-and-configuration.md", description: "Set languages, share clients and configure request behavior." },

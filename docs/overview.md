@@ -35,6 +35,7 @@ Player requests do not depend on Enka's live player API.
 - [SKPORT ID and privacy](guides/skport-id-and-privacy.md)
 - [Public profiles](guides/public-profiles.md)
 - [Character builds](guides/character-builds.md)
+- [Stat calculation](guides/stat-calculation.md)
 - [Owner accounts](guides/owner-accounts.md)
 - [Assets and images](guides/assets-and-images.md)
 - [Languages and configuration](guides/languages-and-configuration.md)

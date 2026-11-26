@@ -150,5 +150,5 @@ Some report metadata remains raw dictionaries where a complete typed conversion
 is not yet exposed. Pull-history and wiki schemas are available as model
 families, but the SDK's fetch helpers for those families currently return raw data.
 
-See [character builds](../guides/character-builds.md) for static calculation
-scope and [assets and images](../guides/assets-and-images.md) for cache behavior.
+See [stat calculation](../guides/stat-calculation.md) for the formulas and
+validation, and [assets and images](../guides/assets-and-images.md) for cache behavior.

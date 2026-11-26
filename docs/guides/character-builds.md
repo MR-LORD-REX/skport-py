@@ -103,10 +103,8 @@ Fractional stats are stored as fractions: `0.05` means `5.0%`. Use the model's
 display helpers rather than inferring units from a number's size. A fraction
 may exceed `1.0`. See [output models](../reference/output-models.md).
 
-The calculator produces a static sheet using canonical curves, potential,
-weapon effects, equipment enhancements, unlocked attributes, active sets, and
-supported unconditional passives. It does not simulate conditional combat
-effects, team buffs, damage rotations, or tactical-item activation.
+See [stat calculation](stat-calculation.md) for the inputs, formulas, rounding
+rules, and reference checks behind the static sheet.
 
 ## Partial builds and raw data
 
