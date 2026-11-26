@@ -146,9 +146,33 @@ caches belong in the application or card-rendering package.
 - `ItemSummary`, `MedalSummary`, `PlayerIdentity`, and `ModelIssue` provide shared
   item, medal, identity, and diagnostic information.
 
-Some report metadata remains raw dictionaries where a complete typed conversion
-is not yet exposed. Pull-history and wiki schemas are available as model
-families, but the SDK's fetch helpers for those families currently return raw data.
+Report models retain source metadata for fields outside their typed schema.
 
 See [stat calculation](../guides/stat-calculation.md) for the formulas and
 validation, and [assets and images](../guides/assets-and-images.md) for cache behavior.
+
+## Attendance and inventory
+
+`AttendanceStatus` groups monthly and first-time `AttendanceDay` entries and
+indexes their `AttendanceReward` metadata by award ID. `available_days`
+returns slots marked available and still incomplete. `CheckInResult`
+preserves the order of claimed and tomorrow award references. Its resolved reward
+lists have `None` where resource metadata is absent.
+
+`Inventory` maps each item category by service ID. Operator entries include
+progression and skill forms when available. An item's `owned` flag and
+`count` carry separate evidence. `count=None` means the service supplied no
+quantity. Names and images are available when the response provides them.
+
+## Pull history and game reference
+
+- `PullHistory` contains `PullRecord` entries, `PullPool` metadata,
+  `PullCheckpoint` state, `PullTotals`, and `BannerPity` summaries.
+  [Pull history guide](../guides/pull-history.md)
+- `WikiSummary` contains the Wiki ID, localized title, and associated game
+  ID when available. `WikiPage` holds readable profile fields and ordered
+  `WikiSection` records with typed entries, blocks, and item references.
+  [Wiki and banners guide](../guides/wiki.md)
+- `Banner` lists public `BannerItem` records and `BannerWindow` schedules.
+  `Notice` has the bulletin's title, plain text, and publication timestamp.
+  `EnumCatalog` keeps enum groups and their localized `SemanticLabel` entries.

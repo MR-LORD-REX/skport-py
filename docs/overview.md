@@ -21,6 +21,8 @@ SKPORT deployment and Endfield.
   equipment sets, artwork links, and static calculated stats.
 - **Account-owner access:** fetch the supplied token owner's roster, inventory,
   attendance, and pull records.
+- **Game reference:** read localized wiki articles, public banners, news, and
+  enum labels.
 - **Activity reports:** read resource counters, regional and spaceship progress,
   monument records, and crisis contracts.
 - **Raw access:** use the service's decoded response data when your application
@@ -37,6 +39,8 @@ Player requests do not depend on Enka's live player API.
 - [Character builds](guides/character-builds.md)
 - [Stat calculation](guides/stat-calculation.md)
 - [Owner accounts](guides/owner-accounts.md)
+- [Pull history](guides/pull-history.md)
+- [Wiki and banners](guides/wiki.md)
 - [Assets and images](guides/assets-and-images.md)
 - [Languages and configuration](guides/languages-and-configuration.md)
 - [Errors and retries](guides/errors-and-retries.md)
@@ -49,10 +53,8 @@ Player requests do not depend on Enka's live player API.
 
 ## Data and rendering
 
-Most game methods return Pydantic models. The SDK supplies data for your
-application or card renderer; image downloads, bitmap caching, themes, and layout
-belong in that application. Raw wiki and pull-record endpoints are available,
-while complete typed wiki and pull-history adapters are not yet exposed.
+Most game methods return Pydantic models. The SDK supplies the data and
+artwork URLs an application can use for its image handling and layout.
 
 Public visibility still applies to public reads. A public profile's returned
 characters are the records SKPORT exposes, which may be a subset of the owner's

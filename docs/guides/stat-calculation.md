@@ -99,18 +99,14 @@ Use `ClientConfig(missing_assets="raise")` to receive the error or
 
 ## How the numbers are checked
 
-The maintainer's offline reference tests use four recorded Enka loadouts for
-Si, Liino, Arcane, and Yvonne. They compare 39 reference values from the Enka
-stat display, including HP, ATK, DEF, attributes, Critical Rate, healing, and
-selected damage and Ultimate Gain values. Integer expectations must match
-exactly. Fraction expectations allow an absolute difference of `0.0006`
-(0.06 percentage points). These comparisons establish agreement with the
-recorded Enka display for the sampled loadouts. [Upstream display references](https://github.com/ShresthVaibhav/akef/blob/55a2bfe3c10d058ee8aba6d0959fd1c616b7f7d0/tests/test_enka.py#L16-L35)
+The offline tests resolve a sanitized SKPORT character response against a
+checked-in subset of a pinned Enka asset revision. The regression compares
+eight manually derived values for that loadout. This includes HP, ATK, DEF,
+the four attributes, and Critical Rate.
+[Fixture derivation](https://github.com/MR-LORD-REX/skport-py/tree/main/tests/fixtures/calculation)
 
-Separate fixture tests resolve and calculate eight captured SKPORT builds.
-They check the canonical revision, equipment and essence mapping, populated
-core stats, and contribution sources. Hand-computed cases exercise modifier
-order, factor defaults, rounding, essence caps, shared gear enhancement slots,
-set thresholds, talent deduplication, and the two passives. The fixture suite
-lives under the maintainer's ignored `local/tests` directory. Direct
-comparisons against in-game screenshots remain unverified.
+Hand-computed cases exercise modifier order, factor defaults, rounding,
+essence caps, shared gear enhancement slots, set thresholds, talent
+deduplication, and the two passives. From a checkout, install the development
+dependencies with `python -m pip install -e ".[dev]"` and run `python -m pytest`.
+Direct comparisons against the in-game stat screen remain unverified.

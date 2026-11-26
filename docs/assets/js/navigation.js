@@ -16,6 +16,8 @@ export const sections = [
       { id: "guides/character-builds", title: "Character builds", path: "guides/character-builds.md", description: "Select operators and use their loadouts and calculated stats." },
       { id: "guides/stat-calculation", title: "Stat calculation", path: "guides/stat-calculation.md", description: "Follow the formulas, rounding rules and validation for static stats." },
       { id: "guides/owner-accounts", title: "Owner accounts", path: "guides/owner-accounts.md", description: "Verify tokens and access an owner's roster and account data." },
+      { id: "guides/pull-history", title: "Pull history", path: "guides/pull-history.md", description: "Sync pull records, inspect pity and save an account history." },
+      { id: "guides/wiki", title: "Wiki and banners", path: "guides/wiki.md", description: "Read localized articles and public banner information." },
       { id: "guides/assets-and-images", title: "Assets & images", path: "guides/assets-and-images.md", description: "Use cached Enka tables and choose SKPORT or Enka artwork." },
       { id: "guides/languages-and-configuration", title: "Configuration", path: "guides/languages-and-configuration.md", description: "Set languages, share clients and configure request behavior." },
       { id: "guides/errors-and-retries", title: "Errors & retries", path: "guides/errors-and-retries.md", description: "Handle missing targets, authentication and partial builds." },

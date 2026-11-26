@@ -146,14 +146,39 @@ methods, it has no `raw` switch; use `raw.owned_card()` for the source snapshot.
 ## Attendance and inventory
 
 ```text
-await client.endfield.attendance(*, token=..., role=None, lang=None)
-await client.endfield.inventory(*, token=..., role=None, lang=None)
-await client.endfield.check_in(*, token=..., role=None, lang=None)
+await client.endfield.attendance(*, token=..., role=None, lang=None, raw=True)
+await client.endfield.inventory(*, token=..., role=None, lang=None, raw=True)
+await client.endfield.check_in(*, token=..., role=None, lang=None, raw=True)
 ```
 
-All three return raw service data. `attendance()` and `inventory()` are reads.
-`check_in()` claims attendance and is a write; it is not automatically replayed
-after an uncertain failure.
+Pass `raw=False` to receive `AttendanceStatus`, `Inventory`, and
+`CheckInResult` respectively. The default `raw=True` returns decoded service
+data. `check_in()` sends one claim attempt and raises `AlreadyCheckedIn` for
+a recognized duplicate claim.
+
+## Pull history
+
+```text
+await client.endfield.pulls(*, token=..., role=None, lang=None, since=None, after=None, featured_items=None)
+```
+
+Returns `PullHistory` scoped to the selected owner. Use `since` to extend a
+previous history or `after` for an exclusive date cutoff. [Pull history guide](../guides/pull-history.md)
+
+## Game reference
+
+```text
+await client.endfield.wiki_catalog(*, type_sub_id=..., type_main_id=1, lang=None)
+await client.endfield.wiki_item(item_id, *, lang=None, index=None)
+await client.endfield.char_banners(*, lang=None)
+await client.endfield.weapon_banners(*, lang=None)
+await client.endfield.news(*, lang=None)
+await client.endfield.enums(*, lang=None)
+```
+
+The first two methods return `list[WikiSummary]` and `WikiPage`. Banner
+methods return `list[Banner]`. `news()` returns a list of `Notice` records,
+and `enums()` returns an `EnumCatalog`. [Wiki and banners guide](../guides/wiki.md)
 
 ## Raw endpoint access
 
@@ -172,5 +197,3 @@ service `data` and generally accept `lang` and, for signed reads, `ttl`.
   sequentially and validates continuation cursors.
 
 Use `ttl=0` on supported raw signed GET methods to bypass response caching.
-Pull history and wiki articles currently have raw fetch helpers, rather than
-complete typed fetch-and-aggregate APIs.

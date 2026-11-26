@@ -91,42 +91,36 @@ does not require public card sharing or character asset loading.
 ## Inventory and attendance
 
 ```python
-inventory = await client.endfield.inventory(token=owner_token, role=role)
-attendance = await client.endfield.attendance(token=owner_token, role=role)
+inventory = await client.endfield.inventory(token=owner_token, role=role, raw=False)
+attendance = await client.endfield.attendance(token=owner_token, role=role, raw=False)
+print(len(inventory.operators), len(attendance.available_days))
 ```
 
-These methods return raw decoded data. To claim the account's daily attendance
-reward, call `check_in()` explicitly:
+Use `raw=False` for typed results. The default `raw=True` returns the decoded
+service response. To claim the account's daily attendance reward, call
+`check_in()` explicitly.
 
 ```python
-result = await client.endfield.check_in(token=owner_token, role=role)
+result = await client.endfield.check_in(token=owner_token, role=role, raw=False)
+for award, reward in zip(result.awards, result.rewards, strict=True):
+    print(reward.name if reward else award.id)
 ```
 
-`check_in()` performs a write. The SDK does not automatically replay writes after
-an uncertain network failure. An explicit already-claimed response raises
-`AlreadyCheckedIn`.
+`check_in()` sends one write attempt. An explicit already-claimed response
+raises `AlreadyCheckedIn`.
 
 ## Pull records
 
-Pull methods currently return raw pages through `client.endfield.raw`:
+Fetch typed history for the selected owner and save its checkpoints for a
+later refresh.
 
 ```python
-page = await client.endfield.raw.character_pulls(
-    token=owner_token,
-    role=role,
-)
-
-async for page in client.endfield.raw.pulls.iter_character_pages(
-    token=owner_token,
-    role=role,
-):
-    for record in page.get("list", []):
-        print(record)
+history = await client.endfield.pulls(token=owner_token, role=role)
+for record in history.records:
+    print(record.pulled_at, record.item.name)
 ```
 
-The iterator follows pages sequentially and raises `DecodeError` for a missing
-or repeated continuation cursor. Weapon history uses `weapon_pools()` followed
-by `weapon_pulls(token=..., pool_id=...)`. Typed history and pity aggregation
-are not exposed yet.
+For incremental sync, pity, and export formats, see the
+[pull history guide](pull-history.md).
 
 See [errors and retries](errors-and-retries.md) for failure handling.
