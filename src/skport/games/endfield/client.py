@@ -3,16 +3,22 @@
 from __future__ import annotations
 
 import asyncio
-from typing import TYPE_CHECKING, Any
+from collections.abc import Collection, Mapping
+from datetime import datetime
+from typing import TYPE_CHECKING, Any, Literal, overload
 
 from skport.api import SkportAPI
 from skport.assets import AssetManager
 from skport.config import ClientConfig, Language, parse_language
 from skport.errors import ConfigError, DecodeError
 from skport.games.base import Game
+from skport.games.endfield.clean.attendance import attendance_status, check_in_result
+from skport.games.endfield.clean.inventory import inventory as build_inventory
+from skport.games.endfield.clean.reference import enum_catalog, notices
 from skport.games.endfield.clean.user import build_verified_user
 from skport.games.endfield.identity import Role, Target, parse_roles, select_role
 from skport.games.endfield.models import (
+    Banner,
     CharacterBuild,
     ContractState,
     FactoryState,
@@ -20,8 +26,13 @@ from skport.games.endfield.models import (
     MonumentState,
     PlayerCard,
     PlayerIdentity,
+    PullHistory,
     VerifiedUser,
 )
+from skport.games.endfield.models.attendance import AttendanceStatus, CheckInResult
+from skport.games.endfield.models.inventory import Inventory
+from skport.games.endfield.models.reference import EnumCatalog, Notice
+from skport.games.endfield.models.wiki import WikiPage, WikiSummary
 from skport.games.endfield.selection import character_records, select_character
 
 if TYPE_CHECKING:
@@ -31,8 +42,8 @@ if TYPE_CHECKING:
 class EndfieldClient:
     """Separate public showcase reads from explicit token-owner operations.
 
-    Domain methods return Pydantic output by default. raw=True preserves the
-    phase-one dictionary/list behavior; raw endpoint methods remain on raw.
+    Domain methods expose normalized results. Attendance, claims and inventory
+    retain their original default response shape. Raw endpoints are on raw.
     """
 
     game: Game | str = Game.ENDFIELD
@@ -361,15 +372,115 @@ class EndfieldClient:
             detail, self._player(target, data), self.config.icon_source, roster=roster
         )
 
+    async def pulls(
+        self,
+        *,
+        token: str,
+        role: Role | str | None = None,
+        lang: str | Language | None = None,
+        since: PullHistory | None = None,
+        after: datetime | None = None,
+        featured_items: Mapping[tuple[str, str, int | None], Collection[str]] | None = None,
+    ) -> PullHistory:
+        """Fetch or incrementally refresh the selected owner's pull history."""
+        return await self.raw.pulls.history(
+            token=token, role=role, lang=lang, since=since, after=after, featured_items=featured_items
+        )
+
+    async def wiki_catalog(
+        self,
+        *,
+        type_sub_id: int,
+        type_main_id: int = 1,
+        lang: str | Language | None = None,
+    ) -> list[WikiSummary]:
+        """List entries in a localized SKPORT Wiki category."""
+        from skport.games.endfield.clean.wiki import wiki_catalog
+
+        data = await self.raw.wiki_catalog(type_sub_id=type_sub_id, type_main_id=type_main_id, lang=lang)
+        return wiki_catalog(data, self.config.icon_source)
+
+    async def wiki_item(
+        self,
+        item_id: str | int,
+        *,
+        lang: str | Language | None = None,
+        index: Mapping[str, WikiSummary] | None = None,
+    ) -> WikiPage:
+        """Read a localized wiki page with ordered sections and readable fields."""
+        from skport.games.endfield.clean.wiki import wiki_page
+
+        return wiki_page(await self.raw.wiki_item(item_id, lang=lang), self.config.icon_source, index=index)
+
+    async def char_banners(self, *, lang: str | Language | None = None) -> list[Banner]:
+        """List public character banner metadata."""
+        from skport.games.endfield.clean.wiki import banners
+
+        return banners(await self.raw.char_banners(lang=lang), kind="character", preferred=self.config.icon_source)
+
+    async def weapon_banners(self, *, lang: str | Language | None = None) -> list[Banner]:
+        """List public weapon banner metadata."""
+        from skport.games.endfield.clean.wiki import banners
+
+        return banners(await self.raw.weapon_banners(lang=lang), kind="weapon", preferred=self.config.icon_source)
+
+    async def enums(self, *, lang: str | Language | None = None) -> EnumCatalog:
+        """Read localized Endfield enum keys and labels."""
+        locale = self._language(lang)
+        return enum_catalog(await self.raw.enums(lang=locale), locale, self.config.icon_source)
+
+    async def news(self, *, lang: str | Language | None = None) -> list[Notice]:
+        """Read the game bulletin feed as display-ready text."""
+        locale = self._language(lang)
+        return notices(await self.raw.news(lang=locale), locale)
+
+    @overload
+    async def attendance(
+        self, *, token: str, role: Role | str | None = None,
+        lang: str | Language | None = None, raw: Literal[True] = True,
+    ) -> dict[str, Any]: ...
+
+    @overload
+    async def attendance(
+        self, *, token: str, role: Role | str | None = None,
+        lang: str | Language | None = None, raw: Literal[False],
+    ) -> AttendanceStatus: ...
+
+    @overload
+    async def attendance(
+        self, *, token: str, role: Role | str | None = None,
+        lang: str | Language | None = None, raw: bool,
+    ) -> AttendanceStatus | dict[str, Any]: ...
+
     async def attendance(
         self,
         *,
         token: str,
         role: Role | str | None = None,
         lang: str | Language | None = None,
-    ) -> dict[str, Any]:
-        """Read attendance using the explicitly supplied account's token."""
-        return await self.raw.attendance(token=token, role=role, lang=lang)
+        raw: bool = True,
+    ) -> AttendanceStatus | dict[str, Any]:
+        """Read the owner's attendance calendar. Pass raw=False for typed output."""
+        data = await self.raw.attendance(token=token, role=role, lang=lang)
+        return data if raw else attendance_status(data, self.config.icon_source)
+
+    @overload
+    async def check_in(
+        self, *, token: str, role: Role | str | None = None,
+        lang: str | Language | None = None, raw: Literal[True] = True,
+    ) -> dict[str, Any]: ...
+
+    @overload
+    async def check_in(
+        self, *, token: str, role: Role | str | None = None,
+        lang: str | Language | None = None, raw: Literal[False],
+    ) -> CheckInResult: ...
+
+    @overload
+    async def check_in(
+        self, *, token: str, role: Role | str | None = None,
+        lang: str | Language | None = None, raw: bool,
+    ) -> CheckInResult | dict[str, Any]: ...
 
     async def check_in(
         self,
@@ -377,9 +488,29 @@ class EndfieldClient:
         token: str,
         role: Role | str | None = None,
         lang: str | Language | None = None,
-    ) -> dict[str, Any]:
-        """Claim daily attendance for the explicitly supplied account."""
-        return await self.raw.check_in(token=token, role=role, lang=lang)
+        raw: bool = True,
+    ) -> CheckInResult | dict[str, Any]:
+        """Claim daily attendance once. Pass raw=False for typed rewards."""
+        data = await self.raw.check_in(token=token, role=role, lang=lang)
+        return data if raw else check_in_result(data, self.config.icon_source)
+
+    @overload
+    async def inventory(
+        self, *, token: str, role: Role | str | None = None,
+        lang: str | Language | None = None, raw: Literal[True] = True,
+    ) -> dict[str, Any]: ...
+
+    @overload
+    async def inventory(
+        self, *, token: str, role: Role | str | None = None,
+        lang: str | Language | None = None, raw: Literal[False],
+    ) -> Inventory: ...
+
+    @overload
+    async def inventory(
+        self, *, token: str, role: Role | str | None = None,
+        lang: str | Language | None = None, raw: bool,
+    ) -> Inventory | dict[str, Any]: ...
 
     async def inventory(
         self,
@@ -387,9 +518,11 @@ class EndfieldClient:
         token: str,
         role: Role | str | None = None,
         lang: str | Language | None = None,
-    ) -> dict[str, Any]:
-        """Read inventory using the explicitly supplied account's token."""
-        return await self.raw.inventory(token=token, role=role, lang=lang)
+        raw: bool = True,
+    ) -> Inventory | dict[str, Any]:
+        """Read the owner's inventory. Pass raw=False for typed categories."""
+        data = await self.raw.inventory(token=token, role=role, lang=lang)
+        return data if raw else build_inventory(data, self.config.icon_source)
 
     async def _owner_target(self, token: str, role: Role) -> Target:
         credential = await self.api.pool.credential_for(token)

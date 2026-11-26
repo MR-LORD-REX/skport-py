@@ -10,6 +10,7 @@ from skport.config import ClientConfig, MissingAssetPolicy, parse_language
 from skport.errors import AssetError, MappingError, SkportError
 from skport.games.endfield.clean.character import build_character
 from skport.games.endfield.clean.profile import build_player_card
+from skport.games.endfield.clean.reference import enum_catalog
 from skport.games.endfield.identity import Target
 from skport.games.endfield.models import CharacterBuild, ModelIssue, PlayerCard, PlayerIdentity
 
@@ -36,14 +37,14 @@ class BuildService:
         """Use stable enum keys for localized equipment labels when available."""
         try:
             enums = await self.api.endfield.enums(lang=locale)
+            catalog = enum_catalog(enums, locale, self.config.icon_source)
         except SkportError:
             return {}
         return {
-            str(entry["key"]): str(entry.get("value") or "")
-            for entries in enums.values()
-            if isinstance(entries, list)
+            entry.key: entry.name
+            for entries in catalog.groups.values()
             for entry in entries
-            if isinstance(entry, dict) and entry.get("key")
+            if entry.key
         }
 
     async def characters(

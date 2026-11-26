@@ -17,6 +17,20 @@ _MARKUP = re.compile(r"<(?:[@#][^>]+|/)>|</?(?:color|b|i)(?:=[^>]*)?>")
 _PARAMETER = re.compile(r"\{([A-Za-z0-9_]+)(?::([^}]+))?\}")
 
 
+def wire_object(value: Any, source: str) -> dict[str, Any]:
+    """Require a JSON object at a response boundary."""
+    if not isinstance(value, dict):
+        raise DecodeError(f"{source} must be an object")
+    return value
+
+
+def wire_list(value: Any, source: str) -> list[Any]:
+    """Require a JSON array at a response boundary."""
+    if not isinstance(value, list):
+        raise DecodeError(f"{source} must be an array")
+    return value
+
+
 def image_links(
     skport: str | None = None, enka: str | None = None,
     preferred: ImageSource = ImageSource.SKPORT,

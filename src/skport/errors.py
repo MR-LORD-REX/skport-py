@@ -175,7 +175,10 @@ def check_envelope(
         raise PrivacyError("requested information is hidden", **context)
     if code == 10001:
         if path == ATTENDANCE_PATH and method.upper() == "POST":
-            if any(text in message for text in ("already", "重复", "已签到", "signed today")):
+            if any(
+                text in message
+                for text in ("already", "重复", "已签到", "signed today", "do not sign in again")
+            ):
                 raise AlreadyCheckedIn("daily reward was already claimed", **context)
         if target and ("binding" in path or path.endswith("/user") or "not found" in message):
             raise TargetNotFound("no valid information found for target", **context)
