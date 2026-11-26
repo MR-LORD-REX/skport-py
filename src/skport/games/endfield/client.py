@@ -282,7 +282,7 @@ class EndfieldClient:
         lang: str | Language | None = None,
         raw: bool = False,
     ) -> PlayerCard | dict[str, Any]:
-        """Fetch the player's public Endfield game profile through ``card()``.
+        """Fetch the player's public Endfield game profile through containing all the public data .
 
         Args:
             skport_id: Public SKPORT community ID of the player.
