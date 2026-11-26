@@ -61,7 +61,12 @@ from skport.games.endfield.models.stats import (
     format_percent,
 )
 from skport.games.endfield.models.talents import Potential, TalentNode, TalentTree
-from skport.games.endfield.models.user import VerifiedUser
+from skport.games.endfield.models.user import (
+    SocialProfile,
+    SocialProfileCounts,
+    SocialProfilePendant,
+    VerifiedUser,
+)
 from skport.games.endfield.models.weapon import Gem, GemTerm, Weapon
 from skport.games.endfield.models.wiki import (
     WikiAssociation,
@@ -174,6 +179,9 @@ __all__ = [
     "Settlement",
     "Skill",
     "SkillForm",
+    "SocialProfile",
+    "SocialProfileCounts",
+    "SocialProfilePendant",
     "StageRun",
     "StatBlock",
     "StatContribution",

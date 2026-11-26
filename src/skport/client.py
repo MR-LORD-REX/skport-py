@@ -15,11 +15,11 @@ from skport.games.registry import GameRegistry
 
 
 class SkportClient:
-    """Compose game clients over one reusable SKPORT API.
+    """Use one SKPORT API to access registered game clients.
 
-    Supply ``api=`` to share a token pool across clients, or ``tokens=`` to let
-    this facade create and own the API. Closing a facade never closes an API
-    supplied by the caller.
+    Use ``client.endfield`` for Endfield operations and ``game()`` for other
+    registered clients. Use ``async with SkportClient(...)`` to release the
+    resources created by the client when finished.
     """
 
     def __init__(
@@ -33,6 +33,26 @@ class SkportClient:
         icon_source: str | ImageSource | None = None,
         assets: AssetManager | None = None,
     ) -> None:
+        """Create a client from an existing API or a list of account tokens.
+
+        Args:
+            api: Existing ``SkportAPI`` to share across clients. The caller
+                manages its lifetime.
+            tokens: Nonempty list of account tokens for a client-created API.
+            config: API settings used when constructing an API from tokens.
+            lang: Default request language for a client-created API. Overrides
+                the language in ``config`` when supplied.
+            region: Deployment for a client-created API. Only the global
+                deployment is supported.
+            icon_source: Preferred source for artwork in normalized results.
+            assets: Existing ``AssetManager`` to share with game clients. The
+                caller manages its lifetime.
+
+        Raises:
+            ConfigError: Neither data source was supplied, ``api`` was combined
+                with ``tokens``, ``config``, ``lang`` or ``region``, or a setting
+                is invalid.
+        """
         try:
             preferred_icons = ImageSource(icon_source) if icon_source is not None else None
         except ValueError as exc:
@@ -64,42 +84,74 @@ class SkportClient:
         )
 
     async def __aenter__(self) -> SkportClient:
-        """Enter the facade without authenticating until needed."""
+        """Return this client for an ``async with`` block.
+
+        Network authentication begins on the first request or a call to ``warm()``.
+        """
         self._require_open()
         return self
 
     async def __aexit__(self, *_: object) -> None:
+        """Release client resources when the context ends."""
         await self.close()
 
     @property
     def endfield(self) -> EndfieldClient:
-        """Return the cached Endfield client sharing this API."""
+        """Return the Endfield client backed by the shared SKPORT API."""
         return cast(EndfieldClient, self.game(Game.ENDFIELD))
 
     @property
     def assets(self) -> AssetManager:
-        """Return the shared asset manager without implicit network activity."""
+        """Return the shared manager for Enka game data and artwork."""
         if self._assets is None:
             self._assets = AssetManager(self.config, self.api.transport)
         return self._assets
 
     async def update_assets(self) -> AssetUpdate:
-        """Update official Enka tables and share the new revision across games."""
+        """Update the Enka game-data snapshot used by game clients.
+
+        Returns:
+            ``AssetUpdate`` with the installed snapshot and whether its source
+            revision changed.
+
+        Raises:
+            AssetError: Updates are unavailable in offline mode, or loading or
+                validating the upstream assets failed.
+            ConfigError: The client is closed.
+        """
         self._require_open()
         return await self.assets.update()
 
     def game(self, game: Game | str) -> GameClient:
-        """Return a registered game client, creating it on first access."""
+        """Get a client for a registered game.
+
+        Args:
+            game: A built-in ``Game`` member or a registered game name.
+
+        Returns:
+            The game's client, created on first access and reused thereafter.
+
+        Raises:
+            ConfigError: The game is unregistered or the client is closed.
+        """
         self._require_open()
         return self.registry.create(game, self.api)
 
     async def warm(self) -> None:
-        """Authenticate the token pool before the first application request."""
+        """Authenticate public pool accounts concurrently before serving requests.
+
+        Raises:
+            PoolExhausted: The pool has no account available to serve a request.
+            ConfigError: The client or its API is closed.
+        """
         self._require_open()
         await self.api.warm()
 
     async def close(self) -> None:
-        """Release game clients and close an API created by this facade."""
+        """Release the game clients and any API or asset manager created here.
+
+        This method is safe to call more than once.
+        """
         if self._closed:
             return
         self._closed = True

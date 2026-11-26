@@ -3,9 +3,9 @@
 Access the Endfield client through `client.endfield`. Unless stated otherwise,
 methods are asynchronous and return normalized Pydantic output models.
 
-Public methods select a target with `skport_id`. Optional `role_id`, `server_id`,
-and `lang` apply to public game reads. Owner methods require the account's
-explicit `token` and accept an optional verified `role` and `lang`.
+Public player methods take `skport_id` as a positional or keyword argument.
+Owner methods take the account's `token` the same way. Use keywords for
+options such as `role_id`, `server_id`, `role`, `lang`, and `raw`.
 
 ## Verification
 
@@ -50,17 +50,19 @@ are validated against the target's visible bindings.
 ### profile
 
 ```text
-await client.endfield.profile(*, skport_id=..., lang=None)
+await client.endfield.profile(skport_id, *, lang=None)
 ```
 
 Return raw SKPORT social-profile data. The social username is ordinarily found
-at `response["user"]["basicUser"]["nickname"]`.
+at `response["user"]["basicUser"]["nickname"]`. The profile endpoint reads
+community data. Use `card()` or `owned_card()` for the `PlayerCard` consumed
+by Endfield Cards.
 
 ### card
 
 ```text
 await client.endfield.card(
-    *, skport_id=..., role_id=None, server_id=None, lang=None, raw=False,
+    skport_id, *, role_id=None, server_id=None, lang=None, raw=False,
 )
 ```
 
@@ -71,7 +73,7 @@ skips asset resolution and calculation.
 
 ```text
 await client.endfield.characters(
-    *, skport_id=..., role_id=None, server_id=None,
+    skport_id, *, role_id=None, server_id=None,
     showcase_only=False, full=False, lang=None, raw=False,
 )
 ```
@@ -84,7 +86,7 @@ individual character endpoint for each selected record.
 
 ```text
 await client.endfield.character(
-    *, skport_id=..., char_id=None, name=None, index=None,
+    skport_id, *, char_id=None, name=None, index=None,
     role_id=None, server_id=None, showcase_only=False,
     full=True, lang=None, raw=False,
 )
@@ -99,10 +101,10 @@ uniquely. See [character builds](../guides/character-builds.md).
 ## Reports
 
 ```text
-await client.endfield.activity(skport_id=..., role_id=None, server_id=None, lang=None)
-await client.endfield.factory(skport_id=..., role_id=None, server_id=None, lang=None)
-await client.endfield.monument(skport_id=..., role_id=None, server_id=None, lang=None)
-await client.endfield.contract(skport_id=..., role_id=None, server_id=None, lang=None)
+await client.endfield.activity(skport_id, *, role_id=None, server_id=None, lang=None)
+await client.endfield.factory(skport_id, *, role_id=None, server_id=None, lang=None)
+await client.endfield.monument(skport_id, *, role_id=None, server_id=None, lang=None)
+await client.endfield.contract(skport_id, *, role_id=None, server_id=None, lang=None)
 ```
 
 Return `LiveStatus`, `FactoryState`, `MonumentState`, and `ContractState`,
@@ -112,18 +114,18 @@ endpoint helpers if your application needs service data directly.
 ## Owner reads
 
 ```text
-await client.endfield.owned_card(*, token=..., role=None, lang=None, raw=False)
+await client.endfield.owned_card(token, *, role=None, lang=None, raw=False)
 
 await client.endfield.owned_characters(
-    *, token=..., role=None, full=False, lang=None, raw=False,
+    token, *, role=None, full=False, lang=None, raw=False,
 )
 
 await client.endfield.owned_character(
-    *, token=..., char_id=None, name=None, index=None,
+    token, *, char_id=None, name=None, index=None,
     operator_id=None, role=None, full=True, lang=None, raw=False,
 )
 
-await client.endfield.owned_activity(*, token=..., role=None, lang=None)
+await client.endfield.owned_activity(token, *, role=None, lang=None)
 ```
 
 Return `PlayerCard`, `list[CharacterBuild]`, and `CharacterBuild`, respectively.
@@ -146,20 +148,21 @@ methods, it has no `raw` switch; use `raw.owned_card()` for the source snapshot.
 ## Attendance and inventory
 
 ```text
-await client.endfield.attendance(*, token=..., role=None, lang=None, raw=True)
-await client.endfield.inventory(*, token=..., role=None, lang=None, raw=True)
-await client.endfield.check_in(*, token=..., role=None, lang=None, raw=True)
+await client.endfield.attendance(token, *, role=None, lang=None, raw=True)
+await client.endfield.inventory(token, *, role=None, lang=None, raw=True, enrich=False)
+await client.endfield.check_in(token, *, role=None, lang=None, raw=True)
 ```
 
 Pass `raw=False` to receive `AttendanceStatus`, `Inventory`, and
 `CheckInResult` respectively. The default `raw=True` returns decoded service
 data. `check_in()` sends one claim attempt and raises `AlreadyCheckedIn` for
-a recognized duplicate claim.
+a recognized duplicate claim. Inventory accepts `enrich=True` with `raw=False`
+to fill available names and icons.
 
 ## Pull history
 
 ```text
-await client.endfield.pulls(*, token=..., role=None, lang=None, since=None, after=None, featured_items=None)
+await client.endfield.pulls(token, *, role=None, lang=None, since=None, after=None, featured_items=None)
 ```
 
 Returns `PullHistory` scoped to the selected owner. Use `since` to extend a

@@ -57,10 +57,12 @@ def _optional_lookup_issue(path: str, exc: SkportError) -> ModelIssue:
 
 
 class EndfieldClient:
-    """Separate public showcase reads from explicit token-owner operations.
+    """Fetch Endfield player, owner, and wiki data through a shared SKPORT API.
 
-    Domain methods expose normalized results. Attendance, claims and inventory
-    retain their original default response shape. Raw endpoints are on raw.
+    Public game reads select a player by SKPORT ID. Owner reads require the
+    account token and verify the selected role against that token's bindings.
+    Access decoded service payloads through ``raw`` or through the ``raw`` option
+    on methods that expose it.
     """
 
     game: Game | str = Game.ENDFIELD
@@ -72,6 +74,14 @@ class EndfieldClient:
         assets: AssetManager | None = None,
         config: ClientConfig | None = None,
     ) -> None:
+        """Create an Endfield client over an existing SKPORT API.
+
+        Args:
+            api: Shared API for authentication and requests.
+            assets: Optional shared canonical asset manager. The caller manages
+                its lifetime. The client creates its own manager when needed.
+            config: Client settings. Defaults to the API's configuration.
+        """
         self.api = api
         self.raw = api.endfield
         self.config = config or api.config
@@ -81,14 +91,14 @@ class EndfieldClient:
 
     @property
     def assets(self) -> AssetManager:
-        """Share canonical assets without fetching during client construction."""
+        """Return the canonical asset manager, creating it on first access."""
         if self._assets is None:
             self._assets = AssetManager(self.config, self.api.transport)
         return self._assets
 
     @property
     def builds(self) -> BuildService:
-        """Lazily create the shared public/owner normalization service."""
+        """Return the build service for normalizing cards and character stats."""
         from skport.games.endfield.builds import BuildService
 
         if self._build_service is None:
@@ -96,13 +106,15 @@ class EndfieldClient:
         return self._build_service
 
     async def __aenter__(self) -> EndfieldClient:
+        """Return this client for an ``async with`` block."""
         return self
 
     async def __aexit__(self, *_: object) -> None:
+        """Release the client's owned assets when its context ends."""
         await self.close()
 
     async def close(self) -> None:
-        """Close only canonical resources created by this game client."""
+        """Release the canonical asset manager created by this client, if any."""
         if self._owns_assets and self._assets is not None:
             await self._assets.close()
 
@@ -114,11 +126,34 @@ class EndfieldClient:
         server_id: str | int | None = None,
         lang: str | Language | None = None,
     ) -> Target:
-        """Discover the game UID and validate optional role/server constraints."""
+        """Resolve a public SKPORT ID to a visible Endfield role.
+
+        Args:
+            skport_id: Public SKPORT community ID of the player.
+            role_id: Endfield role ID to match when supplied.
+            server_id: Endfield server ID to match when supplied.
+            lang: Response language. Defaults to the configured language.
+
+        Returns:
+            ``Target`` with the SKPORT ID, Endfield role ID, and server ID.
+
+        Raises:
+            TargetNotFound: The filters select no visible role or are ambiguous.
+        """
         return await self.api.resolve_target(skport_id, role_id=role_id, server_id=server_id, lang=lang)
 
-    async def profile(self, *, skport_id: str | int, lang: str | Language | None = None) -> dict[str, Any]:
-        """Fetch raw public SKPORT social metadata independent of game builds."""
+    async def profile(self, skport_id: str | int, *, lang: str | Language | None = None) -> dict[str, Any]:
+        """Fetch a public SKPORT community profile.
+
+        Args:
+            skport_id: Public SKPORT community ID of the user.
+            lang: Response language. Defaults to the configured language.
+
+        Returns:
+            Decoded social-profile data from ``SkportAPI.user()``, including
+            ``user.basicUser`` and any social counts supplied by the service.
+            Use ``card()`` for the player's Endfield game snapshot.
+        """
         return await self.api.user(skport_id=skport_id, lang=lang)
 
     async def verify_skid(
@@ -129,7 +164,22 @@ class EndfieldClient:
         server_id: str | int | None = None,
         lang: str | Language | None = None,
     ) -> VerifiedUser:
-        """Verify a public SKPORT profile and return its selected Endfield identity."""
+        """Verify a public community profile and its visible Endfield binding.
+
+        Args:
+            skport_id: Public SKPORT community ID as a string or integer.
+            role_id: Endfield role ID to match when supplied.
+            server_id: Endfield server ID to match when supplied.
+            lang: Response language. Defaults to the configured language.
+
+        Returns:
+            ``VerifiedUser`` with social identity and the selected Endfield role,
+            built from fresh profile and binding responses.
+
+        Raises:
+            ConfigError: The SKPORT ID is empty or has an unsupported type.
+            TargetNotFound: The filters select no visible role or are ambiguous.
+        """
         if not isinstance(skport_id, (str, int)) or isinstance(skport_id, bool) or not str(skport_id).strip():
             raise ConfigError("skport_id must be a nonempty identifier")
         normalized_id = str(skport_id).strip()
@@ -148,7 +198,21 @@ class EndfieldClient:
         role: Role | str | None = None,
         lang: str | Language | None = None,
     ) -> VerifiedUser:
-        """Verify the explicit token owner and return their social/game information."""
+        """Verify an account token and its selected Endfield role.
+
+        Args:
+            token: SKPORT account token belonging to the owner.
+            role: Optional owner ``Role`` or ``3_<roleId>_<serverId>`` header.
+            lang: Response language. Defaults to the configured language.
+
+        Returns:
+            ``VerifiedUser`` with social identity and the verified Endfield role,
+            built from fresh profile and binding responses.
+
+        Raises:
+            ConfigError: The token is empty or the role selector is malformed.
+            TargetNotFound: The selector matches no owned role or is ambiguous.
+        """
         if not isinstance(token, str) or not token.strip():
             raise ConfigError("account tokens must be nonempty strings")
         language = self._language(lang)
@@ -160,22 +224,34 @@ class EndfieldClient:
 
     async def card(
         self,
-        *,
         skport_id: str | int,
+        *,
         role_id: str | int | None = None,
         server_id: str | int | None = None,
         lang: str | Language | None = None,
         raw: bool = False,
     ) -> PlayerCard | dict[str, Any]:
-        """Fetch a public player snapshot with canonical builds and statistics."""
+        """Fetch the player's public Endfield game card.
+
+        Args:
+            skport_id: Public SKPORT community ID of the player.
+            role_id: Endfield role ID to match when supplied.
+            server_id: Endfield server ID to match when supplied.
+            lang: Response and model language. Defaults to the configured language.
+            raw: Return decoded service data and skip build normalization.
+
+        Returns:
+            ``PlayerCard`` with the exposed player information, operator builds,
+            and game progress, or the decoded card payload when ``raw=True``.
+        """
         target = await self.resolve(skport_id, role_id=role_id, server_id=server_id, lang=lang)
         data = await self.raw.detail(target, lang=lang)
         return data if raw else await self.builds.card(data, target, self._language(lang))
 
     async def characters(
         self,
-        *,
         skport_id: str | int,
+        *,
         role_id: str | int | None = None,
         server_id: str | int | None = None,
         showcase_only: bool = False,
@@ -183,7 +259,22 @@ class EndfieldClient:
         lang: str | Language | None = None,
         raw: bool = False,
     ) -> list[CharacterBuild] | list[dict[str, Any]]:
-        """Return exposed characters, optionally in configured showcase order."""
+        """Fetch the operators exposed by a public Endfield game card.
+
+        Args:
+            skport_id: Public SKPORT community ID of the player.
+            role_id: Endfield role ID to match when supplied.
+            server_id: Endfield server ID to match when supplied.
+            showcase_only: Limit the result to the player's configured showcase
+                and use its order.
+            full: Fetch the individual detail endpoint for every selected operator.
+            lang: Response and model language. Defaults to the configured language.
+            raw: Return decoded character records and skip build normalization.
+
+        Returns:
+            A list of ``CharacterBuild`` models, or the selected service records
+            when ``raw=True``.
+        """
         target = await self.resolve(skport_id, role_id=role_id, server_id=server_id, lang=lang)
         data = await self.raw.detail(target, lang=lang)
         records = character_records(data, showcase_only)
@@ -198,8 +289,8 @@ class EndfieldClient:
 
     async def character(
         self,
-        *,
         skport_id: str | int,
+        *,
         char_id: str | None = None,
         name: str | None = None,
         index: int | None = None,
@@ -210,7 +301,29 @@ class EndfieldClient:
         lang: str | Language | None = None,
         raw: bool = False,
     ) -> CharacterBuild | dict[str, Any]:
-        """Select one public character by opaque ID, localized name, or index."""
+        """Fetch one operator from a public Endfield game card.
+
+        Args:
+            skport_id: Public SKPORT community ID of the player.
+            char_id: Opaque operator ID returned by SKPORT.
+            name: Localized operator name. Must match one returned operator.
+            index: Zero-based index into the selected roster.
+            role_id: Endfield role ID to match when supplied.
+            server_id: Endfield server ID to match when supplied.
+            showcase_only: Use the configured showcase for roster-based selection.
+            full: Fetch the individual operator detail. Set False to use the
+                snapshot record.
+            lang: Response and model language. Defaults to the configured language.
+            raw: Return the selected service record and skip build normalization.
+
+        Returns:
+            A ``CharacterBuild``, or the selected decoded record when ``raw=True``.
+
+        Raises:
+            ConfigError: Exactly one of ``char_id``, ``name``, or ``index`` is
+                required. Ambiguous names and invalid selectors also raise this.
+            TargetNotFound: No public target or operator matches the selection.
+        """
         if sum(value is not None for value in (char_id, name, index)) != 1:
             raise ConfigError("Supply exactly one of char_id=, name=, or index=")
         if char_id is not None and not char_id:
@@ -243,13 +356,24 @@ class EndfieldClient:
 
     async def owned_card(
         self,
-        *,
         token: str,
+        *,
         role: Role | str | None = None,
         lang: str | Language | None = None,
         raw: bool = False,
     ) -> PlayerCard | dict[str, Any]:
-        """Fetch the explicitly authenticated owner's game snapshot."""
+        """Fetch an Endfield game card using its owner's account token.
+
+        Args:
+            token: SKPORT account token belonging to the owner.
+            role: Optional owner ``Role`` or ``3_<roleId>_<serverId>`` header.
+            lang: Response and model language. Defaults to the configured language.
+            raw: Return decoded service data and skip build normalization.
+
+        Returns:
+            ``PlayerCard`` for the selected role with owner scope, or the decoded
+            card payload when ``raw=True``.
+        """
         selected = await self.raw.role_for(token, role=role, lang=lang)
         data = await self.raw.owned_card(token=token, role=selected, lang=lang)
         if raw:
@@ -259,14 +383,26 @@ class EndfieldClient:
 
     async def owned_characters(
         self,
-        *,
         token: str,
+        *,
         role: Role | str | None = None,
         full: bool = False,
         lang: str | Language | None = None,
         raw: bool = False,
     ) -> list[CharacterBuild] | list[dict[str, Any]]:
-        """Read the token owner's returned roster, rather than a public showcase."""
+        """Fetch the operator roster returned to the selected owner.
+
+        Args:
+            token: SKPORT account token belonging to the owner.
+            role: Optional owner ``Role`` or ``3_<roleId>_<serverId>`` header.
+            full: Fetch the individual detail endpoint for each returned operator.
+            lang: Response and model language. Defaults to the configured language.
+            raw: Return decoded character records and skip build normalization.
+
+        Returns:
+            A list of ``CharacterBuild`` models in roster order, or decoded
+            character records when ``raw=True``.
+        """
         selected = await self.raw.role_for(token, role=role, lang=lang)
         data = await self.raw.owned_card(token=token, role=selected, lang=lang)
         records = character_records(data, False)
@@ -285,8 +421,8 @@ class EndfieldClient:
 
     async def owned_character(
         self,
-        *,
         token: str,
+        *,
         char_id: str | None = None,
         name: str | None = None,
         index: int | None = None,
@@ -296,7 +432,29 @@ class EndfieldClient:
         lang: str | Language | None = None,
         raw: bool = False,
     ) -> CharacterBuild | dict[str, Any]:
-        """Select one owner build by opaque ID, localized name, or roster index."""
+        """Fetch one operator from the selected owner's Endfield roster.
+
+        Args:
+            token: SKPORT account token belonging to the owner.
+            char_id: Opaque operator ID returned by SKPORT.
+            name: Localized operator name. Must match one returned operator.
+            index: Zero-based index into the returned owner roster.
+            operator_id: Optional service operator ID for the full detail request.
+                The detail endpoint uses the selected character ID by default.
+            role: Optional owner ``Role`` or ``3_<roleId>_<serverId>`` header.
+            full: Fetch the individual operator detail. Set False to use the
+                snapshot record.
+            lang: Response and model language. Defaults to the configured language.
+            raw: Return the selected service record and skip build normalization.
+
+        Returns:
+            A ``CharacterBuild``, or the selected decoded record when ``raw=True``.
+
+        Raises:
+            ConfigError: Exactly one of ``char_id``, ``name``, or ``index`` is
+                required. Ambiguous names and invalid selectors also raise this.
+            TargetNotFound: No owner role or operator matches the selection.
+        """
         if sum(value is not None for value in (char_id, name, index)) != 1:
             raise ConfigError("Supply exactly one of char_id=, name=, or index=")
         if char_id is not None and not char_id:
@@ -330,21 +488,49 @@ class EndfieldClient:
             await self.builds.characters([record], self._player(target, card_data), self._language(lang))
         )[0]
 
-    async def activity(self, **ids: Any) -> LiveStatus:
-        """Normalize resource and activity state from the public player snapshot."""
+    async def activity(
+        self,
+        skport_id: str | int,
+        *,
+        role_id: str | int | None = None,
+        server_id: str | int | None = None,
+        lang: str | Language | None = None,
+    ) -> LiveStatus:
+        """Fetch the resource and activity state exposed by a public game card.
+
+        Args:
+            skport_id: Public SKPORT community ID of the player.
+            role_id: Endfield role ID to match when supplied.
+            server_id: Endfield server ID to match when supplied.
+            lang: Response language. Defaults to the configured language.
+
+        Returns:
+            ``LiveStatus`` with available resource meters, recovery timestamps,
+            and activity state.
+        """
         from skport.games.endfield.clean.progress import build_live_status
 
-        data, target = await self._snapshot_data(ids)
+        data, target = await self._snapshot_data(skport_id, role_id, server_id, lang)
         return build_live_status(data, self._player(target, data), self.config.icon_source)
 
     async def owned_activity(
         self,
-        *,
         token: str,
+        *,
         role: Role | str | None = None,
         lang: str | Language | None = None,
     ) -> LiveStatus:
-        """Normalize resources from the explicitly authenticated owner's snapshot."""
+        """Fetch resource and activity state for the selected Endfield owner.
+
+        Args:
+            token: SKPORT account token belonging to the owner.
+            role: Optional owner ``Role`` or ``3_<roleId>_<serverId>`` header.
+            lang: Response language. Defaults to the configured language.
+
+        Returns:
+            ``LiveStatus`` with resource meters, recovery timestamps, and activity
+            state from the authenticated game card.
+        """
         from skport.games.endfield.clean.progress import build_live_status
 
         selected = await self.raw.role_for(token, role=role, lang=lang)
@@ -352,38 +538,92 @@ class EndfieldClient:
         target = await self._owner_target(token, selected)
         return build_live_status(data, self._player(target, data), self.config.icon_source)
 
-    async def factory(self, **ids: Any) -> FactoryState:
-        """Normalize regions, settlements and spaceship crew for factory cards."""
+    async def factory(
+        self,
+        skport_id: str | int,
+        *,
+        role_id: str | int | None = None,
+        server_id: str | int | None = None,
+        lang: str | Language | None = None,
+    ) -> FactoryState:
+        """Fetch public factory, exploration, and Dijiang state.
+
+        Args:
+            skport_id: Public SKPORT community ID of the player.
+            role_id: Endfield role ID to match when supplied.
+            server_id: Endfield server ID to match when supplied.
+            lang: Response language. Defaults to the configured language.
+
+        Returns:
+            ``FactoryState`` with available region and area progress,
+            settlements, Dijiang cabins, and crew.
+        """
         from skport.games.endfield.clean.world import build_factory_state
 
-        data, target = await self._snapshot_data(ids)
+        data, target = await self._snapshot_data(skport_id, role_id, server_id, lang)
         return build_factory_state(data, self._player(target, data), self.config.icon_source)
 
-    async def monument(self, **ids: Any) -> MonumentState:
-        """Normalize stage, completion, medal and team information."""
+    async def monument(
+        self,
+        skport_id: str | int,
+        *,
+        role_id: str | int | None = None,
+        server_id: str | int | None = None,
+        lang: str | Language | None = None,
+    ) -> MonumentState:
+        """Fetch the player's public Monument records.
+
+        Args:
+            skport_id: Public SKPORT community ID of the player.
+            role_id: Endfield role ID to match when supplied.
+            server_id: Endfield server ID to match when supplied.
+            lang: Response and model language. Defaults to the configured language.
+
+        Returns:
+            ``MonumentState`` with available events, stage completions, medals,
+            and teams enriched by the exposed operator roster.
+        """
         from skport.games.endfield.clean.endgame import build_monument_report
 
-        data, target = await self._snapshot_data(ids)
-        detail = await self.raw.indie_hard(target, lang=ids.get("lang"))
+        data, target = await self._snapshot_data(skport_id, role_id, server_id, lang)
+        detail = await self.raw.indie_hard(target, lang=lang)
         roster = await self.builds.characters(
             character_records(data, False),
             self._player(target, data),
-            self._language(ids.get("lang")),
+            self._language(lang),
         )
         return build_monument_report(
             detail, self._player(target, data), self.config.icon_source, roster=roster
         )
 
-    async def contract(self, **ids: Any) -> ContractState:
-        """Normalize crisis-contract summaries and detailed runs."""
+    async def contract(
+        self,
+        skport_id: str | int,
+        *,
+        role_id: str | int | None = None,
+        server_id: str | int | None = None,
+        lang: str | Language | None = None,
+    ) -> ContractState:
+        """Fetch the player's public Contingency Contract records.
+
+        Args:
+            skport_id: Public SKPORT community ID of the player.
+            role_id: Endfield role ID to match when supplied.
+            server_id: Endfield server ID to match when supplied.
+            lang: Response and model language. Defaults to the configured language.
+
+        Returns:
+            ``ContractState`` with available contracts, stage runs, modifiers,
+            and teams enriched by the exposed operator roster.
+        """
         from skport.games.endfield.clean.endgame import build_contract_report
 
-        data, target = await self._snapshot_data(ids)
-        detail = await self.raw.crisis_contract(target, lang=ids.get("lang"))
+        data, target = await self._snapshot_data(skport_id, role_id, server_id, lang)
+        detail = await self.raw.crisis_contract(target, lang=lang)
         roster = await self.builds.characters(
             character_records(data, False),
             self._player(target, data),
-            self._language(ids.get("lang")),
+            self._language(lang),
         )
         return build_contract_report(
             detail, self._player(target, data), self.config.icon_source, roster=roster
@@ -391,15 +631,34 @@ class EndfieldClient:
 
     async def pulls(
         self,
-        *,
         token: str,
+        *,
         role: Role | str | None = None,
         lang: str | Language | None = None,
         since: PullHistory | None = None,
         after: datetime | None = None,
         featured_items: Mapping[tuple[str, str, int | None], Collection[str]] | None = None,
     ) -> PullHistory:
-        """Fetch or incrementally refresh the selected owner's pull history."""
+        """Fetch or refresh the selected owner's pull history.
+
+        Args:
+            token: SKPORT account token belonging to the owner.
+            role: Optional owner ``Role`` or ``3_<roleId>_<serverId>`` header.
+            lang: Response language. Defaults to the configured language.
+            since: Previous history for this owner and role to extend. Use
+                either ``since`` or ``after``.
+            after: Exclusive, timezone-aware cutoff for pull times.
+            featured_items: Optional verified featured item IDs keyed by
+                ``(stream.key, banner_id, pool_version)``.
+
+        Returns:
+            ``PullHistory`` with observed records, stream checkpoints, and
+            coverage and pity information supported by the available data.
+
+        Raises:
+            ConfigError: Both history inputs are supplied, the cutoff lacks a
+                timezone, or the saved history belongs to another account or role.
+        """
         return await self.raw.pulls.history(
             token=token, role=role, lang=lang, since=since, after=after, featured_items=featured_items
         )
@@ -407,7 +666,16 @@ class EndfieldClient:
     async def wiki_categories(
         self, *, lang: str | Language | None = None, ttl: float | None = _WIKI_TTL
     ) -> WikiCatalogTree:
-        """Discover localized categories and their filter vocabulary."""
+        """Fetch the Endfield wiki's category and filter tree.
+
+        Args:
+            lang: Wiki language. Defaults to the configured language.
+            ttl: Cache lifetime in seconds. Use 0 to bypass the cache.
+
+        Returns:
+            ``WikiCatalogTree`` with localized categories, subcategories, and
+            their published filters.
+        """
         from skport.games.endfield.clean.wiki import wiki_categories
 
         locale = self._language(lang)
@@ -422,7 +690,18 @@ class EndfieldClient:
         lang: str | Language | None = None,
         ttl: float | None = _WIKI_TTL,
     ) -> list[WikiSummary]:
-        """List entries in a localized SKPORT Wiki category."""
+        """List the articles in a localized wiki category.
+
+        Args:
+            type_sub_id: Subcategory ID. Omit to list the entire main category.
+            type_main_id: Main category ID. Defaults to 1, Endfield Database.
+            lang: Wiki language. Defaults to the configured language.
+            ttl: Cache lifetime in seconds. Use 0 to bypass the cache.
+
+        Returns:
+            A list of ``WikiSummary`` records with article IDs, names, artwork,
+            and game associations when the catalog provides them.
+        """
         from skport.games.endfield.clean.wiki import wiki_catalog
 
         data = await self.raw.wiki_catalog(
@@ -438,7 +717,19 @@ class EndfieldClient:
         lang: str | Language | None = None,
         ttl: float | None = _WIKI_TTL,
     ) -> list[WikiSummary]:
-        """Search the service and optionally filter its results by (main ID, subcategory ID)."""
+        """Search published wiki articles using the service's search results.
+
+        Args:
+            keyword: Search text in the requested language.
+            category: Optional ``(main_type_id, type_sub_id)`` filter applied
+                locally to the returned matches.
+            lang: Wiki language. Defaults to the configured language.
+            ttl: Cache lifetime in seconds. Use 0 to bypass the cache.
+
+        Returns:
+            A list of ``WikiSummary`` matches in service order. An empty or
+            whitespace-only keyword returns an empty list.
+        """
         from skport.games.endfield.clean.wiki import wiki_search
 
         if not keyword.strip():
@@ -457,7 +748,21 @@ class EndfieldClient:
         lang: str | Language | None = None,
         ttl: float | None = _WIKI_TTL,
     ) -> WikiBatchResult:
-        """Resolve exact article IDs in batches of up to 30, retaining omitted IDs."""
+        """Resolve exact wiki article IDs in batches of up to 30.
+
+        Args:
+            ids: Collection of nonempty wiki article IDs as strings or integers.
+                Duplicate IDs are requested once.
+            lang: Wiki language. Defaults to the configured language.
+            ttl: Cache lifetime in seconds. Use 0 to bypass the cache.
+
+        Returns:
+            ``WikiBatchResult`` with summaries keyed by article ID, category
+            metadata, and the IDs omitted by the endpoint.
+
+        Raises:
+            ConfigError: The collection or one of its article IDs is invalid.
+        """
         from skport.games.endfield.clean.wiki import wiki_batch
 
         if isinstance(ids, (str, bytes)) or any(
@@ -484,7 +789,18 @@ class EndfieldClient:
         lang: str | Language | None = None,
         ttl: float | None = _WIKI_TTL,
     ) -> WikiIndex:
-        """Index discovered categories or specified (main ID, subcategory ID) pairs."""
+        """Build an index of wiki articles and their game associations.
+
+        Args:
+            categories: Optional collection of ``(main_type_id, type_sub_id)``
+                pairs. Omit to discover and index all main categories.
+            lang: Wiki language. Defaults to the configured language.
+            ttl: Cache lifetime in seconds. Use 0 to bypass the cache.
+
+        Returns:
+            ``WikiIndex`` keyed by article ID, with category-scoped game ID
+            lookup and issues for category requests that failed.
+        """
         locale = self._language(lang)
         selections: list[tuple[int, int | None]]
         if categories is None:
@@ -517,7 +833,23 @@ class EndfieldClient:
         index: Mapping[str, WikiSummary] | None = None,
         ttl: float | None = _WIKI_TTL,
     ) -> WikiPage:
-        """Read a localized wiki page with ordered sections and readable fields."""
+        """Fetch one published wiki article.
+
+        Args:
+            item_id: Wiki article ID from the catalog or search.
+            lang: Wiki language. Defaults to the configured language.
+            index: Optional summaries keyed by wiki article ID for resolving
+                inline item links.
+            ttl: Cache lifetime in seconds. Use 0 to bypass the cache.
+
+        Returns:
+            ``WikiPage`` with article metadata, ordered sections, media, tables,
+            lists, and any parsing issues.
+
+        Raises:
+            WikiNotFound: The service has no article for this ID and language.
+            DecodeError: The returned article is malformed.
+        """
         from skport.games.endfield.clean.wiki import wiki_page
 
         data = await self.raw.wiki_item(item_id, lang=self._language(lang), ttl=ttl)
@@ -541,7 +873,23 @@ class EndfieldClient:
         fallback_lang: str | Language | None = None,
         ttl: float | None = _WIKI_TTL,
     ) -> WikiOperatorReference:
-        """Read a published character reference with base stats and skill rank metrics."""
+        """Fetch a published operator reference from the wiki.
+
+        Args:
+            item_id: Wiki article ID in the Operators category.
+            lang: Wiki language. Defaults to the configured language.
+            fallback_lang: Language to try if the requested article is absent.
+                Existing partial translations are returned in their own language.
+            ttl: Cache lifetime in seconds. Use 0 to bypass the cache.
+
+        Returns:
+            ``WikiOperatorReference`` with profile fields, artwork, published
+            base stats by level, and skill metrics by rank when available.
+
+        Raises:
+            ConfigError: The article is outside the Operators category.
+            WikiNotFound: The article is unavailable in the selected language.
+        """
         from skport.games.endfield.clean.wiki_operator import wiki_operator
 
         locale = self._language(lang)
@@ -556,7 +904,24 @@ class EndfieldClient:
         fallback_lang: str | Language | None = None,
         ttl: float | None = _WIKI_TTL,
     ) -> WikiUpgradeGuide:
-        """Read published upgrade steps and resolve their materials in the article's locale."""
+        """Fetch an operator's published upgrade steps and material costs.
+
+        Args:
+            item_id: Wiki article ID in the Operators category.
+            lang: Wiki language. Defaults to the configured language.
+            fallback_lang: Language to try if the requested article is absent.
+                Existing partial translations are returned in their own language.
+            ttl: Cache lifetime in seconds. Use 0 to bypass the cache.
+
+        Returns:
+            ``WikiUpgradeGuide`` with selectable steps, published cost options,
+            source cells, and localized material summaries where available.
+            Use ``total()`` to sum selected steps and identify unpriced costs.
+
+        Raises:
+            ConfigError: The article is outside the Operators category.
+            WikiNotFound: The article is unavailable in the selected language.
+        """
         from skport.games.endfield.clean.wiki_upgrade import wiki_upgrade_guide
 
         locale = self._language(lang)
@@ -585,7 +950,20 @@ class EndfieldClient:
     async def wiki_material(
         self, item_id: str | int, *, lang: str | Language | None = None, ttl: float | None = _WIKI_TTL
     ) -> WikiMaterial:
-        """Read an item's published acquisition, usage, and documented recipes."""
+        """Fetch a wiki article's material acquisition and usage information.
+
+        Args:
+            item_id: Wiki article ID of the material.
+            lang: Wiki language. Defaults to the configured language.
+            ttl: Cache lifetime in seconds. Use 0 to bypass the cache.
+
+        Returns:
+            ``WikiMaterial`` with available acquisition and usage sections,
+            documented recipes, and any parsing issues.
+
+        Raises:
+            WikiNotFound: The article is unavailable in the selected language.
+        """
         from skport.games.endfield.clean.wiki import wiki_material
 
         return wiki_material(await self.wiki_item(item_id, lang=lang, ttl=ttl))
@@ -593,13 +971,33 @@ class EndfieldClient:
     async def char_banners(
         self, *, lang: str | Language | None = None, ttl: float | None = _BANNER_TTL, enrich: bool = True
     ) -> list[Banner]:
-        """List public character banner metadata."""
+        """Fetch published character banners from the wiki.
+
+        Args:
+            lang: Wiki language. Defaults to the configured language.
+            ttl: Cache lifetime in seconds. Use 0 to bypass the cache.
+            enrich: Resolve blank item names from their linked wiki articles.
+
+        Returns:
+            A list of ``Banner`` models with featured characters, available
+            regional pool windows, and any enrichment issues.
+        """
         return await self._wiki_banners("character", self._language(lang), ttl, enrich)
 
     async def weapon_banners(
         self, *, lang: str | Language | None = None, ttl: float | None = _BANNER_TTL, enrich: bool = True
     ) -> list[Banner]:
-        """List public weapon banner metadata."""
+        """Fetch published weapon banners from the wiki.
+
+        Args:
+            lang: Wiki language. Defaults to the configured language.
+            ttl: Cache lifetime in seconds. Use 0 to bypass the cache.
+            enrich: Resolve blank item names from their linked wiki articles.
+
+        Returns:
+            A list of ``Banner`` models with featured weapons, available
+            regional pool windows, and any enrichment issues.
+        """
         return await self._wiki_banners("weapon", self._language(lang), ttl, enrich)
 
     async def _wiki_banners(
@@ -636,103 +1034,156 @@ class EndfieldClient:
         return result
 
     async def enums(self, *, lang: str | Language | None = None) -> EnumCatalog:
-        """Read localized Endfield enum keys and labels."""
+        """Fetch the game's localized enum catalog.
+
+        Args:
+            lang: Response language. Defaults to the configured language.
+
+        Returns:
+            ``EnumCatalog`` with available enum keys, labels, and artwork.
+        """
         locale = self._language(lang)
         return enum_catalog(await self.raw.enums(lang=locale), locale, self.config.icon_source)
 
     async def news(self, *, lang: str | Language | None = None) -> list[Notice]:
-        """Read the game bulletin feed as display-ready text."""
+        """Fetch the official Endfield news feed.
+
+        Args:
+            lang: Bulletin language. Defaults to the configured language.
+
+        Returns:
+            A list of ``Notice`` models with localized bulletin text and
+            available artwork and links.
+        """
         locale = self._language(lang)
         return notices(await self.raw.news(lang=locale), locale)
 
     @overload
     async def attendance(
-        self, *, token: str, role: Role | str | None = None,
+        self, token: str, *, role: Role | str | None = None,
         lang: str | Language | None = None, raw: Literal[True] = True,
     ) -> dict[str, Any]: ...
 
     @overload
     async def attendance(
-        self, *, token: str, role: Role | str | None = None,
+        self, token: str, *, role: Role | str | None = None,
         lang: str | Language | None = None, raw: Literal[False],
     ) -> AttendanceStatus: ...
 
     @overload
     async def attendance(
-        self, *, token: str, role: Role | str | None = None,
+        self, token: str, *, role: Role | str | None = None,
         lang: str | Language | None = None, raw: bool,
     ) -> AttendanceStatus | dict[str, Any]: ...
 
     async def attendance(
         self,
-        *,
         token: str,
+        *,
         role: Role | str | None = None,
         lang: str | Language | None = None,
         raw: bool = True,
     ) -> AttendanceStatus | dict[str, Any]:
-        """Read the owner's attendance calendar. Pass raw=False for typed output."""
+        """Fetch the selected owner's daily attendance calendar.
+
+        Args:
+            token: SKPORT account token belonging to the owner.
+            role: Optional owner ``Role`` or ``3_<roleId>_<serverId>`` header.
+            lang: Response language. Defaults to the configured language.
+            raw: Return decoded service data by default. Set False for a model.
+
+        Returns:
+            The decoded calendar payload, or ``AttendanceStatus`` with
+            available signed days and rewards when ``raw=False``.
+        """
         data = await self.raw.attendance(token=token, role=role, lang=lang)
         return data if raw else attendance_status(data, self.config.icon_source)
 
     @overload
     async def check_in(
-        self, *, token: str, role: Role | str | None = None,
+        self, token: str, *, role: Role | str | None = None,
         lang: str | Language | None = None, raw: Literal[True] = True,
     ) -> dict[str, Any]: ...
 
     @overload
     async def check_in(
-        self, *, token: str, role: Role | str | None = None,
+        self, token: str, *, role: Role | str | None = None,
         lang: str | Language | None = None, raw: Literal[False],
     ) -> CheckInResult: ...
 
     @overload
     async def check_in(
-        self, *, token: str, role: Role | str | None = None,
+        self, token: str, *, role: Role | str | None = None,
         lang: str | Language | None = None, raw: bool,
     ) -> CheckInResult | dict[str, Any]: ...
 
     async def check_in(
         self,
-        *,
         token: str,
+        *,
         role: Role | str | None = None,
         lang: str | Language | None = None,
         raw: bool = True,
     ) -> CheckInResult | dict[str, Any]:
-        """Claim daily attendance once. Pass raw=False for typed rewards."""
+        """Submit one daily attendance claim for the selected owner role.
+
+        Args:
+            token: SKPORT account token belonging to the owner.
+            role: Optional owner ``Role`` or ``3_<roleId>_<serverId>`` header.
+            lang: Response language. Defaults to the configured language.
+            raw: Return decoded service data by default. Set False for a model.
+
+        Returns:
+            The decoded claim response, or ``CheckInResult`` with the returned
+            rewards when ``raw=False``.
+
+        Raises:
+            AlreadyCheckedIn: The service reports an existing daily claim.
+        """
         data = await self.raw.check_in(token=token, role=role, lang=lang)
         return data if raw else check_in_result(data, self.config.icon_source)
 
     @overload
     async def inventory(
-        self, *, token: str, role: Role | str | None = None,
+        self, token: str, *, role: Role | str | None = None,
         lang: str | Language | None = None, raw: Literal[True] = True, enrich: bool = False,
     ) -> dict[str, Any]: ...
 
     @overload
     async def inventory(
-        self, *, token: str, role: Role | str | None = None,
+        self, token: str, *, role: Role | str | None = None,
         lang: str | Language | None = None, raw: Literal[False], enrich: bool = False,
     ) -> Inventory: ...
 
     @overload
     async def inventory(
-        self, *, token: str, role: Role | str | None = None,
+        self, token: str, *, role: Role | str | None = None,
         lang: str | Language | None = None, raw: bool, enrich: bool = False,
     ) -> Inventory | dict[str, Any]: ...
 
     async def inventory(
         self,
-        *,
         token: str,
+        *,
         role: Role | str | None = None,
         lang: str | Language | None = None,
         raw: bool = True,
         enrich: bool = False,
     ) -> Inventory | dict[str, Any]:
-        """Read the owner's inventory, optionally enriching typed entries with names and icons."""
+        """Fetch the operators, weapons, gear, and tacticals owned by an Endfield role.
+
+        Args:
+            token: SKPORT account token belonging to the owner.
+            role: Optional owner ``Role`` or ``3_<roleId>_<serverId>`` header.
+            lang: Response language. Defaults to the configured language.
+            raw: Return decoded service data by default. Set False for a model.
+            enrich: For typed output, fill available display metadata using
+                the owner's card and wiki summaries.
+
+        Returns:
+            The decoded inventory payload, or ``Inventory`` with the reported
+            ownership, counts, progression, and any enrichment issues.
+        """
         if raw:
             return await self.raw.inventory(token=token, role=role, lang=lang)
         locale = self._language(lang)
@@ -778,14 +1229,15 @@ class EndfieldClient:
         credential = await self.api.pool.credential_for(token)
         return Target(credential.user_id, role.role_id, role.server_id)
 
-    async def _snapshot_data(self, ids: dict[str, Any]) -> tuple[dict[str, Any], Target]:
-        target = await self.resolve(
-            ids["skport_id"],
-            role_id=ids.get("role_id"),
-            server_id=ids.get("server_id"),
-            lang=ids.get("lang"),
-        )
-        return await self.raw.detail(target, lang=ids.get("lang")), target
+    async def _snapshot_data(
+        self,
+        skport_id: str | int,
+        role_id: str | int | None,
+        server_id: str | int | None,
+        lang: str | Language | None,
+    ) -> tuple[dict[str, Any], Target]:
+        target = await self.resolve(skport_id, role_id=role_id, server_id=server_id, lang=lang)
+        return await self.raw.detail(target, lang=lang), target
 
     def _language(self, value: str | Language | None) -> str:
         return parse_language(value or self.config.lang).value
