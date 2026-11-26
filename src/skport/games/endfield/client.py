@@ -16,7 +16,7 @@ from skport.games.endfield.clean.attendance import attendance_status, check_in_r
 from skport.games.endfield.clean.inventory import enrich_inventory, inventory_wiki_ids
 from skport.games.endfield.clean.inventory import inventory as build_inventory
 from skport.games.endfield.clean.reference import enum_catalog, notices
-from skport.games.endfield.clean.user import build_verified_user
+from skport.games.endfield.clean.user import build_social_profile, build_verified_user
 from skport.games.endfield.identity import Role, Target, parse_roles, select_role
 from skport.games.endfield.models import (
     Banner,
@@ -28,6 +28,7 @@ from skport.games.endfield.models import (
     PlayerCard,
     PlayerIdentity,
     PullHistory,
+    SocialProfile,
     VerifiedUser,
 )
 from skport.games.endfield.models.attendance import AttendanceStatus, CheckInResult
@@ -142,19 +143,48 @@ class EndfieldClient:
         """
         return await self.api.resolve_target(skport_id, role_id=role_id, server_id=server_id, lang=lang)
 
-    async def profile(self, skport_id: str | int, *, lang: str | Language | None = None) -> dict[str, Any]:
+    @overload
+    async def skport_profile(
+        self, skport_id: str | int, *, lang: str | Language | None = None, raw: Literal[False] = False,
+    ) -> SocialProfile: ...
+
+    @overload
+    async def skport_profile(
+        self, skport_id: str | int, *, lang: str | Language | None = None, raw: Literal[True],
+    ) -> dict[str, Any]: ...
+
+    @overload
+    async def skport_profile(
+        self, skport_id: str | int, *, lang: str | Language | None = None, raw: bool,
+    ) -> SocialProfile | dict[str, Any]: ...
+
+    async def skport_profile(
+        self,
+        skport_id: str | int,
+        *,
+        lang: str | Language | None = None,
+        raw: bool = False,
+    ) -> SocialProfile | dict[str, Any]:
         """Fetch a public SKPORT community profile.
 
         Args:
             skport_id: Public SKPORT community ID of the user.
             lang: Response language. Defaults to the configured language.
+            raw: Return the decoded community-profile payload.
 
         Returns:
-            Decoded social-profile data from ``SkportAPI.user()``, including
-            ``user.basicUser`` and any social counts supplied by the service.
-            Use ``card()`` for the player's Endfield game snapshot.
+            ``SocialProfile`` with the community username, biography, avatar,
+            and available social counts, or the decoded payload when ``raw=True``.
+            Use ``profile()`` to fetch the player's Endfield game data.
+
+        Raises:
+            DecodeError: The typed response is malformed or identifies a
+                different user from the requested SKPORT ID.
         """
-        return await self.api.user(skport_id=skport_id, lang=lang)
+        data = await self.api.user(skport_id=skport_id, lang=lang)
+        if raw:
+            return data
+        return build_social_profile(data, self.config.icon_source, expected_id=str(skport_id).strip())
 
     async def verify_skid(
         self,
@@ -221,6 +251,52 @@ class EndfieldClient:
             self.api.user(token=token, lang=language, ttl=0),
         )
         return build_verified_user(social, selected, "owner")
+
+    @overload
+    async def profile(
+        self, skport_id: str | int, *, role_id: str | int | None = None,
+        server_id: str | int | None = None, lang: str | Language | None = None,
+        raw: Literal[False] = False,
+    ) -> PlayerCard: ...
+
+    @overload
+    async def profile(
+        self, skport_id: str | int, *, role_id: str | int | None = None,
+        server_id: str | int | None = None, lang: str | Language | None = None,
+        raw: Literal[True],
+    ) -> dict[str, Any]: ...
+
+    @overload
+    async def profile(
+        self, skport_id: str | int, *, role_id: str | int | None = None,
+        server_id: str | int | None = None, lang: str | Language | None = None,
+        raw: bool,
+    ) -> PlayerCard | dict[str, Any]: ...
+
+    async def profile(
+        self,
+        skport_id: str | int,
+        *,
+        role_id: str | int | None = None,
+        server_id: str | int | None = None,
+        lang: str | Language | None = None,
+        raw: bool = False,
+    ) -> PlayerCard | dict[str, Any]:
+        """Fetch the player's public Endfield game profile through ``card()``.
+
+        Args:
+            skport_id: Public SKPORT community ID of the player.
+            role_id: Endfield role ID to match when supplied.
+            server_id: Endfield server ID to match when supplied.
+            lang: Response and model language. Defaults to the configured language.
+            raw: Return decoded game-card data and skip build normalization.
+
+        Returns:
+            ``PlayerCard`` with exposed player information, operator builds,
+            and game progress, or the decoded game-card payload when ``raw=True``.
+            Use ``skport_profile()`` for the user's SKPORT community profile.
+        """
+        return await self.card(skport_id, role_id=role_id, server_id=server_id, lang=lang, raw=raw)
 
     async def card(
         self,
