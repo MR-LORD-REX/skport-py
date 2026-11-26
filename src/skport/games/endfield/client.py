@@ -10,9 +10,10 @@ from typing import TYPE_CHECKING, Any, Literal, overload
 from skport.api import SkportAPI
 from skport.assets import AssetManager
 from skport.config import ClientConfig, Language, parse_language
-from skport.errors import ConfigError, DecodeError
+from skport.errors import ConfigError, DecodeError, SkportError, WikiNotFound
 from skport.games.base import Game
 from skport.games.endfield.clean.attendance import attendance_status, check_in_result
+from skport.games.endfield.clean.inventory import enrich_inventory, inventory_wiki_ids
 from skport.games.endfield.clean.inventory import inventory as build_inventory
 from skport.games.endfield.clean.reference import enum_catalog, notices
 from skport.games.endfield.clean.user import build_verified_user
@@ -30,13 +31,29 @@ from skport.games.endfield.models import (
     VerifiedUser,
 )
 from skport.games.endfield.models.attendance import AttendanceStatus, CheckInResult
+from skport.games.endfield.models.base import ModelIssue
 from skport.games.endfield.models.inventory import Inventory
 from skport.games.endfield.models.reference import EnumCatalog, Notice
-from skport.games.endfield.models.wiki import WikiPage, WikiSummary
+from skport.games.endfield.models.wiki import WikiMaterial, WikiPage, WikiSummary
+from skport.games.endfield.models.wiki_catalog import WikiBatchResult, WikiCatalogTree, WikiIndex
 from skport.games.endfield.selection import character_records, select_character
 
 if TYPE_CHECKING:
     from skport.games.endfield.builds import BuildService
+    from skport.games.endfield.models.wiki_operator import WikiOperatorReference
+    from skport.games.endfield.models.wiki_upgrade import WikiUpgradeGuide
+
+_WIKI_TTL = 3600
+_BANNER_TTL = 600
+_WIKI_BATCH_SIZE = 30
+
+
+def _optional_lookup_issue(path: str, exc: SkportError) -> ModelIssue:
+    return ModelIssue(
+        code="metadata_lookup_failed",
+        message=f"Optional metadata lookup failed ({type(exc).__name__})",
+        path=path,
+    )
 
 
 class EndfieldClient:
@@ -387,18 +404,110 @@ class EndfieldClient:
             token=token, role=role, lang=lang, since=since, after=after, featured_items=featured_items
         )
 
+    async def wiki_categories(
+        self, *, lang: str | Language | None = None, ttl: float | None = _WIKI_TTL
+    ) -> WikiCatalogTree:
+        """Discover localized categories and their filter vocabulary."""
+        from skport.games.endfield.clean.wiki import wiki_categories
+
+        locale = self._language(lang)
+        data = await self.raw.wiki_categories(lang=locale, ttl=ttl)
+        return wiki_categories(data, self.config.icon_source, locale)
+
     async def wiki_catalog(
         self,
         *,
-        type_sub_id: int,
+        type_sub_id: int | None = None,
         type_main_id: int = 1,
         lang: str | Language | None = None,
+        ttl: float | None = _WIKI_TTL,
     ) -> list[WikiSummary]:
         """List entries in a localized SKPORT Wiki category."""
         from skport.games.endfield.clean.wiki import wiki_catalog
 
-        data = await self.raw.wiki_catalog(type_sub_id=type_sub_id, type_main_id=type_main_id, lang=lang)
+        data = await self.raw.wiki_catalog(
+            type_sub_id=type_sub_id, type_main_id=type_main_id, lang=self._language(lang), ttl=ttl
+        )
         return wiki_catalog(data, self.config.icon_source)
+
+    async def wiki_search(
+        self,
+        keyword: str,
+        *,
+        category: tuple[int, int] | None = None,
+        lang: str | Language | None = None,
+        ttl: float | None = _WIKI_TTL,
+    ) -> list[WikiSummary]:
+        """Search the service and optionally filter its results by (main ID, subcategory ID)."""
+        from skport.games.endfield.clean.wiki import wiki_search
+
+        if not keyword.strip():
+            return []
+        data = await self.raw.wiki_search(keyword.strip(), lang=self._language(lang), ttl=ttl)
+        results = wiki_search(data, self.config.icon_source)
+        if category is not None:
+            main_id, sub_id = map(str, category)
+            results = [row for row in results if (row.main_type_id, row.sub_type_id) == (main_id, sub_id)]
+        return results
+
+    async def wiki_items(
+        self,
+        ids: Collection[str | int],
+        *,
+        lang: str | Language | None = None,
+        ttl: float | None = _WIKI_TTL,
+    ) -> WikiBatchResult:
+        """Resolve exact article IDs in batches of up to 30, retaining omitted IDs."""
+        from skport.games.endfield.clean.wiki import wiki_batch
+
+        if isinstance(ids, (str, bytes)) or any(
+            isinstance(key, bool) or not isinstance(key, (int, str)) or not str(key).strip() for key in ids
+        ):
+            raise ConfigError("ids must be a collection of nonempty wiki article IDs")
+        locale = self._language(lang)
+        keys = list(dict.fromkeys(str(key).strip() for key in ids))
+        batches = [keys[i : i + _WIKI_BATCH_SIZE] for i in range(0, len(keys), _WIKI_BATCH_SIZE)]
+        data = await asyncio.gather(*(self.raw.wiki_items(group, lang=locale, ttl=ttl) for group in batches))
+        result = WikiBatchResult(locale=locale, requested_ids=keys)
+        for group, payload in zip(batches, data, strict=True):
+            batch = wiki_batch(payload, group, self.config.icon_source, locale)
+            result.items.update(batch.items)
+            result.missing_ids.extend(batch.missing_ids)
+            result.main_categories.update(batch.main_categories)
+            result.subcategories.update(batch.subcategories)
+        return result
+
+    async def wiki_index(
+        self,
+        *,
+        categories: Collection[tuple[int, int]] | None = None,
+        lang: str | Language | None = None,
+        ttl: float | None = _WIKI_TTL,
+    ) -> WikiIndex:
+        """Index discovered categories or specified (main ID, subcategory ID) pairs."""
+        locale = self._language(lang)
+        selections: list[tuple[int, int | None]]
+        if categories is None:
+            tree = await self.wiki_categories(lang=locale, ttl=ttl)
+            selections = [(int(main.key), None) for main in tree.categories if main.key.isdecimal()]
+        else:
+            selections = list(dict.fromkeys(categories))
+        results = await asyncio.gather(
+            *(
+                self.wiki_catalog(type_main_id=main, type_sub_id=sub, lang=locale, ttl=ttl)
+                for main, sub in selections
+            ),
+            return_exceptions=True,
+        )
+        index = WikiIndex(locale=locale)
+        for (main, sub), result in zip(selections, results, strict=True):
+            if isinstance(result, SkportError):
+                index.issues.append(_optional_lookup_issue(f"catalog.{main}.{sub or ''}", result))
+            elif isinstance(result, BaseException):
+                raise result
+            else:
+                index.items.update((row.id, row) for row in result)
+        return index
 
     async def wiki_item(
         self,
@@ -406,23 +515,125 @@ class EndfieldClient:
         *,
         lang: str | Language | None = None,
         index: Mapping[str, WikiSummary] | None = None,
+        ttl: float | None = _WIKI_TTL,
     ) -> WikiPage:
         """Read a localized wiki page with ordered sections and readable fields."""
         from skport.games.endfield.clean.wiki import wiki_page
 
-        return wiki_page(await self.raw.wiki_item(item_id, lang=lang), self.config.icon_source, index=index)
+        data = await self.raw.wiki_item(item_id, lang=self._language(lang), ttl=ttl)
+        return wiki_page(data, self.config.icon_source, index=index)
 
-    async def char_banners(self, *, lang: str | Language | None = None) -> list[Banner]:
+    async def _wiki_reference_page(
+        self, item_id: str | int, lang: str, fallback_lang: str | Language | None, ttl: float | None
+    ) -> WikiPage:
+        try:
+            return await self.wiki_item(item_id, lang=lang, ttl=ttl)
+        except WikiNotFound:
+            if fallback_lang is None or self._language(fallback_lang) == lang:
+                raise
+        return await self.wiki_item(item_id, lang=fallback_lang, ttl=ttl)
+
+    async def wiki_operator(
+        self,
+        item_id: str | int,
+        *,
+        lang: str | Language | None = None,
+        fallback_lang: str | Language | None = None,
+        ttl: float | None = _WIKI_TTL,
+    ) -> WikiOperatorReference:
+        """Read a published character reference with base stats and skill rank metrics."""
+        from skport.games.endfield.clean.wiki_operator import wiki_operator
+
+        locale = self._language(lang)
+        page = await self._wiki_reference_page(item_id, locale, fallback_lang, ttl)
+        return wiki_operator(page, requested_locale=locale)
+
+    async def wiki_upgrade_guide(
+        self,
+        item_id: str | int,
+        *,
+        lang: str | Language | None = None,
+        fallback_lang: str | Language | None = None,
+        ttl: float | None = _WIKI_TTL,
+    ) -> WikiUpgradeGuide:
+        """Read published upgrade steps and resolve their materials in the article's locale."""
+        from skport.games.endfield.clean.wiki_upgrade import wiki_upgrade_guide
+
+        locale = self._language(lang)
+        page = await self._wiki_reference_page(item_id, locale, fallback_lang, ttl)
+        guide = wiki_upgrade_guide(page)
+        guide.requested_locale = locale
+        if guide.material_ids:
+            try:
+                batch = await self.wiki_items(guide.material_ids, lang=page.summary.locale or locale, ttl=ttl)
+            except SkportError as exc:
+                guide.issues.append(_optional_lookup_issue("materials", exc))
+            else:
+                guide = wiki_upgrade_guide(page, index=batch.items)
+                guide.requested_locale = locale
+                guide.issues.extend(batch.issues)
+                guide.issues.extend(
+                    ModelIssue(
+                        code="wiki_material_summary_missing",
+                        message="The batch returned no summary for a referenced material",
+                        path=f"materials.{key}",
+                    )
+                    for key in batch.missing_ids
+                )
+        return guide
+
+    async def wiki_material(
+        self, item_id: str | int, *, lang: str | Language | None = None, ttl: float | None = _WIKI_TTL
+    ) -> WikiMaterial:
+        """Read an item's published acquisition, usage, and documented recipes."""
+        from skport.games.endfield.clean.wiki import wiki_material
+
+        return wiki_material(await self.wiki_item(item_id, lang=lang, ttl=ttl))
+
+    async def char_banners(
+        self, *, lang: str | Language | None = None, ttl: float | None = _BANNER_TTL, enrich: bool = True
+    ) -> list[Banner]:
         """List public character banner metadata."""
-        from skport.games.endfield.clean.wiki import banners
+        return await self._wiki_banners("character", self._language(lang), ttl, enrich)
 
-        return banners(await self.raw.char_banners(lang=lang), kind="character", preferred=self.config.icon_source)
-
-    async def weapon_banners(self, *, lang: str | Language | None = None) -> list[Banner]:
+    async def weapon_banners(
+        self, *, lang: str | Language | None = None, ttl: float | None = _BANNER_TTL, enrich: bool = True
+    ) -> list[Banner]:
         """List public weapon banner metadata."""
+        return await self._wiki_banners("weapon", self._language(lang), ttl, enrich)
+
+    async def _wiki_banners(
+        self, kind: Literal["character", "weapon"], locale: str, ttl: float | None, enrich: bool
+    ) -> list[Banner]:
         from skport.games.endfield.clean.wiki import banners
 
-        return banners(await self.raw.weapon_banners(lang=lang), kind="weapon", preferred=self.config.icon_source)
+        fetch = self.raw.char_banners if kind == "character" else self.raw.weapon_banners
+        result = banners(await fetch(lang=locale, ttl=ttl), kind=kind, preferred=self.config.icon_source)
+        targets = [(banner, item) for banner in result for item in banner.items if item.wiki_id and not item.name]
+        if enrich and targets:
+            try:
+                batch = await self.wiki_items(
+                    [item.wiki_id for _, item in targets if item.wiki_id], lang=locale, ttl=ttl
+                )
+            except SkportError as exc:
+                for banner in result:
+                    if any(item.wiki_id and not item.name for item in banner.items):
+                        banner.issues.append(_optional_lookup_issue("items", exc))
+            else:
+                sub_id = "1" if kind == "character" else "2"
+                for banner, item in targets:
+                    summary = batch.items.get(item.wiki_id or "")
+                    if summary and (summary.main_type_id, summary.sub_type_id) == ("1", sub_id) and summary.name:
+                        item.name = summary.name
+                    else:
+                        banner.issues.append(
+                            ModelIssue(
+                                code="wiki_banner_item_missing",
+                                message="The linked article has no matching banner summary",
+                                path=f"items.{item.id}",
+                            )
+                        )
+        return result
 
     async def enums(self, *, lang: str | Language | None = None) -> EnumCatalog:
         """Read localized Endfield enum keys and labels."""
@@ -497,19 +708,19 @@ class EndfieldClient:
     @overload
     async def inventory(
         self, *, token: str, role: Role | str | None = None,
-        lang: str | Language | None = None, raw: Literal[True] = True,
+        lang: str | Language | None = None, raw: Literal[True] = True, enrich: bool = False,
     ) -> dict[str, Any]: ...
 
     @overload
     async def inventory(
         self, *, token: str, role: Role | str | None = None,
-        lang: str | Language | None = None, raw: Literal[False],
+        lang: str | Language | None = None, raw: Literal[False], enrich: bool = False,
     ) -> Inventory: ...
 
     @overload
     async def inventory(
         self, *, token: str, role: Role | str | None = None,
-        lang: str | Language | None = None, raw: bool,
+        lang: str | Language | None = None, raw: bool, enrich: bool = False,
     ) -> Inventory | dict[str, Any]: ...
 
     async def inventory(
@@ -519,10 +730,49 @@ class EndfieldClient:
         role: Role | str | None = None,
         lang: str | Language | None = None,
         raw: bool = True,
+        enrich: bool = False,
     ) -> Inventory | dict[str, Any]:
-        """Read the owner's inventory. Pass raw=False for typed categories."""
-        data = await self.raw.inventory(token=token, role=role, lang=lang)
-        return data if raw else build_inventory(data, self.config.icon_source)
+        """Read the owner's inventory, optionally enriching typed entries with names and icons."""
+        if raw:
+            return await self.raw.inventory(token=token, role=role, lang=lang)
+        locale = self._language(lang)
+        owner = await self.raw.role_for(token, role=role, lang=locale) if enrich else role
+        data = await self.raw.inventory(token=token, role=owner, lang=locale)
+        result = build_inventory(data, self.config.icon_source, lang=locale)
+        if not enrich:
+            return result
+        return await self._enrich_inventory(result, token=token, role=owner, locale=locale)
+
+    async def _enrich_inventory(
+        self, result: Inventory, *, token: str, role: Role | str | None, locale: str
+    ) -> Inventory:
+        sources = (
+            ("owner_card", self.raw.owned_card(token=token, role=role, lang=locale)),
+            ("operator_catalog", self.wiki_catalog(type_sub_id=1, lang=locale)),
+            ("weapon_catalog", self.wiki_catalog(type_sub_id=2, lang=locale)),
+        )
+        metadata = await asyncio.gather(*(fetch for _, fetch in sources), return_exceptions=True)
+        owner_card: Any = None
+        catalog: list[WikiSummary] = []
+        for (source, _), payload in zip(sources, metadata, strict=True):
+            if isinstance(payload, SkportError):
+                result.issues.append(_optional_lookup_issue(source, payload))
+            elif isinstance(payload, BaseException):
+                raise payload
+            elif source == "owner_card":
+                owner_card = payload
+            else:
+                catalog.extend(payload)
+        ids = inventory_wiki_ids(result, owner_card) - {row.id for row in catalog}
+        summaries: dict[str, WikiSummary] = {}
+        if ids:
+            try:
+                summaries = (await self.wiki_items(sorted(ids), lang=locale)).items
+            except SkportError as exc:
+                result.issues.append(_optional_lookup_issue("wiki_batch", exc))
+        return enrich_inventory(
+            result, self.config.icon_source, lang=locale, owner_card=owner_card, catalog=catalog, summaries=summaries
+        )
 
     async def _owner_target(self, token: str, role: Role) -> Target:
         credential = await self.api.pool.credential_for(token)

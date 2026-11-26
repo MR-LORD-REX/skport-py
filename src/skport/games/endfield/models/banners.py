@@ -7,7 +7,7 @@ from typing import Literal
 
 from pydantic import Field
 
-from skport.games.endfield.models.base import OutputModel
+from skport.games.endfield.models.base import ModelIssue, OutputModel
 from skport.games.endfield.models.item import ItemSummary
 
 
@@ -16,6 +16,7 @@ class BannerItem(ItemSummary):
 
     dot_type: str | int | None = None
     link: str | None = None
+    wiki_id: str | None = None
 
 
 class BannerWindow(OutputModel):
@@ -37,3 +38,4 @@ class Banner(OutputModel):
     windows: list[BannerWindow] = Field(default_factory=list)
     starts_at: datetime | None = None
     ends_at: datetime | None = None
+    issues: list[ModelIssue] = Field(default_factory=list)

@@ -21,6 +21,7 @@ from skport.errors import (
     TargetNotFound,
     TokenNotInPool,
     UnsupportedFormula,
+    WikiNotFound,
 )
 from skport.games.base import Game
 from skport.games.endfield import EndfieldClient, Role, Target
@@ -56,5 +57,6 @@ __all__ = [
     "TokenNotInPool",
     "TokenPool",
     "UnsupportedFormula",
+    "WikiNotFound",
     "__version__",
 ]

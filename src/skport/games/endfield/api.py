@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from typing import TYPE_CHECKING, Any
 
 from skport.config import Language, parse_language, service_language
@@ -126,8 +127,8 @@ class EndfieldRawAPI:
     async def wiki_catalog(
         self,
         *,
-        type_sub_id: int,
-        type_main_id: int = 1,
+        type_sub_id: int | None = None,
+        type_main_id: int | None = 1,
         lang: str | Language | None = None,
         ttl: float | None = None,
     ) -> Any:
@@ -138,6 +139,33 @@ class EndfieldRawAPI:
             params={"typeMainId": type_main_id, "typeSubId": type_sub_id},
             lang=lang,
             ttl=ttl,
+        )
+
+    async def wiki_categories(
+        self, *, lang: str | Language | None = None, ttl: float | None = None
+    ) -> Any:
+        """Fetch the wiki category tree without article listings."""
+        return await self.wiki_catalog(type_main_id=None, lang=lang, ttl=ttl)
+
+    async def wiki_items(
+        self,
+        ids: Sequence[str | int],
+        *,
+        lang: str | Language | None = None,
+        ttl: float | None = None,
+    ) -> Any:
+        """Fetch a metadata batch using the service's repeated ids query keys."""
+        language = parse_language(lang if lang is not None else self.api.config.lang)
+        return await self.api.request(
+            "GET", ep.WIKI_ITEMS, params={"ids": list(ids), "lang": language.value}, lang=language, ttl=ttl
+        )
+
+    async def wiki_search(
+        self, keyword: str, *, lang: str | Language | None = None, ttl: float | None = None
+    ) -> Any:
+        """Fetch the service search results in their original ordering."""
+        return await self.api.request(
+            "GET", ep.WIKI_SEARCH, params={"keyword": keyword}, lang=lang, ttl=ttl
         )
 
     async def wiki_item(

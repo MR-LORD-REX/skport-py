@@ -2,10 +2,19 @@
 
 from __future__ import annotations
 
+from typing import Literal
+
 from pydantic import Field
 
-from skport.games.endfield.models.base import OutputModel
+from skport.games.endfield.models.base import ModelIssue, OutputModel
 from skport.games.endfield.models.item import ItemSummary
+
+
+class InventoryMetadataSource(OutputModel):
+    """The response and language that supplied a display field or wiki crosswalk."""
+
+    source: Literal["inventory", "owner_card", "wiki_catalog", "wiki_batch"]
+    locale: str | None = None
 
 
 class InventoryEntry(ItemSummary):
@@ -13,6 +22,10 @@ class InventoryEntry(ItemSummary):
 
     owned: bool | None = None
     count: int | None = Field(default=None, ge=0)
+    wiki_item_id: str | None = None
+    wiki_item_source: InventoryMetadataSource | None = None
+    name_source: InventoryMetadataSource | None = None
+    icon_source: InventoryMetadataSource | None = None
 
 
 class InventorySkill(OutputModel):
@@ -44,3 +57,4 @@ class Inventory(OutputModel):
     weapons: dict[str, InventoryEntry] = Field(default_factory=dict)
     equipment: dict[str, InventoryEntry] = Field(default_factory=dict)
     tactical_items: dict[str, InventoryEntry] = Field(default_factory=dict)
+    issues: list[ModelIssue] = Field(default_factory=list)

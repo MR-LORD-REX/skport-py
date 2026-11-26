@@ -82,6 +82,10 @@ class TargetNotFound(APIError):
     """No player or role matches the supplied target."""
 
 
+class WikiNotFound(APIError):
+    """No published wiki article exists for the requested ID and locale."""
+
+
 class PoolExhausted(SkportError):
     """All public credential units failed or are cooling down."""
 
