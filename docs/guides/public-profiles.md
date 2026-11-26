@@ -43,8 +43,8 @@ user = await client.endfield.verify_skid(
     server_id=server_id,
 )
 
-card = await client.endfield.card(
-    skport_id=skport_id,
+card = await client.endfield.profile(
+    skport_id,
     role_id=user.game_uid,
     server_id=user.server_id,
 )
@@ -57,7 +57,7 @@ can be selected, the client raises `TargetNotFound`; provide explicit filters.
 ## Read a player card
 
 ```python
-card = await client.endfield.card(skport_id=skport_id)
+card = await client.endfield.profile(skport_id)
 
 print(card.player.name)
 print(card.authority_level, card.world_level)
@@ -65,10 +65,11 @@ print(card.counts.characters, len(card.characters))
 print(card.source_scope, card.roster_complete)
 ```
 
-`counts.characters` is the reported ownership total. `characters` is the list
-returned by the public endpoint. `roster_complete` indicates whether those
-counts agree when the source provides an ownership total; it can be `None` if
-the information is unavailable.
+`profile()` is an alias for `card()`. Both return a `PlayerCard` with the
+selected Endfield role. `counts.characters` is the reported ownership total.
+`characters` is the list returned by the public endpoint. `roster_complete`
+indicates whether those counts agree when the source provides an ownership
+total. It can be `None` if the information is unavailable.
 
 Read `showcase_ids` for the player's configured showcase IDs. To request only
 those characters in configured order:
@@ -86,13 +87,17 @@ be treated as a complete account inventory. For token-owner data, use
 
 ## Read the social profile
 
-`profile()` returns raw SKPORT social data rather than a game card model:
+`skport_profile()` returns a `SocialProfile` for the target's SKPORT community
+account. It reads the community profile without resolving an Endfield binding.
 
 ```python
-social = await client.endfield.profile(skport_id=skport_id)
-basic = social["user"]["basicUser"]
-print(basic["nickname"])
+social = await client.endfield.skport_profile(skport_id)
+print(social.skport_username, social.biography)
+print(social.avatar.url, social.counts.followers)
 ```
+
+For the previous raw social response from `profile()`, call
+`skport_profile(skport_id, raw=True)`.
 
 ## Activity and progression reports
 

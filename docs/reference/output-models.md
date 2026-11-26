@@ -4,7 +4,7 @@ Normalized responses use Pydantic 2 models with snake_case fields. Import them
 from `skport.games.endfield.models` or their focused modules.
 
 ```python
-from skport.games.endfield.models import CharacterBuild, PlayerCard, VerifiedUser
+from skport.games.endfield.models import CharacterBuild, PlayerCard, SocialProfile, VerifiedUser
 ```
 
 ## Serialization
@@ -32,8 +32,16 @@ Verification returns:
 
 These fields contain no account token or intermediate login credentials.
 
+## SocialProfile
+
+`skport_profile()` returns `SocialProfile` with `skport_id`, `skport_username`,
+`biography`, and `avatar`. The model also carries available account timestamps,
+service codes, and an optional `pendant` with an icon. `counts` contains
+`following`, `followers`, and `likes_received`. An unavailable count is `None`.
+
 ## PlayerCard
 
+`profile()` and `card()` return `PlayerCard` for the selected Endfield role.
 Use `player` for the social ID, game UID, server ID, and in-game name. Other
 fields include avatar/banner references, authority/world levels, experience,
 ownership `counts`, mission text, source timestamps, medals, regions, and the

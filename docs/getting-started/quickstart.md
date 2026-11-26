@@ -21,7 +21,7 @@ async def main() -> None:
         user = await client.endfield.verify_skid(os.environ["SKPORT_ID"])
         print(user.skport_username, user.game_uid, user.in_game_name)
 
-        card = await client.endfield.card(skport_id=user.skport_id)
+        card = await client.endfield.profile(user.skport_id)
         print(card.player.name, card.authority_level, card.world_level)
 
         for build in card.characters:
@@ -53,7 +53,8 @@ Verification returns a `VerifiedUser` and performs fresh SKPORT profile and
 binding reads. It does not load Enka assets. The game UID is selected from the
 target's visible bindings; you do not need to know it in advance.
 
-`card()` returns a `PlayerCard` containing normalized `CharacterBuild` objects.
+`profile()` and `card()` return a `PlayerCard` containing normalized
+`CharacterBuild` objects.
 The first build request downloads official canonical tables if no valid local
 asset snapshot exists. Later clients reuse the snapshot by default. SKPORT
 image URLs are preferred wherever available.

@@ -47,27 +47,30 @@ await client.endfield.resolve(skport_id, *, role_id=None, server_id=None, lang=N
 Return `Target` with `user_id`, `role_id`, and `server_id`. Explicit role filters
 are validated against the target's visible bindings.
 
-### profile
+### skport_profile
 
 ```text
-await client.endfield.profile(skport_id, *, lang=None)
+await client.endfield.skport_profile(skport_id, *, lang=None, raw=False)
 ```
 
-Return raw SKPORT social-profile data. The social username is ordinarily found
-at `response["user"]["basicUser"]["nickname"]`. The profile endpoint reads
-community data. Use `card()` or `owned_card()` for the `PlayerCard` consumed
-by Endfield Cards.
+Return `SocialProfile` with the SKPORT username, biography, avatar, and
+available community counts. Pass `raw=True` to get the decoded social response
+previously returned by `profile()`.
 
-### card
+### profile and card
 
 ```text
+await client.endfield.profile(
+    skport_id, *, role_id=None, server_id=None, lang=None, raw=False,
+)
 await client.endfield.card(
     skport_id, *, role_id=None, server_id=None, lang=None, raw=False,
 )
 ```
 
-Return `PlayerCard`. `raw=True` returns the fetched service data instead and
-skips asset resolution and calculation.
+`profile()` and `card()` return the same `PlayerCard`. With `raw=True`, either
+method returns the decoded Endfield card response and skips asset resolution and
+calculation.
 
 ### characters
 
