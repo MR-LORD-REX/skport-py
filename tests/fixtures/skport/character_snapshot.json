@@ -1,0 +1,1154 @@
+{
+ "detail": {
+  "charData": {
+   "id": "05047b063867199b953b30ac8df9a853",
+   "name": "Yvonne",
+   "avatarSqUrl": "https://static.skport.com/image/common/20251112/bacd477f99daf106e4995acef6c85456.png",
+   "avatarRtUrl": "https://static.skport.com/image/common/20251121/e63ce05be5614dd6df32eff18bb279c7.png",
+   "rarity": {
+    "key": "rarity_6",
+    "value": "6"
+   },
+   "profession": {
+    "key": "profession_assault",
+    "value": "Striker"
+   },
+   "property": {
+    "key": "char_property_cryst",
+    "value": "Cryo"
+   },
+   "weaponType": {
+    "key": "weapon_type_pistol",
+    "value": "Handcannon"
+   },
+   "skills": [
+    {
+     "id": "4306de3203fb26e363496b319cf74092",
+     "name": "Exuberant Trigger",
+     "type": {
+      "key": "skill_type_normal_attack",
+      "value": "Basic Attack"
+     },
+     "property": {
+      "key": "skill_property_cryst",
+      "value": "Cryo"
+     },
+     "iconUrl": "https://static.skport.com/image/common/20261119/93ce7067da1980e94653e01d9df8ec72.png",
+     "desc": "BASIC ATTACK: \nAn attack with up to 5 sequences that deals <@ba.cryst>Cryo DMG</>. As the controlled operator, <#ba.lastcombo>Final Strike</> also deals <@ba.poise>{poise:0}</> Stagger. \n\nDIVE ATTACK: \nBasic attack performed in mid-air becomes a dive attack that deals <@ba.cryst>Cryo DMG</> to nearby enemies. \n\nFINISHER: \nBasic attack performed near a Staggered enemy becomes a finisher that deals massive <@ba.cryst>Cryo DMG</> and recovers some SP.",
+     "descParams": {
+      "atb": "17",
+      "atk_scale": "1.01",
+      "display_atk_scale": "1.01",
+      "poise": "17"
+     },
+     "descLevelParams": {
+      "1": {
+       "level": "1",
+       "params": {
+        "atb": "17",
+        "atk_scale": "0.56",
+        "display_atk_scale": "0.56",
+        "poise": "17"
+       }
+      },
+      "10": {
+       "level": "10",
+       "params": {
+        "atb": "17",
+        "atk_scale": "1.08",
+        "display_atk_scale": "1.08",
+        "poise": "17"
+       }
+      },
+      "11": {
+       "level": "11",
+       "params": {
+        "atb": "17",
+        "atk_scale": "1.17",
+        "display_atk_scale": "1.17",
+        "poise": "17"
+       }
+      },
+      "12": {
+       "level": "12",
+       "params": {
+        "atb": "17",
+        "atk_scale": "1.26",
+        "display_atk_scale": "1.26",
+        "poise": "17"
+       }
+      },
+      "2": {
+       "level": "2",
+       "params": {
+        "atb": "17",
+        "atk_scale": "0.62",
+        "display_atk_scale": "0.62",
+        "poise": "17"
+       }
+      },
+      "3": {
+       "level": "3",
+       "params": {
+        "atb": "17",
+        "atk_scale": "0.67",
+        "display_atk_scale": "0.67",
+        "poise": "17"
+       }
+      },
+      "4": {
+       "level": "4",
+       "params": {
+        "atb": "17",
+        "atk_scale": "0.73",
+        "display_atk_scale": "0.73",
+        "poise": "17"
+       }
+      },
+      "5": {
+       "level": "5",
+       "params": {
+        "atb": "17",
+        "atk_scale": "0.79",
+        "display_atk_scale": "0.79",
+        "poise": "17"
+       }
+      },
+      "6": {
+       "level": "6",
+       "params": {
+        "atb": "17",
+        "atk_scale": "0.84",
+        "display_atk_scale": "0.84",
+        "poise": "17"
+       }
+      },
+      "7": {
+       "level": "7",
+       "params": {
+        "atb": "17",
+        "atk_scale": "0.9",
+        "display_atk_scale": "0.9",
+        "poise": "17"
+       }
+      },
+      "8": {
+       "level": "8",
+       "params": {
+        "atb": "17",
+        "atk_scale": "0.96",
+        "display_atk_scale": "0.96",
+        "poise": "17"
+       }
+      },
+      "9": {
+       "level": "9",
+       "params": {
+        "atb": "17",
+        "atk_scale": "1.01",
+        "display_atk_scale": "1.01",
+        "poise": "17"
+       }
+      }
+     },
+     "forms": [],
+     "descs": []
+    },
+    {
+     "id": "af9dfbbc7cdbfc7c661d65e5de49fa4b",
+     "name": "Brr-Brr-Bomb β",
+     "type": {
+      "key": "skill_type_normal_skill",
+      "value": "Battle Skill"
+     },
+     "property": {
+      "key": "skill_property_cryst",
+      "value": "Cryo"
+     },
+     "iconUrl": "https://static.skport.com/image/common/20251112/e71d9a4adf520e753a11d06c3f0102dc.png",
+     "desc": "Throws a freezing bomb. The bomb explodes when it hits the enemy to deal <@ba.cryst>Cryo DMG</>. If hitting an enemy with <#ba.crystinflict>Cryo Infliction</> or <#ba.naturalinflict>Nature Infliction</>, then <#ba.consume>consume</> all <#ba.spellinflict>Arts Infliction</> stacks, forcibly apply <#ba.frozen>Solidification</>, and deal <@ba.cryst>Cryo DMG</> to the target based on the number of stacks <#ba.consume>consumed</>.\nAfter the battle skill successfully applies <#ba.frozen>Solidification</>, Yvonne gains additional Ultimate Energy based on the number of stacks <#ba.consume>consumed</>. This Ultimate Energy Gain effect can only trigger 1 time, even if the skill hits multiple enemies.",
+     "descParams": {
+      "atk_scale": "2",
+      "atk_scale2": "1.2",
+      "atk_scale_layer": "1.6",
+      "poise": "10",
+      "usp_base": "10",
+      "usp_layer": "30"
+     },
+     "descLevelParams": {
+      "1": {
+       "level": "1",
+       "params": {
+        "atk_scale": "1.11",
+        "atk_scale2": "0.67",
+        "atk_scale_layer": "0.89",
+        "poise": "10",
+        "usp_base": "10",
+        "usp_layer": "30"
+       }
+      },
+      "10": {
+       "level": "10",
+       "params": {
+        "atk_scale": "2.14",
+        "atk_scale2": "1.28",
+        "atk_scale_layer": "1.71",
+        "poise": "10",
+        "usp_base": "10",
+        "usp_layer": "30"
+       }
+      },
+      "11": {
+       "level": "11",
+       "params": {
+        "atk_scale": "2.3",
+        "atk_scale2": "1.38",
+        "atk_scale_layer": "1.85",
+        "poise": "10",
+        "usp_base": "10",
+        "usp_layer": "30"
+       }
+      },
+      "12": {
+       "level": "12",
+       "params": {
+        "atk_scale": "2.5",
+        "atk_scale2": "1.5",
+        "atk_scale_layer": "2",
+        "poise": "10",
+        "usp_base": "10",
+        "usp_layer": "30"
+       }
+      },
+      "2": {
+       "level": "2",
+       "params": {
+        "atk_scale": "1.22",
+        "atk_scale2": "0.73",
+        "atk_scale_layer": "0.98",
+        "poise": "10",
+        "usp_base": "10",
+        "usp_layer": "30"
+       }
+      },
+      "3": {
+       "level": "3",
+       "params": {
+        "atk_scale": "1.33",
+        "atk_scale2": "0.8",
+        "atk_scale_layer": "1.07",
+        "poise": "10",
+        "usp_base": "10",
+        "usp_layer": "30"
+       }
+      },
+      "4": {
+       "level": "4",
+       "params": {
+        "atk_scale": "1.44",
+        "atk_scale2": "0.87",
+        "atk_scale_layer": "1.16",
+        "poise": "10",
+        "usp_base": "10",
+        "usp_layer": "30"
+       }
+      },
+      "5": {
+       "level": "5",
+       "params": {
+        "atk_scale": "1.55",
+        "atk_scale2": "0.93",
+        "atk_scale_layer": "1.24",
+        "poise": "10",
+        "usp_base": "10",
+        "usp_layer": "30"
+       }
+      },
+      "6": {
+       "level": "6",
+       "params": {
+        "atk_scale": "1.67",
+        "atk_scale2": "1",
+        "atk_scale_layer": "1.33",
+        "poise": "10",
+        "usp_base": "10",
+        "usp_layer": "30"
+       }
+      },
+      "7": {
+       "level": "7",
+       "params": {
+        "atk_scale": "1.78",
+        "atk_scale2": "1.07",
+        "atk_scale_layer": "1.42",
+        "poise": "10",
+        "usp_base": "10",
+        "usp_layer": "30"
+       }
+      },
+      "8": {
+       "level": "8",
+       "params": {
+        "atk_scale": "1.89",
+        "atk_scale2": "1.13",
+        "atk_scale_layer": "1.51",
+        "poise": "10",
+        "usp_base": "10",
+        "usp_layer": "30"
+       }
+      },
+      "9": {
+       "level": "9",
+       "params": {
+        "atk_scale": "2",
+        "atk_scale2": "1.2",
+        "atk_scale_layer": "1.6",
+        "poise": "10",
+        "usp_base": "10",
+        "usp_layer": "30"
+       }
+      }
+     },
+     "forms": [],
+     "descs": []
+    },
+    {
+     "id": "a6f79d99f103e6da0eb478f922fb979e",
+     "name": "Flashfreezer υ37",
+     "type": {
+      "key": "skill_type_combo_skill",
+      "value": "Combo Skill"
+     },
+     "property": {
+      "key": "skill_property_cryst",
+      "value": "Cryo"
+     },
+     "iconUrl": "https://static.skport.com/image/common/20251112/88a43b09681816f8bed0f128334d74f8.png",
+     "desc": "COMBO TRIGGER: When the controlled operator performs a <#ba.lastcombo>Final Strike</> on an enemy with <#ba.frozen>Solidification</>.\nImmediately deploys Frost-e-Bytee next to the enemy. While active, Frost-e-Bytee constantly releases energy to attack nearby enemies, deals <@ba.cryst>Cryo DMG</> to them, and <@ba.key>pulls</> them towards itself. After Frost-e-Bytee expires, it explodes to forcibly apply <#ba.frozen>Solidification</> and deal <@ba.cryst>Cryo DMG</> to nearby enemies.\nAfter the combo skill successfully hits the enemy, Yvonne gains additional Ultimate Energy. This Ultimate Energy Gain effect can only trigger 1 time, even if the skill hits multiple enemies.",
+     "descParams": {
+      "atk_scale_boom": "1.6",
+      "atk_scale_tick": "0.8",
+      "duration": "3",
+      "interval": "0.75",
+      "maxcnt": "4",
+      "poise": "10",
+      "usp": "10",
+      "usp_extra": "10"
+     },
+     "descLevelParams": {
+      "1": {
+       "level": "1",
+       "params": {
+        "atk_scale_boom": "0.89",
+        "atk_scale_tick": "0.45",
+        "duration": "3",
+        "interval": "0.75",
+        "maxcnt": "4",
+        "poise": "10",
+        "usp": "10",
+        "usp_extra": "10"
+       }
+      },
+      "10": {
+       "level": "10",
+       "params": {
+        "atk_scale_boom": "1.71",
+        "atk_scale_tick": "0.86",
+        "duration": "3",
+        "interval": "0.75",
+        "maxcnt": "4",
+        "poise": "10",
+        "usp": "10",
+        "usp_extra": "10"
+       }
+      },
+      "11": {
+       "level": "11",
+       "params": {
+        "atk_scale_boom": "1.85",
+        "atk_scale_tick": "0.93",
+        "duration": "3",
+        "interval": "0.75",
+        "maxcnt": "4",
+        "poise": "10",
+        "usp": "10",
+        "usp_extra": "10"
+       }
+      },
+      "12": {
+       "level": "12",
+       "params": {
+        "atk_scale_boom": "2",
+        "atk_scale_tick": "1",
+        "duration": "3",
+        "interval": "0.75",
+        "maxcnt": "4",
+        "poise": "10",
+        "usp": "10",
+        "usp_extra": "10"
+       }
+      },
+      "2": {
+       "level": "2",
+       "params": {
+        "atk_scale_boom": "0.98",
+        "atk_scale_tick": "0.49",
+        "duration": "3",
+        "interval": "0.75",
+        "maxcnt": "4",
+        "poise": "10",
+        "usp": "10",
+        "usp_extra": "10"
+       }
+      },
+      "3": {
+       "level": "3",
+       "params": {
+        "atk_scale_boom": "1.07",
+        "atk_scale_tick": "0.54",
+        "duration": "3",
+        "interval": "0.75",
+        "maxcnt": "4",
+        "poise": "10",
+        "usp": "10",
+        "usp_extra": "10"
+       }
+      },
+      "4": {
+       "level": "4",
+       "params": {
+        "atk_scale_boom": "1.16",
+        "atk_scale_tick": "0.58",
+        "duration": "3",
+        "interval": "0.75",
+        "maxcnt": "4",
+        "poise": "10",
+        "usp": "10",
+        "usp_extra": "10"
+       }
+      },
+      "5": {
+       "level": "5",
+       "params": {
+        "atk_scale_boom": "1.25",
+        "atk_scale_tick": "0.62",
+        "duration": "3",
+        "interval": "0.75",
+        "maxcnt": "4",
+        "poise": "10",
+        "usp": "10",
+        "usp_extra": "10"
+       }
+      },
+      "6": {
+       "level": "6",
+       "params": {
+        "atk_scale_boom": "1.34",
+        "atk_scale_tick": "0.67",
+        "duration": "3",
+        "interval": "0.75",
+        "maxcnt": "4",
+        "poise": "10",
+        "usp": "10",
+        "usp_extra": "10"
+       }
+      },
+      "7": {
+       "level": "7",
+       "params": {
+        "atk_scale_boom": "1.42",
+        "atk_scale_tick": "0.71",
+        "duration": "3",
+        "interval": "0.75",
+        "maxcnt": "4",
+        "poise": "10",
+        "usp": "10",
+        "usp_extra": "10"
+       }
+      },
+      "8": {
+       "level": "8",
+       "params": {
+        "atk_scale_boom": "1.51",
+        "atk_scale_tick": "0.76",
+        "duration": "3",
+        "interval": "0.75",
+        "maxcnt": "4",
+        "poise": "10",
+        "usp": "10",
+        "usp_extra": "10"
+       }
+      },
+      "9": {
+       "level": "9",
+       "params": {
+        "atk_scale_boom": "1.6",
+        "atk_scale_tick": "0.8",
+        "duration": "3",
+        "interval": "0.75",
+        "maxcnt": "4",
+        "poise": "10",
+        "usp": "10",
+        "usp_extra": "10"
+       }
+      }
+     },
+     "forms": [],
+     "descs": []
+    },
+    {
+     "id": "fe670a39d488d71e1aa1ff4f0c263ab1",
+     "name": "Cryoblasting Pistolier",
+     "type": {
+      "key": "skill_type_ultimate_skill",
+      "value": "Ultimate"
+     },
+     "property": {
+      "key": "skill_property_cryst",
+      "value": "Cryo"
+     },
+     "iconUrl": "https://static.skport.com/image/common/20251112/9ee31da7b428504fa9e5690ea603594c.png",
+     "desc": "Immediately deploys the support bot Tink-a-Bella and makes Yvonne the controlled operator.\nTemporarily <@ba.key>enhances</> Yvonne's basic attack (BATK). Each enhanced BATK sequence performed grants a stack of Critical Rate buff. After reaching max stacks, Yvonne also gains a Critical DMG buff. When the skill is about to end, Yvonne's last enhanced BATK becomes an enhanced <#ba.lastcombo>Final Strike</> that deals massive <@ba.cryst>Cryo DMG</>.\nIf the enemy is <#ba.frozen>Solidified</>, Yvonne performs an additional attack that deals <@ba.cryst>Cryo DMG</> and then <#ba.consume>consumes</> the enemy's <#ba.frozen>Solidification</>.",
+     "descParams": {
+      "atk_scale1": "0.185",
+      "atk_scale2": "2.76",
+      "atk_scale_extra": "5.54",
+      "duration": "7",
+      "poise": "20"
+     },
+     "descLevelParams": {
+      "1": {
+       "level": "1",
+       "params": {
+        "atk_scale1": "0.089",
+        "atk_scale2": "1.33",
+        "atk_scale_extra": "2.67",
+        "duration": "7",
+        "poise": "20"
+       }
+      },
+      "10": {
+       "level": "10",
+       "params": {
+        "atk_scale1": "0.172",
+        "atk_scale2": "2.56",
+        "atk_scale_extra": "5.14",
+        "duration": "7",
+        "poise": "20"
+       }
+      },
+      "11": {
+       "level": "11",
+       "params": {
+        "atk_scale1": "0.185",
+        "atk_scale2": "2.76",
+        "atk_scale_extra": "5.54",
+        "duration": "7",
+        "poise": "20"
+       }
+      },
+      "12": {
+       "level": "12",
+       "params": {
+        "atk_scale1": "0.2",
+        "atk_scale2": "3",
+        "atk_scale_extra": "6",
+        "duration": "7",
+        "poise": "20"
+       }
+      },
+      "2": {
+       "level": "2",
+       "params": {
+        "atk_scale1": "0.098",
+        "atk_scale2": "1.47",
+        "atk_scale_extra": "2.94",
+        "duration": "7",
+        "poise": "20"
+       }
+      },
+      "3": {
+       "level": "3",
+       "params": {
+        "atk_scale1": "0.107",
+        "atk_scale2": "1.6",
+        "atk_scale_extra": "3.2",
+        "duration": "7",
+        "poise": "20"
+       }
+      },
+      "4": {
+       "level": "4",
+       "params": {
+        "atk_scale1": "0.116",
+        "atk_scale2": "1.73",
+        "atk_scale_extra": "3.47",
+        "duration": "7",
+        "poise": "20"
+       }
+      },
+      "5": {
+       "level": "5",
+       "params": {
+        "atk_scale1": "0.125",
+        "atk_scale2": "1.86",
+        "atk_scale_extra": "3.74",
+        "duration": "7",
+        "poise": "20"
+       }
+      },
+      "6": {
+       "level": "6",
+       "params": {
+        "atk_scale1": "0.134",
+        "atk_scale2": "2",
+        "atk_scale_extra": "4",
+        "duration": "7",
+        "poise": "20"
+       }
+      },
+      "7": {
+       "level": "7",
+       "params": {
+        "atk_scale1": "0.143",
+        "atk_scale2": "2.13",
+        "atk_scale_extra": "4.27",
+        "duration": "7",
+        "poise": "20"
+       }
+      },
+      "8": {
+       "level": "8",
+       "params": {
+        "atk_scale1": "0.151",
+        "atk_scale2": "2.26",
+        "atk_scale_extra": "4.54",
+        "duration": "7",
+        "poise": "20"
+       }
+      },
+      "9": {
+       "level": "9",
+       "params": {
+        "atk_scale1": "0.16",
+        "atk_scale2": "2.4",
+        "atk_scale_extra": "4.8",
+        "duration": "7",
+        "poise": "20"
+       }
+      }
+     },
+     "forms": [],
+     "descs": []
+    }
+   ],
+   "illustrationUrl": "https://static.skport.com/image/common/20260121/9c451bd9f63956ce51b63f3f1d22bf9c.png",
+   "tags": [
+    "Damage Dealer",
+    "Solidify",
+    "Crit"
+   ],
+   "abilityTalents": [
+    {
+     "id": "chr_0017_yvonne_5",
+     "name": "Keen Mind",
+     "iconUrl": "https://static.skport.com/image/common/20260310/8bd6524509ea7d5b72c1be7b7137a3bb.png",
+     "desc": "Operator Intellect +15.",
+     "descParams": {},
+     "lockedIconUrl": ""
+    },
+    {
+     "id": "chr_0017_yvonne_1",
+     "name": "Keen Mind",
+     "iconUrl": "https://static.skport.com/image/common/20260310/8bd6524509ea7d5b72c1be7b7137a3bb.png",
+     "desc": "Operator Intellect +10.",
+     "descParams": {},
+     "lockedIconUrl": ""
+    },
+    {
+     "id": "chr_0017_yvonne_7",
+     "name": "Keen Mind",
+     "iconUrl": "https://static.skport.com/image/common/20260310/8bd6524509ea7d5b72c1be7b7137a3bb.png",
+     "desc": "Operator Intellect +20.",
+     "descParams": {},
+     "lockedIconUrl": ""
+    },
+    {
+     "id": "chr_0017_yvonne_3",
+     "name": "Keen Mind",
+     "iconUrl": "https://static.skport.com/image/common/20260310/8bd6524509ea7d5b72c1be7b7137a3bb.png",
+     "desc": "Operator Intellect +15.",
+     "descParams": {},
+     "lockedIconUrl": ""
+    }
+   ],
+   "combatTalents": [
+    {
+     "id": "chr_0017_yvonne_passive_skill_0_2",
+     "name": "Barrage of Technology",
+     "iconUrl": "https://static.skport.com/image/common/20260310/cdddd8c737863ef3883f2a078cdee9f1.png",
+     "desc": "Battle skill <@ba.key>Brr-Brr-Bomb β</> improved: After applying <#ba.frozen>Solidification</>, the next basic attack directly becomes a <#ba.lastcombo>Final Strike</> with DMG Dealt <@ba.vup>+{dmg_up:0%}</>.",
+     "descParams": {
+      "dmg_up": "0.5"
+     },
+     "lockedIconUrl": ""
+    },
+    {
+     "id": "chr_0017_yvonne_passive_skill_1_2",
+     "name": "Freezing Point",
+     "iconUrl": "https://static.skport.com/image/common/20260310/0efd507a8010362b0c04645dd80a83bd.png",
+     "desc": "Against enemies with active <#ba.crystinflict>Cryo Infliction</>, gains Critical DMG Dealt <@ba.vup>+{inflict_up:0%}</>. Effect is doubled against enemies with <#ba.frozen>Solidification</>.",
+     "descParams": {
+      "inflict_up": "0.2",
+      "status_up": "0.4"
+     },
+     "lockedIconUrl": ""
+    },
+    {
+     "id": "chr_0017_yvonne_passive_skill_1_1",
+     "name": "Freezing Point",
+     "iconUrl": "https://static.skport.com/image/common/20260310/0efd507a8010362b0c04645dd80a83bd.png",
+     "desc": "Against enemies with active <#ba.crystinflict>Cryo Infliction</>, gains Critical DMG Dealt <@ba.vup>+{inflict_up:0%}</>. Effect is doubled against enemies with <#ba.frozen>Solidification</>.",
+     "descParams": {
+      "inflict_up": "0.1",
+      "status_up": "0.2"
+     },
+     "lockedIconUrl": ""
+    },
+    {
+     "id": "chr_0017_yvonne_passive_skill_0_1",
+     "name": "Barrage of Technology",
+     "iconUrl": "https://static.skport.com/image/common/20260310/cdddd8c737863ef3883f2a078cdee9f1.png",
+     "desc": "Battle skill <@ba.key>Brr-Brr-Bomb β</> improved: After applying <#ba.frozen>Solidification</>, the next basic attack performed becomes a <#ba.lastcombo>Final Strike</>.",
+     "descParams": {
+      "dmg_up": "0"
+     },
+     "lockedIconUrl": ""
+    }
+   ],
+   "cultivationTalents": [
+    {
+     "id": "spaceship_skill_chr_0017_yvonne_2_2",
+     "name": "Fashionista γ",
+     "iconUrl": "https://static.skport.com/image/common/20260310/33b7e052e4b4266e492ce0dd889572a5.png",
+     "desc": "Assign to Growth Chamber to slow Mood Drop of all operators in it by 18%",
+     "descParams": {},
+     "lockedIconUrl": "https://static.skport.com/image/common/20260310/bbac44dc0d060669b985b2f715603a36.png"
+    },
+    {
+     "id": "spaceship_skill_chr_0017_yvonne_1_2",
+     "name": "Fungal Pigment Extraction γ",
+     "iconUrl": "https://static.skport.com/image/common/20260310/db952c40a10ebd18619b6e4b9f23feef.png",
+     "desc": "Assign to Growth Chamber to grant fungal matter growth rate +30%",
+     "descParams": {},
+     "lockedIconUrl": "https://static.skport.com/image/common/20260310/d7ebcfd6a5d7d6572a327941fd634b6d.png"
+    },
+    {
+     "id": "spaceship_skill_chr_0017_yvonne_1_1",
+     "name": "Fungal Pigment Extraction β",
+     "iconUrl": "https://static.skport.com/image/common/20260310/db952c40a10ebd18619b6e4b9f23feef.png",
+     "desc": "Assign to Growth Chamber to grant fungal matter growth rate +20%",
+     "descParams": {},
+     "lockedIconUrl": "https://static.skport.com/image/common/20260310/d7ebcfd6a5d7d6572a327941fd634b6d.png"
+    },
+    {
+     "id": "spaceship_skill_chr_0017_yvonne_2_1",
+     "name": "Fashionista β",
+     "iconUrl": "https://static.skport.com/image/common/20260310/33b7e052e4b4266e492ce0dd889572a5.png",
+     "desc": "Assign to Growth Chamber to slow Mood Drop of all operators in it by 14%",
+     "descParams": {},
+     "lockedIconUrl": "https://static.skport.com/image/common/20260310/bbac44dc0d060669b985b2f715603a36.png"
+    }
+   ]
+  },
+  "id": "05047b063867199b953b30ac8df9a853",
+  "level": 90,
+  "userSkills": {
+   "4306de3203fb26e363496b319cf74092": {
+    "skillId": "4306de3203fb26e363496b319cf74092",
+    "level": 9,
+    "maxLevel": 12,
+    "skillFormType": "CHAR_SKILL_FORM_TYPE_UNSPECIFIED"
+   },
+   "a6f79d99f103e6da0eb478f922fb979e": {
+    "skillId": "a6f79d99f103e6da0eb478f922fb979e",
+    "level": 9,
+    "maxLevel": 12,
+    "skillFormType": "CHAR_SKILL_FORM_TYPE_UNSPECIFIED"
+   },
+   "af9dfbbc7cdbfc7c661d65e5de49fa4b": {
+    "skillId": "af9dfbbc7cdbfc7c661d65e5de49fa4b",
+    "level": 9,
+    "maxLevel": 12,
+    "skillFormType": "CHAR_SKILL_FORM_TYPE_UNSPECIFIED"
+   },
+   "fe670a39d488d71e1aa1ff4f0c263ab1": {
+    "skillId": "fe670a39d488d71e1aa1ff4f0c263ab1",
+    "level": 11,
+    "maxLevel": 12,
+    "skillFormType": "CHAR_SKILL_FORM_TYPE_UNSPECIFIED"
+   }
+  },
+  "bodyEquip": {
+   "equipId": "d462d7a614142cf74cbef39f8893b7c7",
+   "equipData": {
+    "id": "d462d7a614142cf74cbef39f8893b7c7",
+    "name": "MI Security Overalls",
+    "iconUrl": "https://static.skport.com/image/common/20251121/d2d248fcf78e38154ecff8e4b349c4f6.png",
+    "rarity": {
+     "key": "equip_rarity_5",
+     "value": "Gold"
+    },
+    "type": {
+     "key": "equip_type_body",
+     "value": "Armor"
+    },
+    "level": {
+     "key": "equip_level_70",
+     "value": "70"
+    },
+    "properties": [
+     "equip_attr_wisd",
+     "equip_attr_agi",
+     "equip_attr_normal_attack_damage_increase"
+    ],
+    "isAccessory": false,
+    "suit": {
+     "id": "2a50c1685223ad1c8ee798bc66ab8ac3",
+     "name": "MI Security",
+     "skillId": "passive_equipsuit_critsuit_01",
+     "skillDesc": "3-piece set effect: Wearer's Critical Rate <@ba.vup>+{crit_up:0%}</>. \nAfter the wearer scores a critical hit, the wearer gains ATK <@ba.vup>+{atk_up:0%}</> for {duration}s. This effect can reach {max_stack:0} stacks. At max stacks, grant an additional Critical Rate <@ba.vup>+{crit_up2:0%}</>. This effect cannot stack.",
+     "skillDescParams": {
+      "atk_up": "0.05",
+      "crit_up": "0.05",
+      "crit_up2": "0.05",
+      "duration": "5",
+      "max_stack": "5"
+     }
+    },
+    "function": "Designed by Mieszko Industries and assembled by the AIC. This equipment improves the wearer's combat capabilities.",
+    "pkg": "Equipment from the MI Security series. \nWhen the war ended, Mieszko Industries adjusted their production lines and added effective weight-reduction measures. They thus acquired equipment-supply contracts for urban security forces.",
+    "baseAttrValue": 56,
+    "canEnhance": true
+   },
+   "enhance": {
+    "1": 3,
+    "2": 3,
+    "3": 3
+   },
+   "canEnhance": true
+  },
+  "armEquip": {
+   "equipId": "973244cb4e32bb2122f1b31e1930ed93",
+   "equipData": {
+    "id": "973244cb4e32bb2122f1b31e1930ed93",
+    "name": "MI Security Hands PPE T1",
+    "iconUrl": "https://static.skport.com/image/common/20251121/c24a73e0a8c86b461cad77a4749d7476.png",
+    "rarity": {
+     "key": "equip_rarity_5",
+     "value": "Gold"
+    },
+    "type": {
+     "key": "equip_type_hand",
+     "value": "Gloves"
+    },
+    "level": {
+     "key": "equip_level_70",
+     "value": "70"
+    },
+    "properties": [
+     "equip_attr_wisd",
+     "equip_attr_will",
+     "equip_attr_critical_rate"
+    ],
+    "isAccessory": false,
+    "suit": {
+     "id": "2a50c1685223ad1c8ee798bc66ab8ac3",
+     "name": "MI Security",
+     "skillId": "passive_equipsuit_critsuit_01",
+     "skillDesc": "3-piece set effect: Wearer's Critical Rate <@ba.vup>+{crit_up:0%}</>. \nAfter the wearer scores a critical hit, the wearer gains ATK <@ba.vup>+{atk_up:0%}</> for {duration}s. This effect can reach {max_stack:0} stacks. At max stacks, grant an additional Critical Rate <@ba.vup>+{crit_up2:0%}</>. This effect cannot stack.",
+     "skillDescParams": {
+      "atk_up": "0.05",
+      "crit_up": "0.05",
+      "crit_up2": "0.05",
+      "duration": "5",
+      "max_stack": "5"
+     }
+    },
+    "function": "Designed by Mieszko Industries and assembled by the AIC. This equipment improves the wearer's combat capabilities.",
+    "pkg": "Equipment from the MI Security series. \nFeatures miniaturized Arts Units for riot control and excellent energy conductance.",
+    "baseAttrValue": 42,
+    "canEnhance": true
+   },
+   "enhance": {
+    "1": 3,
+    "2": 3,
+    "3": 3
+   },
+   "canEnhance": true
+  },
+  "firstAccessory": {
+   "equipId": "b83ff6bbdc384b117ffe6977cbf1992d",
+   "equipData": {
+    "id": "b83ff6bbdc384b117ffe6977cbf1992d",
+    "name": "MI Security Toolkit",
+    "iconUrl": "https://static.skport.com/image/common/20251121/8320516f3b4b374509982b6f97dc651a.png",
+    "rarity": {
+     "key": "equip_rarity_5",
+     "value": "Gold"
+    },
+    "type": {
+     "key": "equip_type_edc",
+     "value": "Kit"
+    },
+    "level": {
+     "key": "equip_level_70",
+     "value": "70"
+    },
+    "properties": [
+     "equip_attr_wisd",
+     "equip_attr_agi",
+     "equip_attr_critical_rate"
+    ],
+    "isAccessory": false,
+    "suit": {
+     "id": "2a50c1685223ad1c8ee798bc66ab8ac3",
+     "name": "MI Security",
+     "skillId": "passive_equipsuit_critsuit_01",
+     "skillDesc": "3-piece set effect: Wearer's Critical Rate <@ba.vup>+{crit_up:0%}</>. \nAfter the wearer scores a critical hit, the wearer gains ATK <@ba.vup>+{atk_up:0%}</> for {duration}s. This effect can reach {max_stack:0} stacks. At max stacks, grant an additional Critical Rate <@ba.vup>+{crit_up2:0%}</>. This effect cannot stack.",
+     "skillDescParams": {
+      "atk_up": "0.05",
+      "crit_up": "0.05",
+      "crit_up2": "0.05",
+      "duration": "5",
+      "max_stack": "5"
+     }
+    },
+    "function": "Designed by Mieszko Industries and assembled by the AIC. This equipment improves the wearer's combat capabilities.",
+    "pkg": "Equipment from the MI Security series. \n\"Thanks, officer! I swear this'll be the last time I'm calling the police this month for forgetting my keys! PROMISE!\"",
+    "baseAttrValue": 21,
+    "canEnhance": true
+   },
+   "enhance": {
+    "1": 3,
+    "2": 3,
+    "3": 3
+   },
+   "canEnhance": true
+  },
+  "secondAccessory": {
+   "equipId": "05e8444249fd3e905b9930a51e3875f8",
+   "equipData": {
+    "id": "05e8444249fd3e905b9930a51e3875f8",
+    "name": "Turbid Cutting Torch",
+    "iconUrl": "https://static.skport.com/image/common/20251121/483775c57399ec48d258ae762241912c.png",
+    "rarity": {
+     "key": "equip_rarity_5",
+     "value": "Gold"
+    },
+    "type": {
+     "key": "equip_type_edc",
+     "value": "Kit"
+    },
+    "level": {
+     "key": "equip_level_70",
+     "value": "70"
+    },
+    "properties": [
+     "equip_attr_wisd",
+     "equip_attr_str",
+     "equip_attr_normal_attack_damage_increase"
+    ],
+    "isAccessory": false,
+    "suit": {
+     "id": "1a4c13870df449ee376d8ed5e8dd9204",
+     "name": "Tide Surge",
+     "skillId": "passive_equipsuit_burst_01",
+     "skillDesc": "3-piece set effect: Wearer's Skill DMG Dealt <@ba.vup>+{skill_dmg_up:0%}</>.\nAfter the wearer applies <@ba.key>{stack_cond}</> or more stacks of <#ba.spellinflict>Arts Infliction</> on the enemy, the wearer gains <@ba.key>Arts DMG Dealt</> <@ba.vup>+{spell_dmg_up:0%}</> for {duration}s. This effect cannot stack.",
+     "skillDescParams": {
+      "duration": "15",
+      "skill_dmg_up": "0.2",
+      "spell_dmg_up": "0.35",
+      "stack_cond": "2"
+     }
+    },
+    "function": "Designed by Hongshan Swordmancers and assembled by the AIC. This equipment can improve the wearer's combat capabilities.",
+    "pkg": "Equipment designed by the Bureau of Swordmancers for those working near the Blight Tide. \nThis is a touch of fear regarding the Blight Tide: When will the overhanging calamity make itself seen?",
+    "baseAttrValue": 21,
+    "canEnhance": true
+   },
+   "enhance": {
+    "1": 3,
+    "2": 3,
+    "3": 3
+   },
+   "canEnhance": true
+  },
+  "tacticalItem": {
+   "tacticalItemId": "3ecb00a89c2ec66de39820bb74197ad7",
+   "tacticalItemData": {
+    "id": "3ecb00a89c2ec66de39820bb74197ad7",
+    "name": "Buck Capsule [A]",
+    "iconUrl": "https://static.skport.com/image/common/20251112/93eb6ccdbcb192bbf0428bc752696ec2.png",
+    "rarity": {
+     "key": "equip_rarity_4",
+     "value": "Purple"
+    },
+    "activeEffectType": {
+     "key": "active_effect_type_heal",
+     "value": "Recovery"
+    },
+    "activeEffect": "Use this to instantly restore <@ba.vup>{value:0}</> HP.",
+    "passiveEffect": "Once equipped, item is automatically used when the holder falls below <@ba.vup>{param1:0%}</> HP. Max uses per battle: <@ba.vup>{count:0}</>.\n - <@tips.purple>Can support the controlled operator (only once)</>\n - <@tips.orange>Uses are restored after depletion</>",
+    "activeEffectParams": {
+     "value": "891"
+    },
+    "passiveEffectParams": {
+     "count": "3",
+     "param1": "0.6",
+     "param2": "lt"
+    }
+   }
+  },
+  "evolvePhase": 4,
+  "potentialLevel": 0,
+  "weapon": {
+   "weaponData": {
+    "id": "66cc7d14dddc8b486364ce2363b6adda",
+    "name": "Artzy Tyrannical",
+    "iconUrl": "https://static.skport.com/image/common/20251129/e830bac5069e162919e0478eabbbe32b.png",
+    "rarity": {
+     "key": "rarity_6",
+     "value": "6"
+    },
+    "type": {
+     "key": "weapon_type_pistol",
+     "value": "Handcannon"
+    },
+    "function": "A weapon equipped by Endfield operators to significantly boost their combat capabilities.",
+    "description": "One of the most popular products from Mieszko Industries from their bold Fine Artists Collab series. These firearms feature great styles that match their wildly violent performance. Their popularity is proven by the premium they command in secondary markets.",
+    "skills": [
+     {
+      "key": "wpn_attr_wisd_high",
+      "value": "Intellect [L]"
+     },
+     {
+      "key": "wpn_sp_attr_crirate_high",
+      "value": "Critical Rate [L]"
+     },
+     {
+      "key": "sk_wpn_pistol_0010",
+      "value": "Fracture: Artzy Exaggeration"
+     }
+    ],
+    "skillInfos": [
+     {
+      "skill": {
+       "key": "wpn_attr_wisd_high",
+       "value": "Intellect [L]"
+      },
+      "maxLevel": 9,
+      "gemTagId": "attr_wisd"
+     },
+     {
+      "skill": {
+       "key": "wpn_sp_attr_crirate_high",
+       "value": "Critical Rate [L]"
+      },
+      "maxLevel": 9,
+      "gemTagId": "attr_crirate"
+     },
+     {
+      "skill": {
+       "key": "sk_wpn_pistol_0010",
+       "value": "Fracture: Artzy Exaggeration"
+      },
+      "maxLevel": 4,
+      "gemTagId": "crit"
+     }
+    ]
+   },
+   "level": 90,
+   "refineLevel": 0,
+   "breakthroughLevel": 4,
+   "gem": {
+    "id": "item_gem_rarity_5-f9c025f5d84f78bd0e652157b86b284a",
+    "icon": "",
+    "gemData": {
+     "termId": "f9c025f5d84f78bd0e652157b86b284a",
+     "name": "Flawless Essence·Fracture",
+     "icon": "https://static.skport.com/image/common/20260310/2f46c6e0f8e3703d3ccf9c65aa66d0a3.png",
+     "templateId": "item_gem_rarity_5"
+    },
+    "terms": [
+     {
+      "id": "582bc698e5f5399c1725fa734e2562de",
+      "cost": 6,
+      "name": "Intellect"
+     },
+     {
+      "id": "91e054aa673864c81f9e606a49cf235a",
+      "cost": 4,
+      "name": "Critical Rate"
+     },
+     {
+      "id": "f9c025f5d84f78bd0e652157b86b284a",
+      "cost": 3,
+      "name": "Fracture"
+     }
+    ]
+   },
+   "wikiItemId": "80",
+   "skills": [
+    {
+     "key": "wpn_attr_wisd_high",
+     "level": 9,
+     "currentMaxLevel": 9,
+     "currentBaseLevel": 3,
+     "gemTermId": "582bc698e5f5399c1725fa734e2562de",
+     "name": "Intellect [L]"
+    },
+    {
+     "key": "wpn_sp_attr_crirate_high",
+     "level": 7,
+     "currentMaxLevel": 9,
+     "currentBaseLevel": 3,
+     "gemTermId": "91e054aa673864c81f9e606a49cf235a",
+     "name": "Critical Rate [L]"
+    },
+    {
+     "key": "sk_wpn_pistol_0010",
+     "level": 4,
+     "currentMaxLevel": 4,
+     "currentBaseLevel": 1,
+     "gemTermId": "f9c025f5d84f78bd0e652157b86b284a",
+     "name": "Fracture: Artzy Exaggeration"
+    }
+   ]
+  },
+  "gender": "CHAR_GENDER_MALE",
+  "ownTs": "1785000000",
+  "wikiItemId": "14",
+  "talent": {
+   "latestBreakNode": "charBreak70",
+   "attrNodes": [
+    "chr_0017_yvonne_1",
+    "chr_0017_yvonne_3",
+    "chr_0017_yvonne_5",
+    "chr_0017_yvonne_7"
+   ],
+   "latestPassiveSkillNodes": [
+    "chr_0017_yvonne_passive_skill_0_2",
+    "chr_0017_yvonne_passive_skill_1_2"
+   ],
+   "latestFactorySkillNodes": [
+    "fac_chr_0017_yvonne_0_2",
+    "fac_chr_0017_yvonne_1_2"
+   ],
+   "latestSpaceshipSkillNodes": [
+    "spaceship_skill_chr_0017_yvonne_2_2",
+    "spaceship_skill_chr_0017_yvonne_1_2"
+   ]
+  }
+ }
+}

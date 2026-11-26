@@ -1,0 +1,25 @@
+{
+  "list": [
+    {
+      "id": "18",
+      "name": "Anvil, Backpack, Plus A Pot o'Honey",
+      "chars": [
+        {
+          "id": "4bd6b9cffb427b24a3adf5767197a8c4",
+          "pcLink": "https://wiki.skport.com/endfield/detail?mainTypeId=1&subTypeId=1&gameEntryId=1993",
+          "pic": "https://static.skport.com/image/common/20261119/8ade6982ede0b2b60cd78098e2e3594b.png",
+          "rarity": "rarity_6",
+          "name": "",
+          "dotType": "label_type_up"
+        }
+      ],
+      "poolStartAtTs": "1795536000",
+      "sortId": 18,
+      "poolEndAtTs": "1797998400",
+      "startAtTs": "1795536000",
+      "endAtTs": "1798045200",
+      "europePoolStartAtTs": "1795536000",
+      "europePoolEndAtTs": "1798045200"
+    }
+  ]
+}
