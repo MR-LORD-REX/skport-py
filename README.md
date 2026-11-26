@@ -13,6 +13,18 @@ pip install skport-py
 Read the [documentation](https://mr-lord-rex.github.io/skport-py/) for setup, examples, configuration and
 the API reference.
 
+## Examples and tests
+
+The [examples](examples/) cover public and owner profiles, character builds,
+pull history, wiki articles, attendance, and game reports.
+
+Run the offline suite from a checkout.
+
+```console
+python -m pip install -e ".[dev]"
+python -m pytest
+```
+
 ## endfield-cards 
 
 For info cards use [endfield-card](https://github.com/MR-LORD-REX/endfield-cards)
